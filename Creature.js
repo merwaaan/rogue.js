@@ -54,8 +54,12 @@ function Creature()
 		if(this.type == 'PLAYER')
 		{
 			updateHP();
+			writeMessage(this.getName() + ' lose ' + damage + ' HP');
 		}
-		writeMessage(this.getName() + ' loses ' + damage + 'HP');
+		else
+		{
+			writeMessage(this.getName() + ' loses ' + damage + 'HP');
+		}
 
 		if(this.HP <= 0)
 		{
@@ -75,14 +79,14 @@ function Creature()
 
 	this.die = function()
 	{
-		writeMessage(this.getName() + ' dies');
-
 		if(this.type == 'PLAYER')
 		{
+			writeMessage(this.getName() + ' die');
 			gameOver();
 		}
 		else
 		{
+			writeMessage(this.getName() + ' dies');
 			// drop stuff
 		}
 
