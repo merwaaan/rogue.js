@@ -7,8 +7,8 @@ function Monster()
 		this.HP = 5;
 		this.XP = g_monsterInfo[this.type]['XP'];
 
-		this.STR = 1;
-		this.DEF = 1;
+		this.STR = g_monsterInfo[this.type]['STR'];
+		this.DEF = g_monsterInfo[this.type]['DEF'];
 
 		this.model = getModel(g_monsterInfo[this.type]['char'], g_monsterInfo[this.type]['color']);
 

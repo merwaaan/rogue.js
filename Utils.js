@@ -143,6 +143,12 @@ function isTileWalkable(x, y)
 	return true;
 }
 
+function gameOver()
+{
+	$('#wall').append('----- GAME OVER -----<br/><br/>');
+	$('#wall').append('Your quest lasted for ' + g_gameObjectManager.turn + ' turns');
+}
+
 Array.prototype.remove = function(from, to)
 {
 	var rest = this.slice((to || from) + 1 || this.length);

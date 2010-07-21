@@ -16,12 +16,12 @@ body
 	padding-left : 20px;
 }
 
-#status, #characteristics, #equipment
+#status, #characteristics, #equipment, #wall
 {
 	margin-bottom : 10px;
 }
 
-#HP, #XP, #LVL, #STR, #DEF, #WEAPON, #ARMOR
+#HP, #XP, #LVL, #STR, #DEF, #WEAPON, #ARMOR 
 {
 	display : block;
 }

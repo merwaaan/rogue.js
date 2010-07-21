@@ -58,7 +58,7 @@ var g_monsterInfo =
 	{
 		'name' : 'snake',
 		'desc' : 'A small yet venomous snake',
-		'STR' : 1,
+		'STR' : 9,
 		'DEF' : 1,
 		'XP' : 20,
 		'char' : 's',

@@ -23,9 +23,6 @@ function Creature()
 		this.HP = 15;
 		this.maxHP = 15;
 
-		this.STR = 1;
-		this.DEF = 1;
-
 		this.weapon = g_weaponInfo['SWORD'];
 		this.armor = g_armorInfo['SKIN'];
 
@@ -45,7 +42,7 @@ function Creature()
 	
 	this.attack = function(victim)
 	{
-		var damage = Math.round(this.STR + (this.weapon != null ? this.weapon.PWR : 0));
+		var damage = this.STR + (this.weapon != null ? this.weapon.PWR : 0);
 
 		victim.takeDamage(damage, this);
 	};
@@ -80,8 +77,14 @@ function Creature()
 	{
 		writeMessage(this.getName() + ' dies');
 
-		// drop stuff
-
+		if(this.type == 'PLAYER')
+		{
+			gameOver();
+		}
+		else
+		{
+			// drop stuff
+		}
 
 		this.destroyCreature();
 	};
