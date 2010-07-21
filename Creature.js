@@ -3,6 +3,7 @@ function Creature()
 	// status
 	this.HP = 0;
 	this.maxHP = 0;
+	this.XP = 0;
 
 	// characteristics
 	this.STR = 0;
@@ -31,9 +32,20 @@ function Creature()
 		return this;
 	};
 
+	this.destroyCreature = function()
+	{
+		// if the creature is positionned, we free its tile
+		if(this.x != null && this.y != null)
+		{
+			g_level.getTile(this.x, this.y).creature = null;
+		}
+		
+		this.destroyVisualGameObject();
+	};
+	
 	this.attack = function(victim)
 	{
-		var damage = Math.round((this.STR + (this.weapon != null ? this.weapon.PWR : 0)) * getRandomDecimal(0.5, 1));
+		var damage = Math.round(this.STR + (this.weapon != null ? this.weapon.PWR : 0));
 
 		victim.takeDamage(damage, this);
 	};
@@ -42,14 +54,36 @@ function Creature()
 	{
 		this.HP -= damage;
 
-		writeMessage('The XXX loses ' + damage + 'HP', 'DAMAGE_GIVEN');
+		if(this.type == 'PLAYER')
+		{
+			updateHP();
+		}
+		writeMessage(this.getName() + ' loses ' + damage + 'HP');
 
 		if(this.HP <= 0)
 		{
-			g_level.getTile(this.x, this.y).creature = null;
+			this.die();	
 
-			writeMessage('The XXX dies', 'DAMAGE_GIVEN');
+			if(attacker.type == 'PLAYER')
+			{
+				attacker.winXP(this.XP);
+			}
 		}
+		// INTELLIGENCE!!!
+		else if(this.type != 'PLAYER')
+		{
+			this.attack(attacker);
+		}
+	};
+
+	this.die = function()
+	{
+		writeMessage(this.getName() + ' dies');
+
+		// drop stuff
+
+
+		this.destroyCreature();
 	};
 }
 

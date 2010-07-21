@@ -1,7 +1,6 @@
 function Player()
 {
 	// status
-	this.XP = 0;
 	this.nextLevel = 0;
 
 	// characteristics
@@ -14,10 +13,7 @@ function Player()
 
 	this.initPlayer = function()
 	{
-		// search a FLOOR tile where the player can be positionned
-		var tile = g_level.getRandomTile('FLOOR');
-
-		this.initVisualGameObject(tile.x, tile.y, 'PLAYER');
+		this.initCreature('PLAYER');
 
 		this.HP = 15;
 		this.maxHP = 15;
@@ -38,6 +34,44 @@ function Player()
 		g_gameObjectManager.yOffset = this.y - HALF_SIZE;
 
 		return this;
+	};
+
+	this.destroyPlayer = function()
+	{
+		this.destroyCreature();
+	};
+
+	this.winXP = function(XP)
+	{
+		this.XP += XP;
+		
+		writeMessage('You win ' + XP + ' XP', 'GOOD_NEWS');
+
+		if(this.XP >= this.nextLevel)
+		{
+			this.levelUp();
+		}
+	
+		updateAllUI();
+	};
+
+	this.levelUp = function()
+	{
+		this.XP = this.XP % this.nextLevel;
+		this.nextLevel = 100;
+
+		this.LVL++;
+		this.maxHP += 5;
+		this.HP += 5;
+		this.STR += 2;
+		this.DEF += 1;
+
+		writeMessage('You level up!', 'GOOD_NEWS');
+	};
+
+	this.getName = function()
+	{
+		return 'You';
 	};
 
 	this.keyDown = function(event)

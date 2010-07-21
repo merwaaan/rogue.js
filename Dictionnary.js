@@ -24,13 +24,13 @@ var g_weaponInfo =
 {
 	'SWORD' :
 	{
-		'name' : 'Sword',
+		'name' : 'sword',
 		'desc' : 'A big sword',
 		'PWR' : 0
 	},
 	'SPEAR' :
 	{
-		'name' : 'Spear',
+		'name' : 'spear',
 		'desc' : 'A long shining spear',
 		'PWR' : 1
 	}
@@ -40,13 +40,13 @@ var g_armorInfo =
 {
 	'SKIN' :
 	{
-		'name' : 'Wolf skin',
+		'name' : 'wolf skin',
 		'desc' : 'A glorious wolf skin',
 		'PWR' : 0
 	},
 	'MAIL' :
 	{
-		'name' : 'Silver mail',
+		'name' : 'silver mail',
 		'desc' : 'A shiny mail',
 		'PWR' : 3
 	}
@@ -56,21 +56,21 @@ var g_monsterInfo =
 {
 	'SNAKE' :
 	{
-		'name' : 'Snake',
+		'name' : 'snake',
 		'desc' : 'A small yet venomous snake',
 		'STR' : 1,
 		'DEF' : 1,
-		'XP' : 5,
+		'XP' : 20,
 		'char' : 's',
 		'color' : 'yellow'
 	},
 	'SPIDER' :
 	{
-		'name' : 'Spider',
+		'name' : 'spider',
 		'desc' : 'An eight-legged horror',
 		'STR' : 1,
 		'DEF' : 0,
-		'XP' : 2,
+		'XP' : 10,
 		'char' : 'x',
 		'color' : 'red'
 	}
@@ -99,12 +99,12 @@ var g_messageInfo =
 	{
 		'color' : 'blue'
 	},
-	'DAMAGE_TAKEN' :
+	'GOOD_NEWS' :
+	{
+		'color' : 'green'
+	},
+	'BAD_NEWS' :
 	{
 		'color' : 'red'
-	},
-	'DAMAGE_GIVEN' :
-	{
-		'color' : 'pink'
 	}
 };

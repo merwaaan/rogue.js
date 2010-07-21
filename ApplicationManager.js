@@ -6,6 +6,12 @@ function ApplicationManager()
 	  g_player = new Player().initPlayer();
 
 		new Monster().initMonster('SNAKE');
+		new Monster().initMonster('SNAKE');
+		new Monster().initMonster('SNAKE');
+		new Monster().initMonster('SNAKE');
+		new Monster().initMonster('SPIDER');
+		new Monster().initMonster('SPIDER');
+		new Monster().initMonster('SPIDER');
 
 		return this;
 	}

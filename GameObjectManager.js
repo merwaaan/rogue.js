@@ -47,6 +47,19 @@ function GameObjectManager()
 		g_level.draw(this.xOffset, this.yOffset);
 	};
 
+	this.buildTable = function(width, height)
+	{
+		for(var y = 0; y < height; y++)
+		{
+ 			$('#frame').append('<div></div>');
+			
+			for(var x = 0; x < width; x++)			
+			{
+				$('#frame div:last').append('<span class="tile" id="tile_' + y + '_' + x + '"></span>');					
+			}
+		}
+	};
+
 	this.addGameObject = function(object)
 	{
 		this.gameObjects.push(object);
@@ -54,20 +67,7 @@ function GameObjectManager()
 
 	this.removeGameObject = function(object)
 	{
-
-	};
-
-	this.buildTable = function(width, height)
-	{
-		for(var y = 0; y < height; y++)
-		{
-			$('#frame').append('<div></div>');
-
-			for(var x = 0; x < width; x++)
-			{
-				$('#frame div:last').append('<span class="tile" id="tile_' + y + '_' + x + '"></span>');
-			}
-		}
+		this.gameObjects.removeObject(object);
 	};
 
 	this.keyDown = function(event)
