@@ -66,7 +66,7 @@ function Player()
 		this.STR += 2;
 		this.DEF += 1;
 
-		writeMessage('You level up!', 'GOOD_NEWS');
+		writeMessage('You level up!', 'GOOD_NEWS'); // EVERYONE!
 	};
 
 	this.getName = function()
@@ -101,27 +101,31 @@ function Player()
 		var xNew = this.x + xMove;
 		var yNew = this.y + yMove;
 
-		// if the target tile is walkable
-		if(isTileWalkable(xNew, yNew))
+		// check if a movement has to be made
+		if(xNew != this.x || yNew != this.y)
 		{
-			this.move(xNew, yNew);
-
-			// if there is an item on the tile
-			if(true)
+			// if the target tile is walkable
+			if(isTileWalkable(xNew, yNew))
 			{
+				this.move(xNew, yNew);
 
+				// if there is an item on the tile
+				if(true)
+				{
+	
+				}
 			}
-		}
-		// else if there is a monster on the tile
-		else if(g_level.getTile(xNew, yNew).creature != null)
-		{
-			this.attack(g_level.getTile(xNew, yNew).creature);
-		}
+			// else if there is a monster on the tile
+			else if(g_level.getTile(xNew, yNew).creature != null)
+			{
+				this.attack(g_level.getTile(xNew, yNew).creature);
+			}
 		
-		g_gameObjectManager.xOffset += this.x - xOld;
-		g_gameObjectManager.yOffset += this.y - yOld;
+			g_gameObjectManager.xOffset += this.x - xOld;
+			g_gameObjectManager.yOffset += this.y - yOld;
 
-		g_gameObjectManager.turn++;
+			g_gameObjectManager.turn++;
+		}
 	};
 }
 
