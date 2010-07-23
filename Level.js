@@ -31,41 +31,34 @@ function Level()
 
 	this.draw = function(xOffset, yOffset)
 	{
-		var view = '';
+	    // get the canvas 2d context
+	    var ctx = document.getElementById('canvas').getContext('2d');
+	    // clear the canvas
+	    ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+	    ctx.font = DRAW_FONT;
 
-		for(var y = 0; y < SIZE; y++)
+	    // cx and cy are the canvas coordinate we will draw text at
+	    // they increase with the font width and height respectively
+	    for(var y = 0, cy = 0; y < SIZE; y++, cy += FONT_HEIGHT)
+	    {
+		for(var x = 0, cx = 0; x < SIZE; x++, cx += FONT_WIDTH)
 		{
-			var line = '';
+		    var tile = this.getTile(x + xOffset, y + yOffset);
+		    var sprite;
 
-			for(var x = 0; x < SIZE; x++)
-			{
-				var tile = this.getTile(x + xOffset, y + yOffset);
+		    // imaginary tiles, outside of the map
+		    if (tile == undefined)
+			sprite = ['U', 'white'];
+		    // let the tile resolve what should be drawn
+		    else
+			sprite = tile.sprite();
 
-				// imaginary tiles, outside of the map
-				if(tile == undefined)
-				{
-					line += 'U';
-				}
-				// if the tile holds a creature, draw it
-				else if(tile.creature != null)
-				{
-					line += tile.creature.model;
-				}
-				else if(tile.item != null)
-				{
-					line += tile.item.model;
-				}
-				// if the tile is empty, just draw its character
-				else
-				{
-					line += tile.model;
-				}
-			}
-
-			view += line + '<br/>';
+		    // change the fill color
+		    ctx.fillStyle = sprite[1];
+		    // draw the character with current color
+		    ctx.fillText(sprite[0], cx, cy);
 		}
-
-		drawView(view);
+	    }
 	};
 
 	this.generate = function(depth)

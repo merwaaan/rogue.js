@@ -16,7 +16,7 @@ var g_tileInfo =
 {
 	'VOID' :
 	{
-		'char' : '&nbsp;',
+		'char' : '',
 		'color' : 'white',
 		'walkable' : true,
 	},

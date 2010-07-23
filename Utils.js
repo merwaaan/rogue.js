@@ -17,15 +17,12 @@ function getRandomFromList(list)
 
 // DRAWING
 
-function drawView(view)
-{
-	$('#frame').empty();
-	$('#frame').append(view);
-}
-
+/** @return the model as an array [char, color] */
 function getModel(character, color)
 {
-	return '<span style="color:' + color + '">' + character + '</span>';
+    // XXX admittedly, it's a bit useless right now, so we should
+    // refactor this at one point
+    return [character, color];
 }
 
 function drawPath(path)

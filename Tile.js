@@ -53,4 +53,27 @@ function Tile()
 		
 		return false;
 	};
+
+    /** @return the sprite to represent this tile, as an array [char,color] */
+    this.sprite = function()
+    {
+	var sprite;
+ 
+	// if the tile holds a creature, draw it
+	if(this.creature != null)
+	{
+	    sprite = this.creature.model;
+	}
+	else if(this.item != null)
+	{
+	    sprite = this.item.model;
+	}
+	// if the tile is empty, just draw its character
+	else
+	{
+	    sprite = this.model;
+	}
+
+	return sprite;
+    };
 }
