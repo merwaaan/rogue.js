@@ -77,12 +77,12 @@ var g_armorInfo =
 /**
  * - stat : name of the state which will be altered once the item is used (HP, STR, DEF, maybe more later...)
  * - value : quantity of the targetted stat which will be altered
- * - modification : type of alteration applied to the stat
+ * - alteration : type of alteration applied to the stat
  *   - 'relative' : stat = current stat + value
  *   - 'absolute' : stat = value
  *   - 'progressive' : stat = current stat + value at a regular frequency
- * - frequence : frequency in turn of a progressive alteration
- * - duration : maximum duration in turn of a preogressive alteration
+ * - frequency : frequency in turn of a progressive alteration
+ * - duration : maximum duration in turn of a progressive alteration
  */
 
 var g_edibleItemInfo =
@@ -95,7 +95,7 @@ var g_edibleItemInfo =
 		'color' : 'white',
 		'stat' : 'HP',
 		'value' : 5,
-		'modification' : 'relative'
+		'alteration' : 'relative'
 	},
 	'POISONNED_BREAD' :
 	{
@@ -105,7 +105,7 @@ var g_edibleItemInfo =
 		'color' : 'pink',
 		'stat' : 'HP',
 		'value' : -1,
-		'modification' : 'progressive',
+		'alteration' : 'progressive',
 		'frequency' : 1,
 		'duration' : 10
 	}

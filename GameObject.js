@@ -2,6 +2,9 @@ function GameObject()
 {
 	this.type = null;
 
+	// data from the dictionnary
+	this.info = null;
+
 	// position	
 	this.x = null;
 	this.y = null;

@@ -2,15 +2,15 @@ function Monster()
 {
 	this.initMonster = function(type)
 	{
+		this.info = g_monsterInfo[type];
+
 		this.initCreature(type);
 
 		this.HP = 5;
 		this.XP = g_monsterInfo[this.type]['XP'];
 
-		this.STR = g_monsterInfo[this.type]['STR'];
-		this.DEF = g_monsterInfo[this.type]['DEF'];
-
-		this.model = getModel(g_monsterInfo[this.type]['char'], g_monsterInfo[this.type]['color']);
+		this.STR = this.info['STR'];
+		this.DEF = this.info['DEF'];
 
 		return this;
 	};
@@ -22,7 +22,7 @@ function Monster()
 
 	this.getName = function()
 	{
-		return 'The ' + g_monsterInfo[this.type]['name'];
+		return 'The ' + this.info['name'];
 	};
 }
 

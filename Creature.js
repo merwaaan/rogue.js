@@ -26,6 +26,8 @@ function Creature()
 		this.weapon = g_weaponInfo['SWORD'];
 		this.armor = g_armorInfo['SKIN'];
 
+		this.model = getModel(this.info['char'], this.info['color']);
+
 		return this;
 	};
 
@@ -63,6 +65,8 @@ function Creature()
 
 		if(this.HP <= 0)
 		{
+			this.HP = 0;
+
 			this.die();	
 
 			if(attacker.type == 'PLAYER')
@@ -74,6 +78,17 @@ function Creature()
 		else if(this.type != 'PLAYER')
 		{
 			this.attack(attacker);
+		}
+	};
+
+	// TODO
+	this.getHealth = function(quantity)
+	{
+		this.HP += quantity;
+
+		if(this.HP > this.maxHP)
+		{
+			this.HP = this.maxHP;
 		}
 	};
 

@@ -13,6 +13,8 @@ function Player()
 
 	this.initPlayer = function()
 	{
+		this.info = g_playerInfo['PLAYER'];
+
 		this.initCreature('PLAYER');
 
 		this.HP = 15;
@@ -27,8 +29,6 @@ function Player()
 		this.weapon = g_weaponInfo['SWORD'];
 		this.armor = g_armorInfo['SKIN'];
 		
-		this.model = getModel(g_playerInfo[this.type]['char'], g_playerInfo[this.type]['color']);
-
 		// center the screen on the player
 		g_gameObjectManager.xOffset = this.x - HALF_SIZE;
 		g_gameObjectManager.yOffset = this.y - HALF_SIZE;

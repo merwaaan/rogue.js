@@ -4,6 +4,8 @@ function EdibleItem()
 	{
 		this.initItem(x, y, type, owner);
 
+		this.info = g_edibleItemInfo[type];
+
 		return this;
 	};
 
@@ -12,9 +14,29 @@ function EdibleItem()
 		this.destroyItem();
 	};
 
-	this.consume = function()
+	this.consume = function(creature)
 	{
-		
+		writeMessage('You consume ' + this.info['name']);
+
+		if(this.info['alteration'] == 'relative')
+		{
+			if(this.info['value'] > 0)
+			{
+				creature.getHealth(this.info['value']);
+			}
+			else if(this.info['value'] < 0)
+			{
+				creature.takeDamage(this.info['value']);
+			}
+		}
+		else if(this.info['alteration'] == 'absolute')
+		{
+			// TODO
+		}
+		else if(this.info['alteration'] == 'progressive')
+		{
+			// TODO
+		}
 	};
 }
 
