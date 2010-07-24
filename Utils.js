@@ -64,8 +64,8 @@ function updateHP()
 
 function updateXP()
 {
-	drawBar($('#XP_bar'), g_player.XP, g_player.nextLevel);
-	$('#XP_label').text(g_player.XP + '/' + g_player.nextLevel);
+	drawBar($('#XP_bar'), g_player.XP, g_levelingInfo[g_player.LVL]['next']);
+	$('#XP_label').text(g_player.XP + '/' + g_levelingInfo[g_player.LVL]['next']);
 }
 
 function updateLVL()

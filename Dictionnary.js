@@ -125,9 +125,9 @@ var g_monsterInfo =
 		'desc' : 'A small yet venomous snake',
 		'char' : 's',
 		'color' : 'yellow',
-		'STR' : 3,
+		'STR' : 1,
 		'DEF' : 1,
-		'XP' : 20
+		'XP' : 70
 	},
 	'SPIDER' :
 	{
@@ -137,7 +137,7 @@ var g_monsterInfo =
 		'color' : 'red',
 		'STR' : 1,
 		'DEF' : 0,
-		'XP' : 10
+		'XP' : 60
 	}
 };
 
@@ -152,7 +152,27 @@ var g_playerInfo =
 
 var g_levelingInfo =
 {
-
+   1 :
+   {
+      'HP' : '15',
+      'STR' : 1,
+      'DEF' : 1,
+      'next' : 100
+   },
+   2 :
+   {
+      'HP' : '20',
+      'STR' : 2,
+      'DEF' : 2,
+      'next' : 130
+   },
+   3 :
+   {
+      'HP' : '28',
+      'STR' : 3,
+      'DEF' : 2,
+      'next' : 200
+   }
 };
 
 var g_messageInfo =

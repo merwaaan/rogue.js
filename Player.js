@@ -4,14 +4,14 @@ function Player()
 
 	this.info = g_playerInfo['PLAYER'];
 
-	this.HP = 20;
-	this.maxHP = 20;
-	this.XP = 0;
-	this.nextLevel = 100;
+   this.LVL = 1;
 
-	this.LVL = 1;
-	this.STR = 1;
-	this.DEF = 1;
+	this.HP = g_levelingInfo[this.LVL]['HP'];
+	this.maxHP = g_levelingInfo[this.LVL]['HP'];
+	this.XP = 0;
+
+	this.STR = g_levelingInfo[this.LVL]['STR'];
+	this.DEF = g_levelingInfo[this.LVL]['DEF'];
 
 	this.weapon = g_weaponInfo['SWORD'];
 	this.armor = g_armorInfo['SKIN'];
@@ -43,7 +43,7 @@ Player.prototype =
 		
 		writeMessage('You win ' + XP + ' XP', 'GOOD_NEWS');
 
-		if(this.XP >= this.nextLevel)
+		if(this.XP >= g_levelingInfo[this.LVL]['next'])
 		{
 			this.levelUp();
 		}
@@ -53,14 +53,12 @@ Player.prototype =
 
 	levelUp : function()
 	{
-		this.XP = this.XP % this.nextLevel;
-		this.nextLevel = 100;
+		this.XP = this.XP % g_levelingInfo[this.LVL]['next'];
 
 		this.LVL++;
-		this.maxHP += 5;
-		this.HP += 5;
-		this.STR += 2;
-		this.DEF += 1;
+		this.maxHP = g_levelingInfo[this.LVL]['HP'];
+		this.STR = g_levelingInfo[this.LVL]['STR'];
+		this.DEF = g_levelingInfo[this.LVL]['DEF'];
 
 		writeMessage('You level up!', 'GOOD_NEWS'); // EVERYONE!
 	},
