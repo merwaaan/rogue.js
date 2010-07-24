@@ -21,7 +21,7 @@ window.onload = function()
     canvas.width = CANVAS_WIDTH;
     canvas.height = CANVAS_HEIGHT;
 
-	g_gameObjectManager = new GameObjectManager().initGameObjectManager();
+	g_gameObjectManager = new GameObjectManager();
 	g_gameObjectManager.step();
 
 	updateAllUI();
