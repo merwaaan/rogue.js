@@ -1,76 +1,76 @@
 function GameObjectManager()
 {
-	g_gameObjectManager = this;
+    g_gameObjectManager = this;
 
-	this.gameObjects = new Array();
+    this.gameObjects = new Array();
 
-	this.applicationManager = new ApplicationManager();
+    this.applicationManager = new ApplicationManager();
 
-	var keyHandler = function(event)
-	{
-		clearMessages();
+    var keyHandler = function(event)
+    {
+        clearMessages();
 
-		g_gameObjectManager.keyDown(event);
-		g_gameObjectManager.step();
+        g_gameObjectManager.keyDown(event);
+        g_gameObjectManager.step();
 
-			event.preventDefault();
-	};
+        event.preventDefault();
+    };
 
-	// Browsers have different behaviors regarding repeating
-	// keys and special keys like arrows. Short version,
-	// Chrome repeat the keyDown event for repeating arrow
-  // keys, while FF repeat the keyPress event.
-  // Long version : http://unixpapa.com/js/key.html
-  if ($.browser.webkit)
-  	document.onkeydown = keyHandler;
-  else
-    document.onkeypress = keyHandler;
+    // Browsers have different behaviors regarding repeating
+    // keys and special keys like arrows. Short version,
+    // Chrome repeat the keyDown event for repeating arrow
+    // keys, while FF repeat the keyPress event.
+    // Long version : http://unixpapa.com/js/key.html
+    if ($.browser.webkit)
+        document.onkeydown = keyHandler;
+    else
+        document.onkeypress = keyHandler;
 }
 
 GameObjectManager.prototype =
 {
-	gameObjects : null,
+    gameObjects : null,
 
-	applicationManager : null,
+    applicationManager : null,
 
-	turn : 0,
+    turn : 0,
 
-	xOffset : 0,
-	yOffset : 0,
-	
-	step : function()
-	{
-		// update
-		for(i in this.gameObjects)
-		{
-			if(this.gameObjects[i].update)
-			{
-				this.gameObjects[i].update(this.table, this.xOffset, this.yOffset);
-			}
-		}
+    xOffset : 0,
+    yOffset : 0,
+    
+    step : function()
+    {
+        // update
+        for(i in this.gameObjects)
+        {
+            if(this.gameObjects[i].update)
+            {
+                this.gameObjects[i].update(this.table, this.xOffset, this.yOffset);
+            }
+        }
 
-		// draw
-		g_level.draw(this.xOffset, this.yOffset);
-	},
+        // draw
+        g_level.draw(this.xOffset, this.yOffset);
+    },
 
-	addGameObject : function(object)
-	{
-		this.gameObjects.push(object);
-	},
+    addGameObject : function(object)
+    {
+        this.gameObjects.push(object);
+    },
 
-	removeGameObject : function(object)
-	{
-		this.gameObjects.removeObject(object);
-	},
+    removeGameObject : function(object)
+    {
+        this.gameObjects.removeObject(object);
+    },
 
-	keyDown : function(event)
-	{
-		for(i in this.gameObjects)
-		{
-			if(this.gameObjects[i].keyDown)
-			{
-				this.gameObjects[i].keyDown(event);
-			}
-		}
-	}
+    keyDown : function(event)
+    {
+        for(i in this.gameObjects)
+        {
+            if(this.gameObjects[i].keyDown)
+            {
+                this.gameObjects[i].keyDown(event);
+            }
+        }
+    }
 }

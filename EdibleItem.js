@@ -1,41 +1,41 @@
 function EdibleItem(x, y, type, owner)
 {
-	Item.call(this, x, y, type, owner);
+    Item.call(this, x, y, type, owner);
 
-	this.info = g_edibleItemInfo[type];
+    this.info = g_edibleItemInfo[type];
 }
 
 EdibleItem.prototype =
 {
-	destroyEdibleItem : function()
-	{
-		this.destroyItem();
-	},
+    destroyEdibleItem : function()
+    {
+        this.destroyItem();
+    },
 
-	consume : function(creature)
-	{
-		writeMessage('You consume ' + this.info['name']);
+    consume : function(creature)
+    {
+        writeMessage('You consume ' + this.info['name']);
 
-		if(this.info['alteration'] == 'relative')
-		{
-			if(this.info['value'] > 0)
-			{
-				creature.getHealth(this.info['value']);
-			}
-			else if(this.info['value'] < 0)
-			{
-				creature.takeDamage(this.info['value']);
-			}
-		}
-		else if(this.info['alteration'] == 'absolute')
-		{
-			// TODO
-		}
-		else if(this.info['alteration'] == 'progressive')
-		{
-			// TODO
-		}
-	}
+        if(this.info['alteration'] == 'relative')
+        {
+            if(this.info['value'] > 0)
+            {
+                creature.getHealth(this.info['value']);
+            }
+            else if(this.info['value'] < 0)
+            {
+                creature.takeDamage(this.info['value']);
+            }
+        }
+        else if(this.info['alteration'] == 'absolute')
+        {
+            // TODO
+        }
+        else if(this.info['alteration'] == 'progressive')
+        {
+            // TODO
+        }
+    }
 };
 
 extend(EdibleItem, Item);

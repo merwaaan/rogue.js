@@ -14,24 +14,24 @@
 
 var g_tileInfo =
 {
-	'VOID' :
-	{
-		'char' : '',
-		'color' : 'white',
-		'walkable' : true,
-	},
-	'FLOOR' :
-	{
-		'char' : '.',
-		'color' : 'gray',
-		'walkable' : true
-	}, 
-	'WALL' :
-	{
-		'char' : '#',
-		'color' : 'white',
-		'walkable' : false
-	}
+    'VOID' :
+    {
+        'char' : '',
+        'color' : 'white',
+        'walkable' : true,
+    },
+    'FLOOR' :
+    {
+        'char' : '.',
+        'color' : 'gray',
+        'walkable' : true
+    }, 
+    'WALL' :
+    {
+        'char' : '#',
+        'color' : 'white',
+        'walkable' : false
+    }
 };
 
 /**
@@ -40,18 +40,18 @@ var g_tileInfo =
 
 var g_weaponInfo =
 {
-	'SWORD' :
-	{
-		'name' : 'sword',
-		'desc' : 'A big sword',
-		'PWR' : 0
-	},
-	'SPEAR' :
-	{
-		'name' : 'spear',
-		'desc' : 'A long shining spear',
-		'PWR' : 1
-	}
+    'SWORD' :
+    {
+        'name' : 'sword',
+        'desc' : 'A big sword',
+        'PWR' : 0
+    },
+    'SPEAR' :
+    {
+        'name' : 'spear',
+        'desc' : 'A long shining spear',
+        'PWR' : 1
+    }
 };
 
 /**
@@ -60,18 +60,18 @@ var g_weaponInfo =
 
 var g_armorInfo =
 {
-	'SKIN' :
-	{
-		'name' : 'wolf skin',
-		'desc' : 'A glorious wolf skin',
-		'PWR' : 0
-	},
-	'MAIL' :
-	{
-		'name' : 'silver mail',
-		'desc' : 'A shiny mail',
-		'PWR' : 3
-	}
+    'SKIN' :
+    {
+        'name' : 'wolf skin',
+        'desc' : 'A glorious wolf skin',
+        'PWR' : 0
+    },
+    'MAIL' :
+    {
+        'name' : 'silver mail',
+        'desc' : 'A shiny mail',
+        'PWR' : 3
+    }
 };
 
 /**
@@ -87,28 +87,28 @@ var g_armorInfo =
 
 var g_edibleItemInfo =
 {
-	'BREAD' :
-	{
-		'name' : 'bread',
-		'desc' : 'A piece of stale bread',
-		'char' : 'o',
-		'color' : 'white',
-		'stat' : 'HP',
-		'value' : 5,
-		'alteration' : 'relative'
-	},
-	'POISONNED_BREAD' :
-	{
-		'name' : 'poisonned bread',
-		'desc' : 'A piece of reaaally stale bread',
-		'char' : 'o',
-		'color' : 'pink',
-		'stat' : 'HP',
-		'value' : -1,
-		'alteration' : 'progressive',
-		'frequency' : 1,
-		'duration' : 10
-	}
+    'BREAD' :
+    {
+        'name' : 'bread',
+        'desc' : 'A piece of stale bread',
+        'char' : 'o',
+        'color' : 'white',
+        'stat' : 'HP',
+        'value' : 5,
+        'alteration' : 'relative'
+    },
+    'POISONNED_BREAD' :
+    {
+        'name' : 'poisonned bread',
+        'desc' : 'A piece of reaaally stale bread',
+        'char' : 'o',
+        'color' : 'pink',
+        'stat' : 'HP',
+        'value' : -1,
+        'alteration' : 'progressive',
+        'frequency' : 1,
+        'duration' : 10
+    }
 };
 
 /**
@@ -119,82 +119,82 @@ var g_edibleItemInfo =
 
 var g_monsterInfo =
 {
-	'SNAKE' :
-	{
-		'name' : 'snake',
-		'desc' : 'A small yet venomous snake',
-		'char' : 's',
-		'color' : 'yellow',
-		'STR' : 1,
-		'DEF' : 1,
-		'XP' : 70
-	},
-	'SPIDER' :
-	{
-		'name' : 'spider',
-		'desc' : 'An eight-legged horror',
-		'char' : 'x',
-		'color' : 'red',
-		'STR' : 1,
-		'DEF' : 0,
-		'XP' : 60
-	}
+    'SNAKE' :
+    {
+        'name' : 'snake',
+        'desc' : 'A small yet venomous snake',
+        'char' : 's',
+        'color' : 'yellow',
+        'STR' : 1,
+        'DEF' : 1,
+        'XP' : 70
+    },
+    'SPIDER' :
+    {
+        'name' : 'spider',
+        'desc' : 'An eight-legged horror',
+        'char' : 'x',
+        'color' : 'red',
+        'STR' : 1,
+        'DEF' : 0,
+        'XP' : 60
+    }
 };
 
 var g_playerInfo =
 {
-	'PLAYER' :
-	{
-		'char' : '@',
-		'color' : 'white'
-	}
+    'PLAYER' :
+    {
+        'char' : '@',
+        'color' : 'white'
+    }
 };
 
 var g_levelingInfo =
 {
-   1 :
-   {
-      'HP' : '15',
-      'STR' : 1,
-      'DEF' : 1,
-      'next' : 100
-   },
-   2 :
-   {
-      'HP' : '20',
-      'STR' : 2,
-      'DEF' : 2,
-      'next' : 130
-   },
-   3 :
-   {
-      'HP' : '28',
-      'STR' : 3,
-      'DEF' : 2,
-      'next' : 200
-   }
+    1 :
+    {
+        'HP' : '15',
+        'STR' : 1,
+        'DEF' : 1,
+        'next' : 100
+    },
+    2 :
+    {
+        'HP' : '20',
+        'STR' : 2,
+        'DEF' : 2,
+        'next' : 130
+    },
+    3 :
+    {
+        'HP' : '28',
+        'STR' : 3,
+        'DEF' : 2,
+        'next' : 200
+    }
 };
 
 var g_messageInfo =
 {
-	'DEFAULT' :
-	{
-		'color' : 'white'
-	},
-	'AMBIANCE' :
-	{
-		'color' : 'yellow'
-	},
-	'ITEM_FOUND' :
-	{
-		'color' : 'blue'
-	},
-	'GOOD_NEWS' :
-	{
-		'color' : 'green'
-	},
-	'BAD_NEWS' :
-	{
-		'color' : 'red'
-	}
+    'DEFAULT' :
+    {
+        'color' : 'white'
+    },
+    'AMBIANCE' :
+    {
+        'color' : 'yellow'
+    },
+    'ITEM_FOUND' :
+    {
+        'color' : 'blue'
+    },
+    'GOOD_NEWS' :
+    {
+        'color' : 'green'
+    },
+    'BAD_NEWS' :
+    {
+        'color' : 'red'
+    }
 };

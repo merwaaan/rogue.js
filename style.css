@@ -1,38 +1,38 @@
 body
 {
-	font-family : monospace;
-	background-color : black;
-	color : white;
+    font-family : monospace;
+    background-color : black;
+    color : white;
 }
 
 #frame
 {
-	float : left;
+    float : left;
 }
 
 #info
 {
-	float : left;
-	padding-left : 20px;
+    float : left;
+    padding-left : 20px;
 }
 
 #status, #characteristics, #equipment, #wall
 {
-	margin-bottom : 10px;
+    margin-bottom : 10px;
 }
 
 #HP, #XP, #LVL, #STR, #DEF, #WEAPON, #ARMOR 
 {
-	display : block;
+    display : block;
 }
 
 #message
 {
-	clear : left;
-	padding : 10px;
+    clear : left;
+    padding : 10px;
 }
 
 #message span
 {
-	display : block;
+    display : block;
 }
