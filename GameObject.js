@@ -1,31 +1,29 @@
-function GameObject()
+function GameObject(x, y, type)
 {
-	this.type = null;
+	this.type = type;
+
+	this.move(x, y);
+
+	g_gameObjectManager.addGameObject(this);
+}
+
+GameObject.prototype =
+{
+	type : null,
 
 	// data from the dictionnary
-	this.info = null;
+	info : null,
 
 	// position	
-	this.x = null;
-	this.y = null;
+	x : null,
+	y : null,
 
-	this.initGameObject = function(x, y, type)
-	{
-		this.type = type;
-
-		this.move(x, y);
-
-		g_gameObjectManager.addGameObject(this);
-
-		return this;
-	};
-
-	this.destroyGameObject = function()
+	destroyGameObject : function()
 	{
 		g_gameObjectManager.removeGameObject(this);
-	};
+	},
 
-	this.move = function(x, y)
+	move : function(x, y)
 	{
 		// free the previous position
 		if(this.x != null && this.y != null)
@@ -38,5 +36,5 @@ function GameObject()
 
 		// occupy the new position
 		g_level.getTile(x, y).creature = this;
-	};
-}
+	}
+};

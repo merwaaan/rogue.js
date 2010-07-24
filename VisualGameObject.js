@@ -1,19 +1,19 @@
-function VisualGameObject()
+function VisualGameObject(x, y, type)
 {
-	// ascii representation, precomputed to speed up the drawing process
-	this.model = null;
+	GameObject.apply(this, [x, y, type]);
+}	
 
-	this.initVisualGameObject = function(x, y, type)
-	{
-		this.initGameObject(x, y, type);
-	
-		return this;
-	};
-
-	this.destroyVisualGameObject = function()
+VisualGameObject.prototype =
+{
+	destroyVisualGameObject : function()
 	{
 		this.destroyGameObject();
-	};
-}
+	},
 
-VisualGameObject.prototype = new GameObject;
+	model : function()
+	{
+		return [this.info['char'], this.info['color']];
+	}
+};
+
+extend(VisualGameObject, GameObject);

@@ -1,37 +1,33 @@
-function Creature()
+function Creature(type)
+{
+	// search a FLOOR tile where the creature can be positionned
+	var tile = g_level.getRandomTile('FLOOR');
+
+	VisualGameObject.apply(this, [tile.x, tile.y, type]);
+
+	this.HP = 15;
+	this.maxHP = 15;
+
+	this.weapon = g_weaponInfo['SWORD'];
+	this.armor = g_armorInfo['SKIN'];
+}
+
+Creature.prototype =
 {
 	// status
-	this.HP = 0;
-	this.maxHP = 0;
-	this.XP = 0;
+	HP : null,
+	maxHP : null,
+	XP : null,
 
 	// characteristics
-	this.STR = 0;
-	this.DEF = 0;
+	STR : null,
+	DEF : null,
 
 	// equipment
-	this.weapon = null;
-	this.armor = null;
+	weapon : null,
+	armor : null,
 
-	this.initCreature = function(type)
-	{
-		// search a FLOOR tile where the creature can be positionned
-		var tile = g_level.getRandomTile('FLOOR');
-
-		this.initVisualGameObject(tile.x, tile.y, type);
-
-		this.HP = 15;
-		this.maxHP = 15;
-
-		this.weapon = g_weaponInfo['SWORD'];
-		this.armor = g_armorInfo['SKIN'];
-
-		this.model = getModel(this.info['char'], this.info['color']);
-
-		return this;
-	};
-
-	this.destroyCreature = function()
+	destroyCreature : function()
 	{
 		// if the creature is positionned, we free its tile
 		if(this.x != null && this.y != null)
@@ -40,16 +36,16 @@ function Creature()
 		}
 		
 		this.destroyVisualGameObject();
-	};
+	},
 	
-	this.attack = function(victim)
+	attack : function(victim)
 	{
 		var damage = this.STR + (this.weapon != null ? this.weapon.PWR : 0);
 
 		victim.takeDamage(damage, this);
-	};
+	},
 
-	this.takeDamage = function(damage, attacker)
+	takeDamage : function(damage, attacker)
 	{
 		this.HP -= damage;
 
@@ -79,10 +75,10 @@ function Creature()
 		{
 			this.attack(attacker);
 		}
-	};
+	},
 
 	// TODO
-	this.getHealth = function(quantity)
+	getHealth : function(quantity)
 	{
 		this.HP += quantity;
 
@@ -90,9 +86,9 @@ function Creature()
 		{
 			this.HP = this.maxHP;
 		}
-	};
+	},
 
-	this.die = function()
+	die : function()
 	{
 		if(this.type == 'PLAYER')
 		{
@@ -106,7 +102,7 @@ function Creature()
 		}
 
 		this.destroyCreature();
-	};
-}
+	}
+};
 
-Creature.prototype = new VisualGameObject;
+extend(Creature, VisualGameObject);

@@ -1,29 +1,27 @@
-function Monster()
+function Monster(type)
 {
-	this.initMonster = function(type)
-	{
-		this.info = g_monsterInfo[type];
+	Creature.call(this, type);
 
-		this.initCreature(type);
+	this.info = g_monsterInfo[type];
 
-		this.HP = 5;
-		this.XP = g_monsterInfo[this.type]['XP'];
+	this.HP = 5;
+	this.XP = g_monsterInfo[this.type]['XP'];
 
-		this.STR = this.info['STR'];
-		this.DEF = this.info['DEF'];
-
-		return this;
-	};
-
-	this.destroyMonster = function()
-	{
-		this.destroyCreature();
-	};
-
-	this.getName = function()
-	{
-		return 'The ' + this.info['name'];
-	};
+	this.STR = this.info['STR'];
+	this.DEF = this.info['DEF'];
 }
 
-Monster.prototype = new Creature;
+Monster.prototype =
+{
+	destroyMonster : function()
+	{
+		this.destroyCreature();
+	},
+
+	getName : function()
+	{
+		return 'the ' + this.info['name'];
+	}
+}
+
+extend(Monster, Creature);

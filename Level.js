@@ -1,35 +1,34 @@
-function Level()
+function Level(width, height)
 {
-	this.map = null;
-	this.width = 0;
-	this.height = 0;
-	this.tileSize = 0;
-	
-	this.initLevel = function(width, height)
+	g_level = this;
+
+	this.width = width;
+	this.height = height;
+
+	this.map = new Array();
+
+	for(var y = 0; y < this.height; y++)
 	{
-		g_level = this;
+		this.map.push(new Array());
 
-		this.width = width;
-		this.height = height;
-
-		this.map = new Array();
-
-		for(var y = 0; y < this.height; y++)
+		for(var x = 0; x < this.width; x++)
 		{
-			this.map.push(new Array());
-
-			for(var x = 0; x < this.width; x++)
-			{
-				this.map[y].push(new Tile().initTile(x, y, 'VOID'));	
-			}
+			this.map[y].push(new Tile(x, y, 'VOID'));	
 		}
+	}
 
-		this.generate(2);
+	this.generate(2);
+}
 
-		return this;
-	};
+Level.prototype =
+{
+	map : null,
 
-	this.draw = function(xOffset, yOffset)
+	// level size
+	width : null,
+	height : null,
+	
+	draw : function(xOffset, yOffset)
 	{
 	    // get the canvas 2d context
 	    var ctx = document.getElementById('canvas').getContext('2d');
@@ -48,10 +47,10 @@ function Level()
 
 		    // imaginary tiles, outside of the map
 		    if (tile == undefined)
-			sprite = ['U', 'white'];
+					sprite = ['U', 'white'];
 		    // let the tile resolve what should be drawn
 		    else
-			sprite = tile.sprite();
+					sprite = tile.sprite();
 
 		    // change the fill color
 		    ctx.fillStyle = sprite[1];
@@ -59,9 +58,9 @@ function Level()
 		    ctx.fillText(sprite[0], cx, cy);
 		}
 	    }
-	};
+	},
 
-	this.generate = function(depth)
+	generate : function(depth)
 	{
 		// divide the map into several spaces
 		var spaces = this.divideSpace(depth);
@@ -74,9 +73,9 @@ function Level()
 
 		// put walls around built rooms and corridors
 		this.buildWalls();
-	};
+	},
 
-	this.divideSpace = function(depth)
+	divideSpace : function(depth)
 	{
 		var spaces = new Array();
 
@@ -107,9 +106,9 @@ function Level()
 		}
 
 		return spaces;
-	}
+	},
 
-	this.digRooms = function(spaces)
+	digRooms : function(spaces)
 	{
 		var rooms = new Array();
 
@@ -134,9 +133,9 @@ function Level()
 		}
 
 		return rooms;
-	};
+	},
 
-	this.linkRooms = function(rooms, depth)
+	linkRooms : function(rooms, depth)
 	{
 		// first part : link rooms with following indexes (ensures they are all connected)
 		for(var i = 0; i < rooms.length - 1; i++)
@@ -149,22 +148,23 @@ function Level()
 		{
 			this.digCorridor(getRandomFromList(rooms), getRandomFromList(rooms));
 		}
-	};
+	},
 
-	this.digCorridor = function(room1, room2)
+	digCorridor : function(room1, room2)
 	{
 		// get random tiles inside each room
 		var tile1 = this.getTile(getRandomInteger(room1.x, room1.x + room1.width - 1), getRandomInteger(room1.y, room1.y + room1.height - 1));
 		var tile2 = this.getTile(getRandomInteger(room2.x, room2.x + room2.width - 1), getRandomInteger(room2.y, room2.y + room2.height - 1));
 
-		var corridor = new AStar().getPath(tile1, tile2, false);	
+		var corridor = new AStar().getPath(tile1, tile2, false);
+
 		for(var j = 0; j < corridor.length; j++)
 		{
 			this.getTile(corridor[j].x, corridor[j].y).setType('FLOOR');
 		}
-	};
+	},
 
-	this.buildWalls = function()
+	buildWalls : function()
 	{
 		// go through each tile of the map
 		for(var y = 0; y < this.height; y++)
@@ -194,9 +194,9 @@ function Level()
 				}
 			}
 		}
-	};
+	},
 
-	this.getTile = function(x, y)
+	getTile : function(x, y)
 	{
 		if(this.map[y] == undefined || this.map[y][x] == undefined)
 		{
@@ -204,9 +204,9 @@ function Level()
 		}
 
 		return this.map[y][x];
-	};
+	},
 
-	this.getRandomTile = function(type)
+	getRandomTile : function(type)
 	{
 		if(type == undefined)
 		{
@@ -221,5 +221,5 @@ function Level()
 		} while(tile.type != type);
 	
 		return tile;
-	};
+	}
 }

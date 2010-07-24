@@ -165,3 +165,12 @@ Array.prototype.removeObject = function(object)
 		}
 	}
 }
+
+
+// INHERITANCE
+
+function extend(child, superclass)
+{
+	child.prototype.__proto__ = superclass.prototype;
+}
+

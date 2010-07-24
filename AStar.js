@@ -1,10 +1,14 @@
 function AStar()
 {
-	this.open = null;
-	this.closed = null;
+}
+
+AStar.prototype =
+{
+	open : null,
+	closed : null,
 
 	// return an array of Tiles leading to tile tileEnd from tile tileStart
-	this.getPath = function(tileStart, tileEnd, diagonal)
+	getPath : function(tileStart, tileEnd, diagonal)
 	{
 		this.open = new Array();
 		this.closed = new Array();
@@ -84,9 +88,9 @@ function AStar()
 		path = path.reverse();
 
 		return path;
-	};
+	},
 
-	this.getBestTile = function(list)
+	getBestTile : function(list)
 	{
 		var iBest = 0;
 
@@ -99,9 +103,9 @@ function AStar()
 		}
 
 		return list[iBest];
-	};
+	},
 
-	this.removeTile = function(tile, list)
+	removeTile : function(tile, list)
 	{
 		for(var i = 0; i < list.length; i++)
 		{
@@ -112,9 +116,9 @@ function AStar()
 				return;
 			}
 		}
-	};
+	},
 
-	this.inList = function(tile, list)
+	inList : function(tile, list)
 	{
 		for(var i = 0; i < list.length; i++)
 		{
@@ -125,15 +129,15 @@ function AStar()
 		}
 
 		return false;
-	};
+	},
 
-	this.getCost = function(tileFrom, tileTo)
+	getCost : function(tileFrom, tileTo)
 	{
 		return tileFrom.c + (tileFrom.x == tileTo.x || tileFrom.y == tileTo.y ? 10 : 14);
-	};
+	},
 
-	this.getManhattan = function(tile1, tile2)
+	getManhattan : function(tile1, tile2)
 	{
 		return (Math.abs(tile1.x - tile2.x) + Math.abs(tile1.y - tile2.y)) * 10;
-	};
+	},
 }

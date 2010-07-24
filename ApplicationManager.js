@@ -2,16 +2,16 @@ function ApplicationManager()
 {
 	this.initApplicationManager = function()
 	{
-		g_level = new Level().initLevel(50, 50);
-	  g_player = new Player().initPlayer();
+		g_level = new Level(50, 50);
+	  g_player = new Player();
 
-		new Monster().initMonster('SNAKE');
-		new Monster().initMonster('SNAKE');
-		new Monster().initMonster('SNAKE');
-		new Monster().initMonster('SNAKE');
-		new Monster().initMonster('SPIDER');
-		new Monster().initMonster('SPIDER');
-		new Monster().initMonster('SPIDER');
+		new Monster('SNAKE');
+		new Monster('SNAKE');
+		new Monster('SNAKE');
+		new Monster('SNAKE');
+		new Monster('SPIDER');
+		new Monster('SPIDER');
+		new Monster('SPIDER');
 
 		return this;
 	}

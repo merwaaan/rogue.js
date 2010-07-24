@@ -1,37 +1,35 @@
-function Item()
+function Item(x, y, type, owner)
 {
+	VisualGameObject.call(this, x, y, type);
+
+	this.owner = owner;
+}
+
+Item.prototype =
+{				
 	// item owner
-	this.owner = null;
+	owner : null,
 
-	this.initItem = function(x, y, type, owner)
-	{
-		this.initVisualGameObject(x, y, type);
-	
-		this.owner = owner;
-
-		return this;
-	};
-
-	this.destroyItem = function()
+	destroyItem : function()
 	{
 		this.destroyVisualGameObject();
-	};
+	},
 
-	this.pickUp = function(creature)
+	pickUp : function(creature)
 	{
 		this.owner = creature;
 
 		g_level.getTile(this.x, this.y).item = null;
-	};
+	},
 
-	this.drop = function(x, y)
+	drop : function(x, y)
 	{
 		this.owner = null;
 		this.x = x;
 		this.x = y;
 
 		g_level.getTile(x, y).item = this;
-	};
-}
+	}
+};
 
-Item.prototype = new VisualGameObject;
+extend(Item, VisualGameObject);

@@ -1,20 +1,18 @@
-function EdibleItem()
+function EdibleItem(x, y, type, owner)
 {
-	this.initEdibleItem = function(x, y, type, owner)
-	{
-		this.initItem(x, y, type, owner);
+	Item.call(this, x, y, type, owner);
 
-		this.info = g_edibleItemInfo[type];
+	this.info = g_edibleItemInfo[type];
+}
 
-		return this;
-	};
-
-	this.destroyEdibleItem = function()
+EdibleItem.prototype =
+{
+	destroyEdibleItem : function()
 	{
 		this.destroyItem();
-	};
+	},
 
-	this.consume = function(creature)
+	consume : function(creature)
 	{
 		writeMessage('You consume ' + this.info['name']);
 
@@ -37,7 +35,7 @@ function EdibleItem()
 		{
 			// TODO
 		}
-	};
-}
+	}
+};
 
-EdibleItem.prototype = new Item;
+extend(EdibleItem, Item);

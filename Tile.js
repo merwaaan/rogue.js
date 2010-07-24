@@ -1,50 +1,52 @@
-function Tile()
+function Tile(x, y, type)
 {
-	this.x = 0;
-	this.y = 0;
-	this.type = null;
+	this.x = x;
+	this.y = y;
 
-	// ascii representation, precomputed to speed up the drawing process
-	this.model = null;
+	this.type = type;
+
+	this.info = g_tileInfo[type];
+}
+
+Tile.prototype =
+{
+	x : null,
+	y : null,
+
+	type : null,
+
+	// data from the dictionnary
+	info : null,
 
 	// apparence
-	this.light = false;
-	this.explored = false;
+	light : false,
+	explored : false,
 
 	// held creature (player or monster)
-	this.creature = null;
+	creature : null,
 
 	// held item
-	this.item = null;
+	item : null,
 
 	// pathfinding variables
-	this.parent = null;
-	this.c = 0; // cost from the start
-	this.m = 0; // manhattan distance
+	parent : null,
+	c : 0, // cost from the start
+	m : 0, // manhattan distance
 
-	this.initTile = function(x, y, type)
-	{
-		this.x = x;
-		this.y = y;
-		this.type = type;
-
-		this.model = getModel(g_tileInfo[this.type]['char'], g_tileInfo[this.type]['color']);
-
-		return this;
-	};
-
-	this.setType = function(type)
-	{
-		this.type = type;
-		this.model = getModel(g_tileInfo[this.type]['char'], g_tileInfo[this.type]['color']);
-	};
-
-	this.isWalkable = function()
+	isWalkable : function()
 	{
 		return g_tileInfo[this.type]['walkable'] && this.creature == null;
-	};
+	},
 
-	this.equals = function(tile)
+	setType : function(type)
+	{
+		this.type = type;
+
+		// update the data from the dictionnary
+		this.info = g_tileInfo[type];
+	},
+
+equals : function(tile)
 	{
 		if(this.x == tile.x && this.y == tile.y)
 		{
@@ -52,28 +54,33 @@ function Tile()
 		}
 		
 		return false;
-	};
+	},
 
-    /** @return the sprite to represent this tile, as an array [char,color] */
-    this.sprite = function()
-    {
-	var sprite;
+	/** @return the sprite to represent this tile, as an array [char,color] */
+	sprite : function()
+	{
+		var sprite;
  
-	// if the tile holds a creature, draw it
-	if(this.creature != null)
-	{
-	    sprite = this.creature.model;
-	}
-	else if(this.item != null)
-	{
-	    sprite = this.item.model;
-	}
-	// if the tile is empty, just draw its character
-	else
-	{
-	    sprite = this.model;
-	}
+		// if the tile holds a creature, draw it
+		if(this.creature != null)
+		{
+		    sprite = this.creature.model();
+		}
+		else if(this.item != null)
+		{
+	 	   sprite = this.item.model();
+		}
+		// if the tile is empty, just draw its character
+		else
+		{
+		    sprite = this.model();
+		}
 
-	return sprite;
-    };
+		return sprite;
+  },
+
+	model : function()
+	{
+		return [this.info['char'], this.info['color']];
+	}
 }

@@ -1,47 +1,43 @@
 function Player()
 {
-	// status
-	this.nextLevel = 0;
+	Creature.apply(this, ['PLAYER']);
 
+	this.info = g_playerInfo['PLAYER'];
+
+	this.HP = 20;
+	this.maxHP = 20;
+	this.XP = 0;
+	this.nextLevel = 100;
+
+	this.LVL = 1;
+	this.STR = 1;
+	this.DEF = 1;
+
+	this.weapon = g_weaponInfo['SWORD'];
+	this.armor = g_armorInfo['SKIN'];
+		
+	// center the screen on the player
+	g_gameObjectManager.xOffset = this.x - HALF_SIZE;
+	g_gameObjectManager.yOffset = this.y - HALF_SIZE;
+}
+
+Player.prototype =
+{
 	// characteristics
-	this.LVL = 0;
+	LVL : null,
+	nextLevel : null,
 
 	// inventory
-	this.inv_weapons = null;
-	this.inv_armors = null;
-	this.inv_misc = null;
+	inv_weapons : null,
+	inv_armors : null,
+	inv_misc : null,
 
-	this.initPlayer = function()
-	{
-		this.info = g_playerInfo['PLAYER'];
-
-		this.initCreature('PLAYER');
-
-		this.HP = 15;
-		this.maxHP = 15;
-		this.XP = 0;
-		this.nextLevel = 100;
-
-		this.LVL = 1;
-		this.STR = 1;
-		this.DEF = 1;
-
-		this.weapon = g_weaponInfo['SWORD'];
-		this.armor = g_armorInfo['SKIN'];
-		
-		// center the screen on the player
-		g_gameObjectManager.xOffset = this.x - HALF_SIZE;
-		g_gameObjectManager.yOffset = this.y - HALF_SIZE;
-
-		return this;
-	};
-
-	this.destroyPlayer = function()
+	destroyPlayer : function()
 	{
 		this.destroyCreature();
-	};
+	},
 
-	this.winXP = function(XP)
+	winXP : function(XP)
 	{
 		this.XP += XP;
 		
@@ -53,9 +49,9 @@ function Player()
 		}
 	
 		updateAllUI();
-	};
+	},
 
-	this.levelUp = function()
+	levelUp : function()
 	{
 		this.XP = this.XP % this.nextLevel;
 		this.nextLevel = 100;
@@ -67,14 +63,14 @@ function Player()
 		this.DEF += 1;
 
 		writeMessage('You level up!', 'GOOD_NEWS'); // EVERYONE!
-	};
+	},
 
-	this.getName = function()
+	getName : function()
 	{
 		return 'You';
-	};
+	},
 
-	this.keyDown = function(event)
+	keyDown : function(event)
 	{
 		var xOld = this.x;
 		var yOld = this.y;
@@ -126,7 +122,7 @@ function Player()
 
 			g_gameObjectManager.turn++;
 		}
-	};
-}
+	}
+};
 
-Player.prototype = new Creature;
+extend(Player, Creature);
