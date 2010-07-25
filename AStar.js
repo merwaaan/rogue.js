@@ -21,7 +21,7 @@ AStar.prototype =
         {
             // transfer the best tile from the open list to the closed list
             current = this.getBestTile(this.open);
-            this.removeTile(current, this.open);
+            this.open.removeObject(current);
             this.closed.push(current);
 
             // stop the search if we reach the target tile
@@ -40,10 +40,10 @@ AStar.prototype =
                         var neighbor = g_level.getTile(current.x + x, current.y + y);
 
                         // if the neighbor exists, is walkable and is not in the closed list
-                        if(neighbor != undefined && neighbor.isWalkable() && !this.inList(neighbor, this.closed))
+                        if(neighbor != undefined && neighbor.isWalkable() && !this.closed.containsObject(neighbor))
                         {
                             // if the neighbor is not already present in the open list, add it
-                            if(!this.inList(neighbor, this.open))
+                            if(!this.open.containsObject(neighbor))
                             {
                                 // calculate the neighbor score
                                 neighbor.parent = current;
@@ -103,32 +103,6 @@ AStar.prototype =
         }
 
         return list[iBest];
-    },
-
-    removeTile : function(tile, list)
-    {
-        for(var i = 0; i < list.length; i++)
-        {
-            if(tile.equals(list[i]))
-            {
-                list.splice(i, 1);
-
-                return;
-            }
-        }
-    },
-
-    inList : function(tile, list)
-    {
-        for(var i = 0; i < list.length; i++)
-        {
-            if(tile.x == list[i].x && tile.y == list[i].y)
-            {
-                return true;
-            }
-        }
-
-        return false;
     },
 
     getCost : function(tileFrom, tileTo)

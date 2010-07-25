@@ -216,6 +216,9 @@ function gameOver()
     $('#wall').append('Your quest lasted for ' + g_gameObjectManager.turn + ' turns');
 }
 
+// ARRAY
+
+// Array Remove - By John Resig (MIT Licensed)
 Array.prototype.remove = function(from, to)
 {
     var rest = this.slice((to || from) + 1 || this.length);
@@ -234,8 +237,20 @@ Array.prototype.removeObject = function(object)
             break;
         }
     }
-}
+};
 
+Array.prototype.containsObject = function(object)
+{
+   for(var i = 0; i < this.length; i++)
+   {
+      if(this[i] === object)
+      {
+         return true;
+      }
+   }
+
+   return false;
+};
 
 // INHERITANCE
 
