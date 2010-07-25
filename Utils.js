@@ -17,6 +17,12 @@ function getRandomFromList(list)
 
 // DRAWING
 
+/** @return the 2d canvas context for drawing */
+function getCanvasContext()
+{
+    return document.getElementById('canvas').getContext('2d');
+}
+
 /** @return the model as an array [char, color] */
 function getModel(character, color)
 {
@@ -259,3 +265,89 @@ function extend(child, superclass)
     child.prototype.__proto__ = superclass.prototype;
 }
 
+// INTERACTIVE DEBUGGING
+
+/** @effect outputs player position to the console */
+function playerPos()
+{
+    console.log("Player is at " + g_player.x + ',' + g_player.y);
+}
+
+/**
+ * @requires x0, y0, x1 and y1 are canvas coordinates
+ * @effect draw a blue line from (x0,y0) to (x1,y1) on the canvas
+ */
+function drawLine(x0, y0, x1, y1)
+{
+    var ctx = getCanvasContext();
+    ctx.strokeStyle = 'blue';
+    // so much code for just one line ...
+    ctx.beginPath();
+    ctx.moveTo(x0, y0);
+    ctx.lineTo(x1, y1);
+    ctx.stroke();
+    ctx.closePath();
+}
+
+/**
+ * @requires points is an array of level coordinates
+ * @effect highlight an array of points by drawing a rectangle
+ * around each one 
+ */
+function highlightPoints(points)
+{
+    var ctx = getCanvasContext();
+    ctx.strokeStyle = 'gold';
+
+    for (var i = 0; i < points.length; ++i)
+    {
+        // the rectangles are the size of the font
+        // the '+2' is a graphical shift for better visual alignment which
+        // I got from trial and error
+        var cxy = levelToCanvasCoord(points[i][0], points[i][1]);
+        ctx.strokeRect(cxy[0], cxy[1] + 2, FONT_WIDTH, FONT_HEIGHT);
+    }
+}
+
+/**
+ * @requires x and y are level coordinates
+ * @effect draw a rectangle around each point on the path from the
+ * player to (x,y)
+ */
+function highlightPathTo(x, y)
+{
+    highlightPoints(bresenhamLinePoints(g_player.x, g_player.y, x, y));
+}
+
+/**
+ * @requires cx and cy are canvas coordinates
+ * @return the level coordinates [x, y] which correspond to the given
+ * canvas coordinates
+ */
+function canvasToLevelCoord(cx, cy)
+{
+    // we add 1 to y to be consistent with levelToCanvasCoord
+    return [Math.floor(cx / FONT_WIDTH + g_gameObjectManager.xOffset),
+            Math.floor(cy / FONT_HEIGHT + g_gameObjectManager.yOffset + 1)];
+}
+
+/**
+ * @requires x, y are level coordinates
+ * @return the canvas coordinates [cx, cy] which correspond to the
+ * given level coordinates
+ */
+function levelToCanvasCoord(x, y)
+{
+    // we substract 1 from y otherwise we end up with the wrong tile
+    return [(x - g_gameObjectManager.xOffset) * FONT_WIDTH,
+            (y - g_gameObjectManager.yOffset - 1) * FONT_HEIGHT];
+}
+
+/** @effect binds left mouse click to highlightPathTo(click.x, click.y) */
+function debugShowPathTo()
+{
+    document.getElementById('canvas').addEventListener('click', function(e) {
+        var xy = canvasToLevelCoord(e.offsetX, e.offsetY);
+        highlightPathTo(xy[0], xy[1]);
+    }, false);
+}
