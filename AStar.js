@@ -105,19 +105,6 @@ AStar.prototype =
         return list[iBest];
     },
 
-    removeTile : function(tile, list)
-    {
-        for(var i = 0; i < list.length; i++)
-        {
-            if(tile.equals(list[i]))
-            {
-                list.splice(i, 1);
-
-                return;
-            }
-        }
-    },
-
     getCost : function(tileFrom, tileTo)
     {
         return tileFrom.c + (tileFrom.x == tileTo.x || tileFrom.y == tileTo.y ? 10 : 14);

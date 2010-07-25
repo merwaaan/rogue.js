@@ -163,7 +163,7 @@ Array.prototype.removeObject = function(object)
     {
         if(this[i] === object)
         {
-            this.remove(i, i);
+            this.remove(i);
             break;
         }
     }
