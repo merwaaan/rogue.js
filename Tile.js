@@ -18,10 +18,6 @@ Tile.prototype =
     // data from the dictionnary
     info : null,
 
-    // apparence
-    light : false,
-    explored : false,
-
     // held creature (player or monster)
     creature : null,
 

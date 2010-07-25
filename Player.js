@@ -15,6 +15,8 @@ function Player()
 
     this.weapon = g_weaponInfo['SWORD'];
     this.armor = g_armorInfo['SKIN'];
+
+    this.seenTiles = new Array();
     
     // center the screen on the player
     g_gameObjectManager.xOffset = this.x - HALF_SIZE;
@@ -171,8 +173,6 @@ Player.prototype =
      */
     addSeenTile : function(tile)
     {
-        if (this.seenTiles === null)
-            this.seenTiles = new Array();
         if (this.seenTiles[tile.x] === undefined)
             this.seenTiles[tile.x] = new Array();
         this.seenTiles[tile.x][tile.y] = true;
@@ -188,7 +188,7 @@ Player.prototype =
      */
     hasSeenTile : function(tile)
     {
-        return this.seenTiles && this.seenTiles[tile.x] && this.seenTiles[tile.x][tile.y];
+        return this.seenTiles[tile.x] && this.seenTiles[tile.x][tile.y];
     }
 };
 
