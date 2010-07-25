@@ -8,6 +8,9 @@
  * - color : the CSS color of the character
  */
 
+// color to draw the tiles in the fog of war in
+const FOW_COLOR = 'rgb(100,100,100)';
+
 /**
  * walkable : true if creature can go through this type of tile
  */

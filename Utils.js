@@ -121,10 +121,80 @@ function writeMessage(message, type)
 
 // LIGHTING
 
-function castLightRay()
+/**
+ * @requires x0, y0, x1 and y1 to be integers
+ * @return the array of all the [x, y] points the bresenham line going
+ *    from (x0, y0) to (x1, y1) pass through, in order.
+ *    That is, if we do :
+ *    var p = bresenhamLinePoints(x0, y0, x1, y1);
+ *    then the following statements are true :
+ *    p[0][0] == x0; p[0][1] == y0;
+ *    p[p.length-1][0] == x1; p[p.length-1][1] == y1;
+ */
+function bresenhamLinePoints(x0, y0, x1, y1)
 {
+    // This is the "optimized" Bresenham's algorithm from :
+    // http://en.wikipedia.org/wiki/Bresenham's_line_algorithm#Optimization (25/07/2010)
+    // but adapted to return the points in order
 
-};
+    // We could use a fancy generator instead of returning an
+    // whole array, and minimize overhead, but generators are only
+    // available in Mozilla's Javascript implementation.
+
+    // the array of points to return
+    var points = new Array();
+
+    // we need to know if the line's slope is above or below 1,
+    // that is, if the line is above or below the diagonal y = x
+    var steep = Math.abs(y1 - y0) > Math.abs(x1 - x0);
+
+    // if the line is above, take its symmetrical along the y = x axis
+    if (steep)
+    {
+        // swap x and y
+        var t;
+        t = x0, x0 = y0, y0 = t;
+        t = x1, x1 = y1, y1 = t;
+    }
+
+    // now the line is going to the right, and increases faster in x
+    // than in y
+    // we just have to remember we swapped x and y when steep == true,
+    // and add the points accordingly
+
+    var deltax = Math.abs(x1 - x0);
+    var deltay = Math.abs(y1 - y0);
+    var error = deltax >> 1;  // error = floor(deltax / 2)
+    var xstep = x0 < x1 ? 1 : -1;
+    var ystep = y0 < y1 ? 1 : -1;
+    var y = y0;
+    
+    // go along the line, and add each point
+    for (var x = x0; x != x1; x += xstep)
+    {
+        // if steep, remember we swapped x and y
+        if (steep)
+            points[points.length] = [y, x];
+        else
+            points[points.length] = [x, y];
+
+        // increase y when x has increased enough
+        error -= deltay;
+        if (error < 0)
+        {
+            y += ystep;
+            error += deltax;
+        }
+    }
+
+    // add the end point
+    if (steep)
+        points[points.length] = [y, x];
+    else
+        points[points.length] = [x, y];
+
+    return points;
+}
 
 // MISC.
 

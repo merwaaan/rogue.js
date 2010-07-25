@@ -32,6 +32,9 @@ Player.prototype =
     inv_armors : null,
     inv_misc : null,
 
+    // tile memory
+    seenTiles : null,
+
     destroyPlayer : function()
     {
         this.destroyCreature();
@@ -156,6 +159,36 @@ Player.prototype =
 
             g_gameObjectManager.turn++;
         }
+    },
+
+    /**
+     * Commit the given tile to the player memory. A subsequent call
+     * to this.hasSeenTile(tile) will return true.
+     *
+     * @requires tile is defined and not null
+     * @modifies this.seenTiles
+     * @effect add tile to this.seenTiles
+     */
+    addSeenTile : function(tile)
+    {
+        if (this.seenTiles === null)
+            this.seenTiles = new Array();
+        if (this.seenTiles[tile.x] === undefined)
+            this.seenTiles[tile.x] = new Array();
+        this.seenTiles[tile.x][tile.y] = true;
+    },
+
+    /**
+     * Whether this player has seen the given tile or not. To add a
+     * tile to this player memory, use this.addSeenTile.
+     *
+     * @requires tile is defined and not null
+     * @return true iff this player saw the tile :
+     *         this.seenTiles.contains(tile)
+     */
+    hasSeenTile : function(tile)
+    {
+        return this.seenTiles && this.seenTiles[tile.x] && this.seenTiles[tile.x][tile.y];
     }
 };
 

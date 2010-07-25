@@ -35,27 +35,40 @@ Level.prototype =
         // clear the canvas
         ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
         ctx.font = DRAW_FONT;
-
+        
         // cx and cy are the canvas coordinate we will draw text at
         // they increase with the font width and height respectively
         for(var y = 0, cy = 0; y < SIZE; y++, cy += FONT_HEIGHT)
         {
             for(var x = 0, cx = 0; x < SIZE; x++, cx += FONT_WIDTH)
             {
+                // get the tile
                 var tile = this.getTile(x + xOffset, y + yOffset);
-                var sprite;
 
-                // imaginary tiles, outside of the map
-                if (tile == undefined)
-                    sprite = ['U', 'white'];
-                // let the tile resolve what should be drawn
-                else
-                    sprite = tile.sprite();
+                // do not draw undefined tiles
+                if (tile != undefined)
+                {
+                    // let the tile resolve what should be drawn
+                    var sprite = tile.sprite();
 
-                // change the fill color
-                ctx.fillStyle = sprite[1];
-                // draw the character with current color
-                ctx.fillText(sprite[0], cx, cy);
+                    // if the player can see the tile, draw it
+                    // otherwise, if the player previously saw the
+                    // tile, grey it out (fog of war)
+                    // otherwise, don't draw it
+                    if (g_player.canSeeTile(tile))
+                    {
+                        g_player.addSeenTile(tile);
+                        ctx.fillStyle = sprite[1];
+                        // draw the character with current fillStyle
+                        ctx.fillText(sprite[0], cx, cy);
+                    }
+                    else if (g_player.hasSeenTile(tile))
+                    {
+                        ctx.fillStyle = FOW_COLOR;
+                        // draw the character with current fillStyle
+                        ctx.fillText(sprite[0], cx, cy);
+                    }
+                }
             }
         }
     },

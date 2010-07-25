@@ -102,6 +102,53 @@ Creature.prototype =
         }
 
         this.destroyCreature();
+    },
+
+    /**
+     * Whether or not this creature can see the given tile. A creature
+     * can see a tile if there are no objects it can't see through on
+     * the line from its position to the tile. If the creature can't
+     * see through the tile itself, it can still see the tile.
+     * Currently, the line used is Bresenham's.
+     *
+     * @requires tile is defined and not null
+     * @return true iff this creature can see the tile
+     */
+    canSeeTile : function(tile)
+    {
+        // get all the points from this creature to the tile
+        var points = bresenhamLinePoints(this.x, this.y, tile.x, tile.y);
+        var x, y;
+        var tileAtPoint;
+        
+        // we just need to check all the points minus the tile
+        for (var i = 0; i < points.length - 1; ++i)
+        {
+            x = points[i][0]; y = points[i][1];
+            tileAtPoint = g_level.getTile(x, y);
+
+            // if any obstacle is in the way, we can't see the tile
+            if (!this.canSeeThroughTile(tileAtPoint))
+                return false;
+        }
+       
+        // if there was no obstacle, then the creature can see the tile, even
+        // though it might not see through it.
+        return true;
+    },
+
+    /**
+     * Whether or not this creature can see through the tile.
+     *
+     * @requires tile defined and not null
+     * @return true iff this creature can see through the tile
+     */
+    canSeeThroughTile : function(tile)
+    {
+        // walls are the default light-ender
+        // other fun mechanisms could interact with this, like magic,
+        // status effects, special monsters ...
+        return tile.type != 'WALL';
     }
 };
 
