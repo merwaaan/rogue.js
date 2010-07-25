@@ -9,7 +9,7 @@
  */
 
 // color to draw the tiles in the fog of war in
-const FOW_COLOR = 'rgb(100,100,100)';
+const FOW_COLOR = 'rgb(80,80,80)';
 
 /**
  * walkable : true if creature can go through this type of tile
@@ -26,7 +26,7 @@ var g_tileInfo =
     'FLOOR' :
     {
         'char' : '.',
-        'color' : 'gray',
+        'color' : 'white',
         'walkable' : true
     }, 
     'WALL' :

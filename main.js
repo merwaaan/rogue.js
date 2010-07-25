@@ -25,5 +25,4 @@ window.onload = function()
    g_gameObjectManager.step();
 
    buildStatusFrame();
-   updateAllUI();
 }

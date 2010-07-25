@@ -7,9 +7,6 @@ function Creature(type)
 
     this.HP = 15;
     this.maxHP = 15;
-
-    this.weapon = g_weaponInfo['SWORD'];
-    this.armor = g_armorInfo['SKIN'];
 }
 
 Creature.prototype =
@@ -40,7 +37,7 @@ Creature.prototype =
     
     attack : function(victim)
     {
-        var damage = this.STR + (this.weapon != null ? this.weapon.PWR : 0);
+        var damage = this.STR + (this.weapon != null ? this.weapon.getDamage() : 0);
 
         victim.takeDamage(damage, this);
     },

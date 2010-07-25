@@ -13,12 +13,12 @@ function Player()
     this.STR = g_levelingInfo[this.LVL]['STR'];
     this.DEF = g_levelingInfo[this.LVL]['DEF'];
 
-    this.weapon = g_weaponInfo['SWORD'];
-    this.armor = g_armorInfo['SKIN'];
+    this.weapon = new Weapon(null, null, 'SWORD', this);
+    this.armor = new Armor(null, null, 'SKIN', this);
 
     this.inventory = new Inventory();
-    this.inventory.add('WEAPON', 'SWORD');
-    this.inventory.add('ARMOR', 'SKIN');
+    this.inventory.add('WEAPON', this.weapon);
+    this.inventory.add('ARMOR', this.armor);
 
     this.seenTiles = new Array();
     

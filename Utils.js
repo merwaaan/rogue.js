@@ -92,13 +92,15 @@ function buildStatusFrame()
    {
       $('#info #equipment').append('<span id="' + s[i] + '">' + s[i] + ' <span id="' + s[i] + '_label"></span></span>');
    }
+
+   updateAllUI();
 }
 
 function buildInventoryFrame()
 {
    $('#info').empty();
    
-   $('#info').append('<div id="inventory"><div id="objects"></div><div id="details"></div></div>');
+   $('#info').append('<div id="inventory"><div id="items"></div><div id="details"></div></div>');
 }
 
 function updateHP()
@@ -130,12 +132,12 @@ function updateDEF()
 
 function updateWEAPON()
 {
-    $('#WEAPON_label').text(g_player.weapon['name'] + ' (+' + g_player.weapon['PWR'] + ')');
+    $('#WEAPON_label').text(g_player.weapon.getName() + ' (+' + g_player.weapon.getDamage() + ')');
 }
 
 function updateARMOR()
 {
-    $('#ARMOR_label').text(g_player.armor['name'] + ' (+' + g_player.armor['PWR'] + ')');
+    $('#ARMOR_label').text(g_player.armor.getName() + ' (+' + g_player.armor.getProtection() + ')');
 }
 
 function updateAllUI()
