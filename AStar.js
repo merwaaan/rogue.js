@@ -13,6 +13,11 @@ AStar.prototype =
         this.open = new Array();
         this.closed = new Array();
 
+        if(diagonal == undefined)
+        {
+           diagonal = true;
+        }
+
         // put the starting tile in the open list
         var current = tileStart;
         this.open.push(current);

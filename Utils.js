@@ -364,6 +364,26 @@ function highlightPoints(points)
 }
 
 /**
+ * @requires tiles is an array of level tiles
+ * @effect highlight an array of tiles by drawing a rectangle
+ * around each one 
+ */
+function highlightTiles(tiles)
+{
+    var ctx = getCanvasContext();
+    ctx.strokeStyle = 'gold';
+
+    for (var i = 0; i < tiles.length; ++i)
+    {
+        // the rectangles are the size of the font
+        // the '+2' is a graphical shift for better visual alignment which
+        // I got from trial and error
+        var cxy = levelToCanvasCoord(tiles[i].x, tiles[i].y);
+        ctx.strokeRect(cxy[0], cxy[1] + 2, FONT_WIDTH, FONT_HEIGHT);
+    }
+}
+
+/**
  * @requires x and y are level coordinates
  * @effect draw a rectangle around each point on the path from the
  * player to (x,y)
@@ -371,6 +391,19 @@ function highlightPoints(points)
 function highlightPathTo(x, y)
 {
     highlightPoints(bresenhamLinePoints(g_player.x, g_player.y, x, y));
+}
+
+/**
+ * @requires x and y are level coordinates
+ * @effect draw a rectangle around each point on the path from the
+ * player to (x,y)
+ */
+function highlightAStarTo(x, y)
+{
+   var from = g_level.getTile(g_player.x, g_player.y);
+   var to = g_level.getTile(x, y);
+
+   highlightTiles(new AStar().getPath(from, to));
 }
 
 /**
@@ -403,5 +436,14 @@ function debugShowPathTo()
     document.getElementById('canvas').addEventListener('click', function(e) {
         var xy = canvasToLevelCoord(e.offsetX, e.offsetY);
         highlightPathTo(xy[0], xy[1]);
+    }, false);
+}
+
+/** @effect binds left mouse click to highlightAStarTo(click.x, click.y) */
+function debugShowAStarTo()
+{
+    document.getElementById('canvas').addEventListener('click', function(e) {
+        var xy = canvasToLevelCoord(e.offsetX, e.offsetY);
+        highlightAStarTo(xy[0], xy[1]);
     }, false);
 }
