@@ -6,25 +6,7 @@ function GameObjectManager()
 
     this.applicationManager = new ApplicationManager();
 
-    var keyHandler = function(event)
-    {
-        clearMessages();
-
-        g_gameObjectManager.keyDown(event);
-        g_gameObjectManager.step();
-
-        event.preventDefault();
-    };
-
-    // Browsers have different behaviors regarding repeating
-    // keys and special keys like arrows. Short version,
-    // Chrome repeat the keyDown event for repeating arrow
-    // keys, while FF repeat the keyPress event.
-    // Long version : http://unixpapa.com/js/key.html
-    if ($.browser.webkit)
-        document.onkeydown = keyHandler;
-    else
-        document.onkeypress = keyHandler;
+    setKeyHandler(this.keyHandler_game);
 }
 
 GameObjectManager.prototype =
@@ -69,8 +51,18 @@ GameObjectManager.prototype =
         {
             if(this.gameObjects[i].keyDown)
             {
-                this.gameObjects[i].keyDown(event);
+               this.gameObjects[i].keyDown(event);
             }
         }
-    }
+    },
+    
+   keyHandler_game : function(event)
+   {
+       clearMessages();
+
+       g_gameObjectManager.keyDown(event);
+       g_gameObjectManager.step();
+
+       event.preventDefault();
+   }
 }

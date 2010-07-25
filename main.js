@@ -16,13 +16,14 @@ var g_player = null;
 
 window.onload = function()
 {
-    // set the canvas dimension dynamically
-    var canvas = document.getElementById('canvas');
-    canvas.width = CANVAS_WIDTH;
-    canvas.height = CANVAS_HEIGHT;
+   // set the canvas dimension dynamically
+   var canvas = document.getElementById('canvas');
+   canvas.width = CANVAS_WIDTH;
+   canvas.height = CANVAS_HEIGHT;
 
-    g_gameObjectManager = new GameObjectManager();
-    g_gameObjectManager.step();
+   g_gameObjectManager = new GameObjectManager();
+   g_gameObjectManager.step();
 
-    updateAllUI();
+   buildStatusFrame();
+   updateAllUI();
 }

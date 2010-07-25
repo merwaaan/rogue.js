@@ -36,3 +36,19 @@ body
 {
     display : block;
 }
+
+#inventory #objects
+{
+   float : left;
+}
+
+#inventory #objects li
+{
+   list-style-type : none;
+   margin-left : 10px;
+}
+
+#inventory #details
+{
+   float : left;
+}
