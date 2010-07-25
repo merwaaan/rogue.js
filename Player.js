@@ -16,6 +16,10 @@ function Player()
     this.weapon = g_weaponInfo['SWORD'];
     this.armor = g_armorInfo['SKIN'];
 
+    this.inventory = new Inventory();
+    this.inventory.add('WEAPON', 'SWORD');
+    this.inventory.add('ARMOR', 'SKIN');
+
     this.seenTiles = new Array();
     
     // center the screen on the player
@@ -30,9 +34,7 @@ Player.prototype =
     nextLevel : null,
 
     // inventory
-    inv_weapons : null,
-    inv_armors : null,
-    inv_misc : null,
+    inventory : null,
 
     // tile memory
     seenTiles : null,
@@ -85,6 +87,10 @@ Player.prototype =
         // numpad only works in Chrome for the moment
         switch(event.keyCode)
         {
+        // i
+        case 73:
+            this.inventory.open();
+            return;
         // left arrow
         case 37:
         // numpad 4

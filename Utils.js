@@ -56,6 +56,45 @@ function drawBar(element, value, max)
 
 // UI
 
+function buildStatusFrame()
+{
+   $('#info').empty();
+   
+   // "status" part
+   $('#info').append('<div id="status"></div>');
+   
+   var s = ['HP', 'XP']; 
+   for(var i = 0; i < s.length; i++)
+   {
+	$('#info #status').append('<span id="' + s[i] + '">' + s[i] + ' <span id="' + s[i] + '_bar"></span> <span id="' + s[i] + '_label"></span>');
+   }
+   
+   // "characteristics" part
+   $('#info').append('<div id="characteristics"></div>');
+    
+   s = ['LVL', 'STR', 'DEF'];
+   for(var i = 0; i < s.length; i++)
+   {
+      $('#info #characteristics').append('<span id="' + s[i] + '">' + s[i] + ' <span id="' + s[i] + '_label"></span></span>');                         
+   }
+   
+   // "equipment" part
+   $('#info').append('<div id="equipment"></div>');
+    
+   s = ['WEAPON', 'ARMOR'];
+   for(var i = 0; i < s.length; i++)
+   {
+      $('#info #equipment').append('<span id="' + s[i] + '">' + s[i] + ' <span id="' + s[i] + '_label"></span></span>');
+   }
+}
+
+function buildInventoryFrame()
+{
+   $('#info').empty();
+   
+   $('#info').append('<div id="inventory"><div id="objects"></div><div id="details"></div></div>');
+}
+
 function updateHP()
 {
     drawBar($('#HP_bar'), g_player.HP, g_player.maxHP);
@@ -214,6 +253,19 @@ function gameOver()
 {
     $('#wall').append('----- GAME OVER -----<br/><br/>');
     $('#wall').append('Your quest lasted for ' + g_gameObjectManager.turn + ' turns');
+}
+
+function setKeyHandler(keyHandler)
+{
+    // Browsers have different behaviors regarding repeating
+    // keys and special keys like arrows. Short version,
+    // Chrome repeat the keyDown event for repeating arrow
+    // keys, while FF repeat the keyPress event.
+    // Long version : http://unixpapa.com/js/key.html
+    if ($.browser.webkit)
+        document.onkeydown = keyHandler;
+    else
+        document.onkeypress = keyHandler;
 }
 
 // ARRAY
