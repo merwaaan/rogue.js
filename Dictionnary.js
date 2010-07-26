@@ -96,7 +96,7 @@ var g_armorInfo =
  * - duration : maximum duration in turn of a progressive alteration
  */
 
-var g_edibleItemInfo =
+var g_foodInfo =
 {
     'BREAD' :
     {
@@ -155,7 +155,7 @@ var g_monsterInfo =
 // keep all the item dictionnaries and their respective categories (mainly used in the player's inventory)
 // [[dictionnary, category name], ...]
 
-var g_itemsCategories = [[g_weaponInfo, 'WEAPON'], [g_armorInfo, 'ARMOR'], [g_edibleItemInfo, 'EDIBLE']];
+var g_itemsCategories = [[g_weaponInfo, 'WEAPON'], [g_armorInfo, 'ARMOR'], [g_foodInfo, 'FOOD']];
 
 var g_playerInfo =
 {

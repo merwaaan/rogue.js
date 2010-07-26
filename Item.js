@@ -35,7 +35,7 @@ Item.prototype =
    },
 
    /**
-    * return a string representing the name of the category that
+    * returns a string representing the name of the category that
     * the current item belongs to. This information comes from g_itemsCategories.
     *
     */

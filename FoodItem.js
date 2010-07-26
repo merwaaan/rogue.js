@@ -1,13 +1,13 @@
-function EdibleItem(x, y, type, owner)
+function FoodItem(x, y, type, owner)
 {
     Item.call(this, x, y, type, owner);
 
-    this.info = g_edibleItemInfo[type];
+    this.info = g_foodInfo[type];
 }
 
-EdibleItem.prototype =
+FoodItem.prototype =
 {
-    destroyEdibleItem : function()
+    destroyFoodItem : function()
     {
         this.destroyItem();
     },
@@ -38,4 +38,4 @@ EdibleItem.prototype =
     }
 };
 
-extend(EdibleItem, Item);
+extend(FoodItem, Item);

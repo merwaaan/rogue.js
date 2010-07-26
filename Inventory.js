@@ -2,7 +2,7 @@ function Inventory()
 {
    this.weapons = new Array();
    this.armors = new Array();
-   this.edibleItems = new Array();
+   this.food = new Array();
 
    this.shortcuts = new Array();
 }
@@ -12,7 +12,7 @@ Inventory.prototype =
    // inventory content
    weapons : null,
    armors : null,
-   edibleItems : null,
+   food : null,
 
    /**
     * Array listing all of the shortcuts and the items associated to
@@ -32,9 +32,9 @@ Inventory.prototype =
       {
          this.armors.push(item);
       }
-      else if(category == 'EDIBLE')
+      else if(category == 'FOOD')
       {
-         this.edibleItems.push(item);
+         this.food.push(item);
       }
    },
 
@@ -48,9 +48,9 @@ Inventory.prototype =
       {
          this.armors.removeObject(item);
       }
-      else if(category == 'EDIBLE')
+      else if(category == 'FOOD')
       {
-         this.edibleItems.removeObject(item);
+         this.food.removeObject(item);
       }
    },
             
@@ -60,7 +60,7 @@ Inventory.prototype =
 
       // list of all the categories of items possibly in the inventory
       // [[category display name, local array], ...]
-      var categories = [['Weapons', this.weapons], ['Armors', this.armors], ['Edible items', this.edibleItems]];
+      var categories = [['Weapons', this.weapons], ['Armors', this.armors], ['Food', this.food]];
 
       // ASCII code of the key used to select an item
       var keyCodeAscii = 97;

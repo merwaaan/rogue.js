@@ -20,6 +20,7 @@ function Player()
    this.inventory.add('WEAPON', this.weapon);
    this.inventory.add('ARMOR', this.armor);
    this.inventory.add('WEAPON', new Weapon(null, null, 'SPEAR', this));
+   this.inventory.add('FOOD', new FoodItem(null, null, 'BREAD', this));
 
    this.seenTiles = new Array();
     
