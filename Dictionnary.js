@@ -47,12 +47,16 @@ var g_weaponInfo =
     {
         'name' : 'sword',
         'desc' : 'A big sword',
+        'char' : 't',
+        'color' : 'blue',
         'PWR' : 0
     },
     'SPEAR' :
     {
         'name' : 'spear',
         'desc' : 'A long shining spear',
+        'char' : 'l',
+        'color' : 'blue',
         'PWR' : 1
     }
 };
@@ -67,12 +71,16 @@ var g_armorInfo =
     {
         'name' : 'wolf skin',
         'desc' : 'A glorious wolf skin',
+        'char' : 's',
+        'color' : 'blue',
         'PWR' : 0
     },
     'MAIL' :
     {
         'name' : 'silver mail',
         'desc' : 'A shiny mail',
+        'char' : 'm',
+        'color' : 'blue',
         'PWR' : 3
     }
 };

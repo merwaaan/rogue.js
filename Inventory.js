@@ -89,6 +89,7 @@ Inventory.prototype =
          }
       }
 
+      // record the inventory, so that it can be accessed within the key handler
       var inv = this;
 
       // configure and set the current key handler
@@ -97,9 +98,7 @@ Inventory.prototype =
          // ESCAPE
          if(event.keyCode == 27)
          {
-            buildStatusFrame();
-
-            setKeyHandler(g_gameObjectManager.keyHandler_game);
+            inv.close();
          }
          // if the used shorcut is associated with an item, open the detail tab
          else if(inv.shortcuts[event.keyCode])
@@ -122,23 +121,38 @@ Inventory.prototype =
       // temporary version for illustration purposes only
       $('#inventory #details').append('<br/><br/>drop (d)');
 
+      // record the inventory, so that it can be accessed within the key handler
+      var inv = this;
+
       // configure and set the current key handler
       this.keyHandler_details = function(event)
       {
          // ESCAPE
          if(event.keyCode == 27)
          {
-            buildStatusFrame();
-
-            setKeyHandler(g_gameObjectManager.keyHandler_game);
+            inv.close();
          }
-        
+         // d
+         else if(event.keyCode == 68)
+         {
+            inv.close();
+            item.drop(g_player.x, g_player.y);
+            inv.remove('WEAPON', item);
+         }
+                 
          event.preventDefault();
-      }
+      };
 
       setKeyHandler(this.keyHandler_details); 
    },
 
+   close : function()
+   {
+      buildStatusFrame();
+
+      setKeyHandler(g_gameObjectManager.keyHandler_game);
+   },
+              
    keyHandler_items : null,
    
    keyHandler_details : null
