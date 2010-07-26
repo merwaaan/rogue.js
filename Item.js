@@ -34,21 +34,20 @@ Item.prototype =
       g_level.getTile(x, y).item = this;
    },
 
+   /**
+    * return a string representing the name of the category that
+    * the current item belongs to. This information comes from g_itemsCategories.
+    *
+    */
    getCategory : function()
    {
-      if(g_weaponInfo[this.type])
+      for(var i = 0; i < g_itemsCategories.length; i++)
       {
-         return 'WEAPON';
+         if(g_itemsCategories[i][0][this.type])
+         {
+            return g_itemsCategories[i][1];
+         }
       }
-      else if(g_armorInfo[this.type])
-      {
-         return 'ARMOR';
-      }
-      else if(g_edibleItemInfo[this.type])
-      {
-         return 'EDIBLE';
-      }
-      // ...
    }
 };
 
