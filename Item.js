@@ -19,6 +19,9 @@ Item.prototype =
    {
       this.owner = creature;
 
+      // only works for @ at the moment
+      creature.inventory.add(this.getCategory(), this);
+
       g_level.getTile(this.x, this.y).item = null;
    },
 
@@ -29,6 +32,23 @@ Item.prototype =
 
       this.owner = null;
       g_level.getTile(x, y).item = this;
+   },
+
+   getCategory : function()
+   {
+      if(g_weaponInfo[this.type])
+      {
+         return 'WEAPON';
+      }
+      else if(g_armorInfo[this.type])
+      {
+         return 'ARMOR';
+      }
+      else if(g_edibleItemInfo[this.type])
+      {
+         return 'EDIBLE';
+      }
+      // ...
    }
 };
 

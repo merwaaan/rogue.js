@@ -92,6 +92,13 @@ Player.prototype =
         case 73:
             this.inventory.open();
             return;
+        // p
+        case 80:
+            if(g_level.getTile(this.x, this.y).item)
+            {
+               g_level.getTile(this.x, this.y).item.pickUp(this);
+            }
+            return;
         // left arrow
         case 37:
         // numpad 4

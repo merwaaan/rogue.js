@@ -137,7 +137,7 @@ Inventory.prototype =
          {
             inv.close();
             item.drop(g_player.x, g_player.y);
-            inv.remove('WEAPON', item);
+            inv.remove(item.getCategory(), item);
          }
                  
          event.preventDefault();
