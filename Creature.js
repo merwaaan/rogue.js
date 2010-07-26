@@ -144,18 +144,21 @@ Creature.prototype =
             var dy = this.y < tile.y ? -1 : 1;
             // three possibilities of floors adjacent to this wall in
             // the creature direction
-            var tile1 = g_level.getTile(tile.x + dx, tile.y);
-            var tile2 = g_level.getTile(tile.x, tile.y + dy);
-            var tile3 = g_level.getTile(tile.x + dx, tile.y + dy);
+            var nearTiles = [];
+            // push the diagonal possibility first
+            nearTiles.push(g_level.getTile(tile.x + dx, tile.y + dy));
+            nearTiles.push(g_level.getTile(tile.x + dx, tile.y));
+            nearTiles.push(g_level.getTile(tile.x, tile.y + dy));
+
 
             // the creature can see the wall if it can see the all the
             // floors adjacent to it
-            if (tile1.type == 'FLOOR')
-                canSee = this.canSeeTile(tile1);
-            else if (tile2.type == 'FLOOR')
-                canSee = this.canSeeTile(tile2);
-            else if (tile3.type == 'FLOOR')
-                canSee = this.canSeeTile(tile3);
+            for (var i = 0, t; i < nearTiles.length; ++i)
+            {
+                t = nearTiles[i];
+                if (t && t.type == 'FLOOR')
+                    canSee = this.canSeeTile(t);
+            }
         }
 
         return canSee;
