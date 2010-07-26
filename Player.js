@@ -1,30 +1,31 @@
 function Player()
 {
-    Creature.apply(this, ['PLAYER']);
+   Creature.apply(this, ['PLAYER']);
 
-    this.info = g_playerInfo['PLAYER'];
+   this.info = g_playerInfo['PLAYER'];
 
-    this.LVL = 1;
+   this.LVL = 1;
 
-    this.HP = g_levelingInfo[this.LVL]['HP'];
-    this.maxHP = g_levelingInfo[this.LVL]['HP'];
-    this.XP = 0;
+   this.HP = g_levelingInfo[this.LVL]['HP'];
+   this.maxHP = g_levelingInfo[this.LVL]['HP'];
+   this.XP = 0;
 
-    this.STR = g_levelingInfo[this.LVL]['STR'];
-    this.DEF = g_levelingInfo[this.LVL]['DEF'];
+   this.STR = g_levelingInfo[this.LVL]['STR'];
+   this.DEF = g_levelingInfo[this.LVL]['DEF'];
 
-    this.weapon = new Weapon(null, null, 'SWORD', this);
-    this.armor = new Armor(null, null, 'SKIN', this);
+   this.weapon = new Weapon(null, null, 'SWORD', this);
+   this.armor = new Armor(null, null, 'SKIN', this);
 
-    this.inventory = new Inventory();
-    this.inventory.add('WEAPON', this.weapon);
-    this.inventory.add('ARMOR', this.armor);
+   this.inventory = new Inventory();
+   this.inventory.add('WEAPON', this.weapon);
+   this.inventory.add('ARMOR', this.armor);
+   this.inventory.add('WEAPON', new Weapon(null, null, 'SPEAR', this));
 
-    this.seenTiles = new Array();
+   this.seenTiles = new Array();
     
-    // center the screen on the player
-    g_gameObjectManager.xOffset = this.x - HALF_SIZE;
-    g_gameObjectManager.yOffset = this.y - HALF_SIZE;
+   // center the screen on the player
+   g_gameObjectManager.xOffset = this.x - HALF_SIZE;
+   g_gameObjectManager.yOffset = this.y - HALF_SIZE;
 }
 
 Player.prototype =

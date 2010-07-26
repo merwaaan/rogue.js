@@ -70,7 +70,7 @@ Inventory.prototype =
          var currentCat = categories[i];
 
          // display the name of the current category
-         $('#inventory #items').append('<ul>' + currentCat[0] + '</ul>');
+         $('#inventory #items').append('<ul><span class="category">' + currentCat[0] + '</span></ul>');
 
          // display the content of the current category
          if(currentCat[1].length > 0)
@@ -115,7 +115,7 @@ Inventory.prototype =
    displayDetails : function(item)
    {
       // display basic information about the selected item
-      $('#inventory #details').append(item.getName() + '<br/>' + item.getDescription());
+      $('#inventory #details').append(item.getName() + ' : ' + item.getDescription());
 
       // display a list of possible actions depending on the item characteristics
       // temporary version for illustration purposes only
