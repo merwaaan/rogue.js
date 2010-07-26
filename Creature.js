@@ -117,6 +117,7 @@ Creature.prototype =
         var points = bresenhamLinePoints(this.x, this.y, tile.x, tile.y);
         var x, y;
         var tileAtPoint;
+        var canSee = true;
         
         // we just need to check all the points minus the tile
         for (var i = 0; i < points.length - 1; ++i)
@@ -126,12 +127,38 @@ Creature.prototype =
 
             // if any obstacle is in the way, we can't see the tile
             if (!this.canSeeThroughTile(tileAtPoint))
-                return false;
+                canSee = false;
         }
-       
+
         // if there was no obstacle, then the creature can see the tile, even
         // though it might not see through it.
-        return true;
+
+        // Fix for some walls not being seen due to the path the
+        // Bresenham's line took.
+        // We get around this by making walls seen whenever the floor
+        // next to it is seen.
+        if (!canSee && tile.type == 'WALL')
+        {
+            // get the floors between the wall and the creature
+            var dx = this.x < tile.x ? -1 : 1;
+            var dy = this.y < tile.y ? -1 : 1;
+            // three possibilities of floors adjacent to this wall in
+            // the creature direction
+            var tile1 = g_level.getTile(tile.x + dx, tile.y);
+            var tile2 = g_level.getTile(tile.x, tile.y + dy);
+            var tile3 = g_level.getTile(tile.x + dx, tile.y + dy);
+
+            // the creature can see the wall if it can see the all the
+            // floors adjacent to it
+            if (tile1.type == 'FLOOR')
+                canSee = this.canSeeTile(tile1);
+            else if (tile2.type == 'FLOOR')
+                canSee = this.canSeeTile(tile2);
+            else if (tile3.type == 'FLOOR')
+                canSee = this.canSeeTile(tile3);
+        }
+
+        return canSee;
     },
 
     /**
