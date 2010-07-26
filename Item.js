@@ -30,6 +30,18 @@ Item.prototype =
       this.x = x;
       this.y = y;
 
+      // unwield the item if currenctly used
+      if(this.owner.weapon == this)
+      {
+         this.owner.weapon = null;
+         updateWEAPON();
+      }
+      else if(this.owner.armor == this)
+      {
+         this.owner.armor = null;
+         updateARMOR();
+      }
+
       this.owner = null;
       g_level.getTile(x, y).item = this;
    },

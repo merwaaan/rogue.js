@@ -132,12 +132,18 @@ function updateDEF()
 
 function updateWEAPON()
 {
-    $('#WEAPON_label').text(g_player.weapon.getName() + ' (+' + g_player.weapon.getDamage() + ')');
+   var name = g_player.weapon ? g_player.weapon.getName() : 'none';
+   var damage = g_player.weapon ? g_player.weapon.getDamage() : 0;
+
+   $('#WEAPON_label').text(name + ' (+' + damage + ')');
 }
 
 function updateARMOR()
 {
-    $('#ARMOR_label').text(g_player.armor.getName() + ' (+' + g_player.armor.getProtection() + ')');
+   var name = g_player.armor ? g_player.armor.getName() : 'none';
+   var protection = g_player.armor ? g_player.armor.getProtection() : 0;
+
+    $('#ARMOR_label').text(name + ' (+' + protection + ')');
 }
 
 function updateAllUI()
