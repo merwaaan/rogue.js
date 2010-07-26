@@ -9,19 +9,32 @@ function Monster(type)
 
     this.STR = this.info['STR'];
     this.DEF = this.info['DEF'];
+
+    // DO NOT uncomment if you want to live!
+    this.brain = new FiniteStateMachine(new FollowState(this, g_player));
 }
 
 Monster.prototype =
 {
-    destroyMonster : function()
-    {
-        this.destroyCreature();
-    },
+   brain : null,
 
-    getName : function()
-    {
-        return 'the ' + this.info['name'];
-    }
+   destroyMonster : function()
+   {
+       this.destroyCreature();
+   },
+
+   update : function()
+   {
+      if(this.brain)
+      {
+         this.brain.think();
+      }
+   },
+
+   getName : function()
+   {
+       return 'the ' + this.info['name'];
+   }
 }
 
 extend(Monster, Creature);

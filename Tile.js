@@ -31,7 +31,7 @@ Tile.prototype =
 
     isWalkable : function()
     {
-        return g_tileInfo[this.type]['walkable'] && this.creature == null;
+        return g_tileInfo[this.type]['walkable'] && !this.creature;
     },
 
     setType : function(type)

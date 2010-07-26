@@ -95,6 +95,22 @@ AStar.prototype =
         return path;
     },
 
+   // shameful hack to bypass a bug, but it's late and I just want to try the FSM before going to bed. Forgive me fmdkdd!
+   getPathCreature : function(tileStart, tileEnd)
+   {
+      var c1 = tileStart.creature;
+      tileStart.creature = null;
+      var c2 = tileEnd.creature;
+      tileEnd.creature = null;
+
+      var path = this.getPath(tileStart, tileEnd);
+
+      tileStart.creature = c1;
+      tileEnd.creature = c2;
+
+      return path;
+   },
+
     getBestTile : function(list)
     {
         var iBest = 0;
