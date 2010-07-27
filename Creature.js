@@ -67,11 +67,6 @@ Creature.prototype =
                 attacker.winXP(this.XP);
             }
         }
-        // INTELLIGENCE!!!
-        else if(this.type != 'PLAYER')
-        {
-            this.attack(attacker);
-        }
     },
 
     // TODO
