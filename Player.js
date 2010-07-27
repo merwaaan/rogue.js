@@ -190,7 +190,24 @@ Player.prototype =
     {
         if (this.seenTiles[tile.x] === undefined)
             this.seenTiles[tile.x] = new Array();
-        this.seenTiles[tile.x][tile.y] = true;
+        // record the sprite drawn for the tile to avoid omniscience
+        this.seenTiles[tile.x][tile.y] = tile.sprite()[0];
+    },
+
+    /**
+     * Return the sprite character of the tile as it was when the
+     * player last saw it.  If the player has not previously seen the
+     * given tile, undefined is returned.
+     *
+     * @requires tile is defined and not null,
+     *           this.hasSeenTile(tile) is true
+     * @return the tile's sprite character as it was when the player last
+     *         commited it to memory, or undefined it the player never
+     *         saw the tile
+     */
+    getSeenTile : function(tile)
+    {
+        return this.seenTiles[tile.x][tile.y];
     },
 
     /**

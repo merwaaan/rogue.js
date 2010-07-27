@@ -53,20 +53,21 @@ Level.prototype =
 
                     // if the player can see the tile, draw it
                     // otherwise, if the player previously saw the
-                    // tile, grey it out (fog of war)
+                    // tile, draw the tile as it was last seen, and
+                    // grey it out (fog of war)
                     // otherwise, don't draw it
                     if (g_player.canSeeTile(tile))
                     {
                         g_player.addSeenTile(tile);
                         ctx.fillStyle = sprite[1];
-                        // draw the character with current fillStyle
+                        // draw the character with its natural color
                         ctx.fillText(sprite[0], cx, cy);
                     }
                     else if (g_player.hasSeenTile(tile))
                     {
                         ctx.fillStyle = FOW_COLOR;
-                        // draw the character with current fillStyle
-                        ctx.fillText(sprite[0], cx, cy);
+                        // draw the last seen character with fog of war
+                        ctx.fillText(g_player.getSeenTile(tile), cx, cy);
                     }
                 }
             }
