@@ -36,8 +36,17 @@ GameObject.prototype =
 
       this.x = x;
       this.y = y;
-      
+
       g_level.getTile(x, y).creature = this;
+   },
+
+   /**
+    * @returns the tile the current object is positionned on,
+    *  null if it is not positionned
+    */
+   getTile : function()
+   {
+      return g_level.getTile(this.x, this.y);
    },
 
    /**

@@ -11,7 +11,7 @@ function Monster(type)
     this.DEF = this.info['DEF'];
 
     // DO NOT uncomment if you want to live!
-    //this.brain = new FiniteStateMachine(new FollowState(this, g_player));
+    this.brain = new FiniteStateMachine(new RoamState(this));
 }
 
 Monster.prototype =
