@@ -27,16 +27,16 @@ FollowState.prototype =
 
    update : function()
    {
-      if(Math.abs(this.host.x - this.target.x) <= 1 && Math.abs(this.host.y - this.target.y) <= 1)
+      if(this.host.nextTo(this.target))
       {
          this.host.brain.changeState(new AttackState(this.host, this.target));
       }
       else
       {
-         var path = new AStar().getPathCreature(g_level.getTile(this.host.x, this.host.y), g_level.getTile(this.target.x, this.target.y));
+         var path = new AStar().getInBetweenPath(g_level.getTile(this.host.x, this.host.y), g_level.getTile(this.target.x, this.target.y));
          if(path)
          {
-            this.host.move(path[1].x, path[1].y);
+            this.host.move(path[0].x, path[0].y);
          }
       }
    },
@@ -59,7 +59,7 @@ AttackState.prototype =
 
    update : function()
    {
-      if(Math.abs(this.host.x - this.target.x) > 1 || Math.abs(this.host.y - this.target.y) > 1)
+      if(!this.host.nextTo(this.target))
       {
          this.host.brain.changeState(new FollowState(this.host, this.target));
       }

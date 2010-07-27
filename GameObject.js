@@ -40,6 +40,15 @@ GameObject.prototype =
       g_level.getTile(x, y).creature = this;
    },
 
+   /**
+    * @requires obj to be a GameObject
+    * @returns true if the the current object is in an adjacent tile of obj
+    */
+   nextTo : function(obj)
+   {
+      return Math.abs(this.x - obj.x) <= 1 && Math.abs(this.y - obj.y) <= 1;
+   },
+
    getName : function()
    {
       return this.info['name'] ? this.info['name'] : 'no name in the dictionnary';
