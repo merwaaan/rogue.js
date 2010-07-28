@@ -282,6 +282,32 @@ function torchlightTile(tile)
     return TORCH_PALETTE[d];
 }
 
+/**
+ * Toggle realtime drawing of the screen.
+ *
+ * @requires enable is true or false, interval is a positive integer
+ * @param enable true redraws the screen every interval ms, false
+ *        redraws the screen at every key input 
+ * @param interval the interval at which to refresh the screen in milliseconds
+ */
+function setRealtimeDraw(enable, interval)
+{
+    // use the global refreshTimer to remember the timer
+    if (enable)
+        refreshTimer = setInterval('redraw()', interval);
+    else
+        clearInterval(refreshTimer);
+}
+
+/**
+ * Redraw the level
+ */
+function redraw()
+{
+    g_level.draw(g_gameObjectManager.xOffset, g_gameObjectManager.yOffset);
+}
+
+
 // MISC.
 
 function isTileWalkable(x, y)
