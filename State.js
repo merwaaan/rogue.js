@@ -9,12 +9,15 @@ State.prototype =
 
    enter : null,
    update : null,
-   exit : null
+   exit : null,
+
+   // toString() MUST returns the name of the class
+   toString : null
 }
 
 // IDLE
 
-function IdleState(host)
+function IdleState(host, args)
 {
    State.call(this, host);
 }
@@ -25,13 +28,18 @@ IdleState.prototype =
    {
       // well... 
    },
+
+   toString : function()
+   {
+      return 'IdleState';
+   }
 };
 
 extend(IdleState, State);
 
 // ROAM
 
-function RoamState(host)
+function RoamState(host, args)
 {
    State.call(this, host);
 
@@ -73,6 +81,11 @@ RoamState.prototype =
       {
          this.destination = g_level.getRandomTile('FLOOR');
       }
+   },
+
+   toString : function()
+   {
+      return 'RoamState';
    }
 };
 
@@ -81,11 +94,11 @@ extend(RoamState, State);
 
 // FOLLOW
 
-function FollowState(host, target)
+function FollowState(host, args)
 {
    State.call(this, host);
 
-   this.target = target;
+   this.target = args[0];
 }
 
 FollowState.prototype =
@@ -94,30 +107,28 @@ FollowState.prototype =
 
    update : function()
    {
-      if(this.host.nextTo(this.target))
+      var path = new AStar().getInBetweenPath(this.host.getTile(), this.target.getTile());
+      if(path)
       {
-         this.host.brain.changeState(new AttackState(this.host, this.target));
-      }
-      else
-      {
-         var path = new AStar().getInBetweenPath(this.host.getTile(), this.target.getTile());
-         if(path)
-         {
-            this.host.move(path[0].x, path[0].y);
-         }
+         this.host.move(path[0].x, path[0].y);
       }
    },
+
+   toString : function()
+   {
+      return 'FollowState';
+   }
 };
 
 extend(FollowState, State);
 
 // ATTACK
 
-function AttackState(host, target)
+function AttackState(host, args)
 {
    State.call(this, host);
 
-   this.target = target;
+   this.target = args[0];
 }
 
 AttackState.prototype =
@@ -126,15 +137,13 @@ AttackState.prototype =
 
    update : function()
    {
-      if(!this.host.nextTo(this.target))
-      {
-         this.host.brain.changeState(new FollowState(this.host, this.target));
-      }
-      else
-      {
-         this.host.attack(this.target);
-      }
+      this.host.attack(this.target);
    },
+
+   toString : function()
+   {
+      return 'AttackState';
+   }
 };
 
 extend(AttackState, State);
