@@ -47,18 +47,20 @@ FiniteStateMachine.prototype =
    checkPossibleTransitions : function()
    {
       // get all the possible transitions from the current state
-      var transitions = this.behavior[this.state];
+      var currentState = this.behavior[this.state];
 
       // holds the array returned by the stimulus functions
       var args = null;
 
-      // check each condition likely to trigger a transition
-      for(var stimulus in transitions)
+      // check each possible transition
+      for(var transition in currentState)
       {
-         if(args = eval('this.host.' + stimulus + '()'))
+         if(args = eval('this.host.' + currentState[transition]['check'] + '()'))
          {
             // change the state and pass the arguments received from the stimulus function
-            this.changeState(new transitions[stimulus](this.host, args));   
+            this.changeState(new currentState[transition]['next'](this.host, args));   
+
+            return;
          }
       }
    }
