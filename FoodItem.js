@@ -14,6 +14,7 @@ FoodItem.prototype =
 
     consume : function(creature)
     {
+	    
         writeMessage('You consume ' + this.info['name']);
 
         if(this.info['alteration'] == 'relative')

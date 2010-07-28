@@ -24,7 +24,7 @@ Item.prototype =
 
       if(creature.type == 'PLAYER')
       {
-         writeMessage(g_player.getName() + ' picks up ' + this.getName(), 'ITEM_FOUND');
+         writeMessage(g_player.getName() + ' pick up ' + this.getName(), 'ITEM_FOUND');
       }
 
       g_level.getTile(this.x, this.y).item = null;
@@ -47,7 +47,7 @@ Item.prototype =
          updateARMOR();
       }
 
-      writeMessage(g_player.getName() + ' drops ' + this.getName(), 'ITEM_FOUND');
+      writeMessage(g_player.getName() + ' drop ' + this.getName(), 'ITEM_FOUND');
 
       this.owner = null;
       g_level.getTile(x, y).item = this;

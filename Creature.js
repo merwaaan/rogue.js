@@ -48,7 +48,8 @@ Creature.prototype =
 
         if(this.type == 'PLAYER')
         {
-         writeMessage(this.getName() + ' loses ' + damage + 'HP', 'BAD_NEWS');
+         writeMessage(this.getName() + ' lose ' + damage + 'HP', 'BAD_NEWS');
+	 updateHP();
         }
         else
         { 
@@ -84,19 +85,21 @@ Creature.prototype =
         }
     },
 
-    die : function()
-    {
-        writeMessage(this.getName() + ' dies');
-            
-        // drop stuff
-         
+   die : function()
+   {
+      if(this.type == 'PLAYER')
+	   {
+         writeMessage(this.getName() + ' die', 'BAD_NEWS');
+	      gameOver();
+	   }
+	   else
+	   {
+	      writeMessage(this.getName() + ' dies');
+	   }
+	
+      // drop stuff
 
-        if(this.type == 'PLAYER')
-        {
-            gameOver();
-        }
-
-        this.destroyCreature();
+      this.destroyCreature();
     },
 
     /**
