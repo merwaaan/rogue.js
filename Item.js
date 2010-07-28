@@ -22,6 +22,11 @@ Item.prototype =
       // only works for @ at the moment
       creature.inventory.add(this.getCategory(), this);
 
+      if(creature.type == 'PLAYER')
+      {
+         writeMessage(g_player.getName() + ' picks up ' + this.getName(), 'ITEM_FOUND');
+      }
+
       g_level.getTile(this.x, this.y).item = null;
    },
 
@@ -41,6 +46,8 @@ Item.prototype =
          this.owner.armor = null;
          updateARMOR();
       }
+
+      writeMessage(g_player.getName() + ' drops ' + this.getName(), 'ITEM_FOUND');
 
       this.owner = null;
       g_level.getTile(x, y).item = this;

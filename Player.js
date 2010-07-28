@@ -50,7 +50,7 @@ Player.prototype =
     {
         this.XP += XP;
         
-        writeMessage('You win ' + XP + ' XP', 'GOOD_NEWS');
+        writeMessage(this.getName() + ' wins ' + XP + ' XP points', 'GOOD_NEWS');
 
         if(this.XP >= g_levelingInfo[this.LVL]['next'])
         {
@@ -69,12 +69,13 @@ Player.prototype =
         this.STR = g_levelingInfo[this.LVL]['STR'];
         this.DEF = g_levelingInfo[this.LVL]['DEF'];
 
-        writeMessage('You level up!', 'GOOD_NEWS'); // EVERYONE!
+        writeMessage(this.getName() + ' levels up!', 'GOOD_NEWS'); // EVERYONE!
     },
 
+    // TODO let the user choose the name of his adventurer
     getName : function()
     {
-        return 'You';
+        return 'NAME';
     },
 
     keyDown : function(event)

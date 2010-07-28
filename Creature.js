@@ -48,12 +48,16 @@ Creature.prototype =
 
         if(this.type == 'PLAYER')
         {
-            updateHP();
-            writeMessage(this.getName() + ' lose ' + damage + ' HP');
+         writeMessage(this.getName() + ' loses ' + damage + 'HP', 'BAD_NEWS');
         }
         else
+        { 
+           writeMessage(this.getName() + ' loses ' + damage + 'HP');
+        }
+
+        if(this.type == 'PLAYER')
         {
-            writeMessage(this.getName() + ' loses ' + damage + 'HP');
+            updateHP();
         }
 
         if(this.HP <= 0)
@@ -82,15 +86,14 @@ Creature.prototype =
 
     die : function()
     {
+        writeMessage(this.getName() + ' dies');
+            
+        // drop stuff
+         
+
         if(this.type == 'PLAYER')
         {
-            writeMessage(this.getName() + ' die');
             gameOver();
-        }
-        else
-        {
-            writeMessage(this.getName() + ' dies');
-            // drop stuff
         }
 
         this.destroyCreature();

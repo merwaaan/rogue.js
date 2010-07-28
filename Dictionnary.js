@@ -199,7 +199,7 @@ var g_messageInfo =
     },
     'AMBIANCE' :
     {
-        'color' : 'yellow'
+        'color' : 'gold'
     },
     'ITEM_FOUND' :
     {
