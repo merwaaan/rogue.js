@@ -56,7 +56,9 @@ RoamState.prototype =
          else
          {
             var path = new AStar().getInBetweenPath(this.host.getTile(), this.destination);
-            this.host.move(path[0].x, path[0].y);
+             // if a path is found, move there
+             if (path)
+                 this.host.move(path[0].x, path[0].y);
          }
       }
       else if(!this.destination)
