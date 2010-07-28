@@ -78,7 +78,15 @@ Inventory.prototype =
             for(var j = 0; j < currentCat[1].length; j++)
             {
                var shortcut = String.fromCharCode(keyCodeAscii);
-               $('#inventory #items ul:last-child').append('<li>' + currentCat[1][j].getName() + ' (' + shortcut + ')</li>');
+               var name = currentCat[1][j].getName();
+
+               // change the color of the object if it is a wielded weapon or armor
+               if(currentCat[1][j] == g_player.weapon || currentCat[1][j] == g_player.armor)
+               {
+                  name = '<span class="wielded">' + name + '</span>';
+               }
+
+               $('#inventory #items ul:last-child').append('<li>' + name + ' (' + shortcut + ')</li>');
                
                // memorize the shortcut and the associated item
                // 32 is the offset between a character's ASCII code and its Javascript code

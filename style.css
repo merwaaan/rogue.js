@@ -47,6 +47,11 @@ body
    color : gold;
 }
 
+#inventory .wielded
+{
+   color : chartreuse;
+}
+
 #inventory #items ul
 {
    margin : 0;
