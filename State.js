@@ -100,16 +100,14 @@ function FollowState(host, args)
 {
    State.call(this, host);
 
-   this.target = args[0];
+   this.host.targetedEnemy = args[0];
 }
 
 FollowState.prototype =
 {
-   target : null,
-
    update : function()
    {
-      var path = new AStar().getInBetweenPath(this.host.getTile(), this.target.getTile());
+      var path = new AStar().getInBetweenPath(this.host.getTile(), this.host.targetedEnemy.getTile());
       if(path)
       {
          this.host.move(path[0].x, path[0].y);
@@ -130,16 +128,14 @@ function AttackState(host, args)
 {
    State.call(this, host);
 
-   this.target = args[0];
+   this.host.targetedEnemy = args[0];
 }
 
 AttackState.prototype =
 {
-   target : null,
-
    update : function()
    {
-      this.host.attack(this.target);
+      this.host.attack(this.host.targetedEnemy);
    },
 
    toString : function()

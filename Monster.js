@@ -17,6 +17,9 @@ Monster.prototype =
 {
    brain : null,
 
+   // tracked enemy
+   targetedEnemy : null,
+
    destroyMonster : function()
    {
        this.destroyCreature();
@@ -36,23 +39,6 @@ Monster.prototype =
    },
 
    /**
-    * @returns the enemy currently targeted by the monster,
-    *  if there is none, or if he has no brain, returns null.
-    *
-    *  note : this means that targetted enemy must be called 'target'
-    *  in each state they appear in.
-    */
-   getTargetedEnemy : function()
-   {
-      if(this.brain && this.brain.state && this.brain.state.target)
-      {
-         return this.brain.state.target;
-      }
-
-      return null;
-   },
-
-   /**
     * Stimulus functions
     */
 
@@ -66,28 +52,28 @@ Monster.prototype =
    },
 
    /**
-    * @returns the target enemy if the current monster is positionned next to it,
-    * null if it is still far away
+    * @returns the targeted enemy if the current monster is positionned next to it,
+    * null if it is still far away or if it doesn't exist
     */
    nextToTargetedEnemy : function()
    {
-      if(this.nextTo(this.getTargetedEnemy()))
+      if(this.targetedEnemy && this.nextTo(this.targetedEnemy))
       {
-         return [this.getTargetedEnemy()];
+         return [this.targetedEnemy];
       }
 
       return null;
    },
 
    /**
-    * @returns the target enemy if the current monster is far away from it,
-    * null if it is next to it
+    * @returns the targeted enemy if the current monster is far away from it,
+    * null if it is next to it or if it doesn't exist
     */
    farFromTargetedEnemy : function()
    {
-      if(!this.nextToTargetedEnemy())
+      if(this.targetedEnemy && !this.nextToTargetedEnemy())
       {
-         return [this.getTargetedEnemy()];
+         return [this.targetedEnemy];
       }
 
       return null;
