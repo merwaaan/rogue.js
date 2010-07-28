@@ -59,7 +59,12 @@ Level.prototype =
                     if (g_player.canSeeTile(tile))
                     {
                         g_player.addSeenTile(tile);
-                        ctx.fillStyle = sprite[1];
+
+                        // experimental torch light
+                        if (tile.type == 'WALL' || tile.type == 'FLOOR')
+                            ctx.fillStyle = torchlightTile(tile);
+                        else
+                            ctx.fillStyle = sprite[1];
                         // draw the character with its natural color
                         ctx.fillText(sprite[0], cx, cy);
                     }

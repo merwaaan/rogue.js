@@ -249,6 +249,39 @@ function bresenhamLinePoints(x0, y0, x1, y1)
     return points;
 }
 
+// Next-gen lighting effects
+
+TORCH_PALETTE = [ 'white', '#fff72e', '#ffde2e', '#ffb12e', '#ff7e2e', '#ff3b2e', '#9c453f' ];
+
+/**
+ * Return the color the tile shoud be painted with to make it looks
+ * like the player is holding a torch.
+ * Preferably use with tiles that are in line of sight.
+ *
+ * @requires tile is defined and not null
+ * @return a CSS color-code to paint the tile with
+ */
+function torchlightTile(tile)
+{
+    // compute distance from player to tile
+    var dx = tile.x - g_player.x;
+    var dy = tile.y - g_player.y;
+    // euclidean distance looks nicer
+    var d = Math.sqrt(dx * dx + dy * dy);
+    // expand radius (increase to widen torch radius)
+    d /= 3.5;
+    // add noise variation
+    d += d * Math.random();
+    // round to integer
+    d = Math.round(d);
+    // clamp d to array indices
+    d = Math.max(0, d);
+    d = Math.min(d, TORCH_PALETTE.length - 1);
+
+    // return the corresponding color in palette
+    return TORCH_PALETTE[d];
+}
+
 // MISC.
 
 function isTileWalkable(x, y)
