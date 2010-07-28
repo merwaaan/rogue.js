@@ -152,7 +152,8 @@ Player.prototype =
         var yNew = this.y + yMove;
 
         // check if a movement has to be made
-        if(xNew != this.x || yNew != this.y)
+        // don't walk into undefined tiles
+        if((xNew != this.x || yNew != this.y) && g_level.getTile(xNew, yNew))
         {
             // if the target tile is walkable
             if(isTileWalkable(xNew, yNew))
