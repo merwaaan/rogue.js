@@ -25,7 +25,7 @@
 
 var g_followerBehavior =
 {
-   'IdleState' : { 'seeEnemy' : 'FollowState' },
-   'FollowState' : { 'nextToTargetedEnemy' : 'AttackState' },
-   'AttackState' : { 'farFromTargetedEnemy' : 'FollowState' }
+   IdleState : { seeEnemy : FollowState },
+   FollowState : { nextToTargetedEnemy : AttackState },
+   AttackState : { farFromTargetedEnemy : FollowState }
 };
