@@ -81,7 +81,7 @@ Inventory.prototype =
                var name = currentCat[1][j].getName();
 
                // change the color of the object if it is a wielded weapon or armor
-               if(currentCat[1][j] == g_player.weapon || currentCat[1][j] == g_player.armor)
+               if(currentCat[1][j].isWielded && currentCat[1][j].isWielded())
                {
                   name = '<span class="wielded">' + name + '</span>';
                }
@@ -123,11 +123,17 @@ Inventory.prototype =
    displayDetails : function(item)
    {
       // display basic information about the selected item
-      $('#inventory #details').append(item.getName() + ' : ' + item.getDescription());
+      $('#inventory #details').append(item.getName() + ' : ' + item.getDescription() + '<br/>');
 
-      // display a list of possible actions depending on the item characteristics
-      // temporary version for illustration purposes only
-      $('#inventory #details').append('<br/><br/>drop (d)');
+      // display the list of possible actions
+      if(item.drop)
+         $('#inventory #details').append('<br/>drop (d)');
+
+      if(item.wield && item.isWielded && !item.isWielded())
+         $('#inventory #details').append('<br/>wield (w)');
+
+      if(item.unwield && item.isWielded && item.isWielded())
+         $('#inventory #details').append('<br/>unwield (u)');
 
       // record the inventory, so that it can be accessed within the key handler
       var inv = this;
@@ -140,12 +146,33 @@ Inventory.prototype =
          {
             inv.close();
          }
-         // d
+         // d : drop item
          else if(event.keyCode == 68)
          {
-            inv.close();
-            item.drop(g_player.x, g_player.y);
-            inv.remove(item.getCategory(), item);
+            if(item.drop)
+            {
+               inv.close();
+               item.drop(g_player.x, g_player.y);
+               inv.remove(item.getCategory(), item);
+            }
+         }
+         // u : unwield item
+         else if(event.keyCode == 85)
+         {
+            if(item.unwield && item.isWielded && item.isWielded())
+            {
+               inv.close();
+               item.unwield();
+            }
+         }
+         // w : wield item
+         else if(event.keyCode == 87)
+         {
+            if(item.wield && item.isWielded && !item.isWielded())
+            {
+               inv.close();
+               item.wield();
+            }
          }
                  
          event.preventDefault();
