@@ -1,3 +1,7 @@
+const MAX_WEAPON = 3;
+const MAX_ARMOR = 2;
+const MAX_FOOD = 5;
+
 function Inventory()
 {
    this.weapons = new Array();
@@ -53,7 +57,24 @@ Inventory.prototype =
          this.food.removeObject(item);
       }
    },
-            
+
+   // returns true if there is a free slot for the item in the inventory
+   hasFreeSlot : function(item)
+   {
+      if(item.getCategory() == 'WEAPON')
+      {
+         return this.weapons < MAX_WEAPON;
+      }
+      else if(item.getCategory() == 'ARMOR')
+      {
+         return this.armors < MAX_ARMOR;
+      }
+      else if(item.getCategory() == 'FOOD')
+      {
+         return this.weapons < MAX_FOOD;
+      }
+   },
+
    open : function()
    {
       buildInventoryFrame();

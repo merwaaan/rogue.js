@@ -17,17 +17,24 @@ Item.prototype =
 
    pickUp : function(creature)
    {
-      this.owner = creature;
-
-      // only works for @ at the moment
-      creature.inventory.add(this.getCategory(), this);
-
-      if(creature.type == 'PLAYER')
+      if(creature.inventory.hasFreeSlot(this))
       {
-         writeMessage(g_player.getName() + ' pick up ' + this.getName(), 'ITEM_FOUND');
-      }
+         this.owner = creature;
 
-      g_level.getTile(this.x, this.y).pickUpItem(this);
+         // only works for @ at the moment
+         creature.inventory.add(this.getCategory(), this);
+
+         if(creature.type == 'PLAYER')
+         {
+            writeMessage(g_player.getName() + ' pick up ' + this.getName(), 'ITEM_FOUND');
+         }
+
+         g_level.getTile(this.x, this.y).pickUpItem(this);
+      }
+      else
+      {
+         writeMessage('There is not enough space in your inventory');
+      }
    },
 
    drop : function(x, y)

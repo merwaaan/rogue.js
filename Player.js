@@ -90,12 +90,13 @@ Player.prototype =
         // numpad only works in Chrome for the moment
         switch(event.keyCode)
         {
-        // i
+        // i : inventory
         case 73:
             this.inventory.open();
             return;
-        // p
+        // p : pick up
         case 80:
+            // check if an item is on the tile
             if(g_level.getTile(this.x, this.y).items && g_level.getTile(this.x, this.y).items[0])
             {
                g_level.getTile(this.x, this.y).items[0].pickUp(this);
