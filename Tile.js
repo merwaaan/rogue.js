@@ -6,6 +6,8 @@ function Tile(x, y, type)
     this.type = type;
 
     this.info = g_tileInfo[type];
+
+    this.items = new Array();
 }
 
 Tile.prototype =
@@ -21,8 +23,8 @@ Tile.prototype =
     // held creature (player or monster)
     creature : null,
 
-    // held item
-    item : null,
+    // held items
+    items : null,
 
     // pathfinding variables
     parent : null,
@@ -58,15 +60,16 @@ Tile.prototype =
         var sprite;
         
         // if the tile holds a creature, draw it
-        if(this.creature != null)
+        if(this.creature)
         {
             sprite = this.creature.model();
         }
-        else if(this.item != null)
+        // else if it holds one or more items, draw the first
+        else if(this.items && this.items[0])
         {
-            sprite = this.item.model();
+            sprite = this.items[0].model();
         }
-        // if the tile is empty, just draw its character
+        // else if the tile is empty, just draw its character
         else
         {
             sprite = this.model();
@@ -78,5 +81,17 @@ Tile.prototype =
     model : function()
     {
         return [this.info['char'], this.info['color']];
-    }
+    },
+
+   // drop an item on the tile
+   dropItem : function(item)
+   {
+      this.items.push(item);
+   },
+
+   // remove an item from the tile
+   pickUpItem : function(item)
+   {
+      this.items.removeObject(item);
+   }
 }

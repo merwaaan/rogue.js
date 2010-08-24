@@ -27,7 +27,7 @@ Item.prototype =
          writeMessage(g_player.getName() + ' pick up ' + this.getName(), 'ITEM_FOUND');
       }
 
-      g_level.getTile(this.x, this.y).item = null;
+      g_level.getTile(this.x, this.y).pickUpItem(this);
    },
 
    drop : function(x, y)
@@ -50,7 +50,7 @@ Item.prototype =
       writeMessage(g_player.getName() + ' drop ' + this.getName(), 'ITEM_FOUND');
 
       this.owner = null;
-      g_level.getTile(x, y).item = this;
+      g_level.getTile(x, y).dropItem(this);
    },
 
    /**

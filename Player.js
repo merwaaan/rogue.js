@@ -96,9 +96,9 @@ Player.prototype =
             return;
         // p
         case 80:
-            if(g_level.getTile(this.x, this.y).item)
+            if(g_level.getTile(this.x, this.y).items && g_level.getTile(this.x, this.y).items[0])
             {
-               g_level.getTile(this.x, this.y).item.pickUp(this);
+               g_level.getTile(this.x, this.y).items[0].pickUp(this);
             }
             return;
         // left arrow
@@ -161,11 +161,14 @@ Player.prototype =
             {
                 this.move(xNew, yNew);
 
-                // if there is an item on the tile, print a message for the player
-                var item;
-                if(item = g_level.getTile(xNew, yNew).item)
+                // if there is items on the current tile, enumerate them
+                var items;
+                if(items = g_level.getTile(xNew, yNew).items)
                 {
-                  writeMessage('There is a ' + item.getName() + ' on the floor');
+                  for(var i = 0; i < items.length; i++)
+                  {
+                     writeMessage('There is a ' + items[i].getName() + ' on the floor');
+                  }
                 }
             }
             // else if there is a monster on the tile
