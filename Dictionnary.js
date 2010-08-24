@@ -201,16 +201,16 @@ var g_messageInfo =
     {
         'color' : 'gold'
     },
-    'ITEM_FOUND' :
+    'INFO' :
     {
-        'color' : 'blue'
+        'color' : 'lightseagreen'
     },
-    'GOOD_NEWS' :
+    'GOOD' :
     {
-        'color' : 'green'
+        'color' : 'chartreuse'
     },
-    'BAD_NEWS' :
+    'BAD' :
     {
-        'color' : 'red'
+        'color' : 'crimson'
     }
 };

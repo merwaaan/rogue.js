@@ -63,15 +63,15 @@ Inventory.prototype =
    {
       if(item.getCategory() == 'WEAPON')
       {
-         return this.weapons < MAX_WEAPON;
+         return this.weapons.length < MAX_WEAPON;
       }
       else if(item.getCategory() == 'ARMOR')
       {
-         return this.armors < MAX_ARMOR;
+         return this.armors.length < MAX_ARMOR;
       }
       else if(item.getCategory() == 'FOOD')
       {
-         return this.weapons < MAX_FOOD;
+         return this.food.length < MAX_FOOD;
       }
    },
 

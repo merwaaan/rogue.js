@@ -48,7 +48,7 @@ Creature.prototype =
 
       if(this.type == 'PLAYER')
       {
-         writeMessage(this.getName() + ' lose ' + damage + 'HP', 'BAD_NEWS');
+         writeMessage(this.getName() + ' lose ' + damage + 'HP', 'BAD');
 	      updateHP();
       }
       else
@@ -89,7 +89,7 @@ Creature.prototype =
    {
       if(this.type == 'PLAYER')
 	   {
-         writeMessage(this.getName() + ' die', 'BAD_NEWS');
+         writeMessage(this.getName() + ' die', 'BAD');
 	      gameOver();
 	   }
 	   else
