@@ -6,8 +6,7 @@ function Player()
 
    this.LVL = 1;
 
-   this.HP = g_levelingInfo[this.LVL]['HP'];
-   this.maxHP = g_levelingInfo[this.LVL]['HP'];
+   this.HP = this.maxHP = g_levelingInfo[this.LVL]['HP'];
    this.XP = 0;
 
    this.STR = g_levelingInfo[this.LVL]['STR'];
@@ -65,11 +64,11 @@ Player.prototype =
         this.XP = this.XP % g_levelingInfo[this.LVL]['next'];
 
         this.LVL++;
-        this.maxHP = g_levelingInfo[this.LVL]['HP'];
-        this.STR = g_levelingInfo[this.LVL]['STR'];
-        this.DEF = g_levelingInfo[this.LVL]['DEF'];
+        this.maxHP += g_levelingInfo[this.LVL]['HP'];
+        this.STR += g_levelingInfo[this.LVL]['STR'];
+        this.DEF += g_levelingInfo[this.LVL]['DEF'];
 
-        writeMessage(this.getName() + ' level up!', 'GOOD'); // EVERYONE!
+        writeMessage(this.getName() + ' level up!', 'GOOD');
     },
 
     // TODO let the user choose the name of his adventurer

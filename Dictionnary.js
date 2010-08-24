@@ -177,16 +177,16 @@ var g_levelingInfo =
     },
     2 :
     {
-        'HP' : '20',
-        'STR' : 2,
-        'DEF' : 2,
+        'HP' : '5',
+        'STR' : 1,
+        'DEF' : 1,
         'next' : 130
     },
     3 :
     {
-        'HP' : '28',
-        'STR' : 3,
-        'DEF' : 2,
+        'HP' : '5',
+        'STR' : 1,
+        'DEF' : 0,
         'next' : 200
     }
 };
