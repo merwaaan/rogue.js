@@ -31,10 +31,10 @@ var g_followerBehavior =
    },
    FollowState : 
    {
-      'A' : { 'check' : 'nextToTargetedEnemy' , 'next' : AttackState }
+      'A' : {'check' : 'nextToTargetedEnemy' , 'next' : AttackState }
    },
    AttackState :
    {
-      'A' : { 'check' : 'farFromTargetedEnemy' , 'next' : FollowState }
+      'A' : {'check' : 'farFromTargetedEnemy' , 'next' : FollowState }
    }
 };

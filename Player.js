@@ -161,10 +161,11 @@ Player.prototype =
             {
                 this.move(xNew, yNew);
 
-                // if there is an item on the tile
-                if(true)
+                // if there is an item on the tile, print a message for the player
+                var item;
+                if(item = g_level.getTile(xNew, yNew).item)
                 {
-                    
+                  writeMessage('There is a ' + item.getName() + ' on the floor');
                 }
             }
             // else if there is a monster on the tile

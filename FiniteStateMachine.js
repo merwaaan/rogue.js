@@ -1,19 +1,21 @@
 function FiniteStateMachine(host, behavior)
 {
+   // creature whose actions are controlled by this FSM
    this.host = host;
 
+   // transition table
    this.behavior = behavior;
 
    // for the moment, the first state is always IDLE
-   this.changeState(new IdleState(this));
+   this.changeState(new IdleState(this.host));
 }
 
 FiniteStateMachine.prototype =
 {
-   // 'owner' of the FSM
    host : null,
    
-   // current state    
+   behavior : null,
+
    state : null,
 
    think : function()

@@ -9,10 +9,7 @@ State.prototype =
 
    enter : null,
    update : null,
-   exit : null,
-
-   // toString() MUST returns the name of the class
-   toString : null
+   exit : null
 }
 
 // IDLE
@@ -89,6 +86,7 @@ RoamState.prototype =
    {
       return 'RoamState';
    }
+
 };
 
 extend(RoamState, State);
