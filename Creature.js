@@ -49,16 +49,11 @@ Creature.prototype =
       if(this.type == 'PLAYER')
       {
          writeMessage(this.getName() + ' lose ' + damage + 'HP', 'BAD');
-	      updateHP();
+         g_menu.updateStatusFrame();
       }
       else
       { 
          writeMessage(this.getName() + ' loses ' + damage + 'HP');
-      }
-
-      if(this.type == 'PLAYER')
-      {
-         updateHP();
       }
 
       if(this.HP <= 0)

@@ -39,6 +39,8 @@ function drawPath(path)
     };
 }
 
+// UI
+
 function drawBar(element, value, max)
 {
     var limit = Math.round(value / max * 10);
@@ -60,116 +62,26 @@ function drawBar(element, value, max)
     element.text(bar);
 }
 
-// UI
-
-function buildStatusFrame()
-{
-   $('#info').empty();
-   
-   // "status" part
-   $('#info').append('<div id="status"></div>');
-   
-   var s = ['HP', 'XP']; 
-   for(var i = 0; i < s.length; i++)
-   {
-	$('#info #status').append('<span id="' + s[i] + '">' + s[i] + ' <span id="' + s[i] + '_bar"></span> <span id="' + s[i] + '_label"></span>');
-   }
-   
-   // "characteristics" part
-   $('#info').append('<div id="characteristics"></div>');
-    
-   s = ['LVL', 'STR', 'DEF'];
-   for(var i = 0; i < s.length; i++)
-   {
-      $('#info #characteristics').append('<span id="' + s[i] + '">' + s[i] + ' <span id="' + s[i] + '_label"></span></span>');                         
-   }
-   
-   // "equipment" part
-   $('#info').append('<div id="equipment"></div>');
-    
-   s = ['WEAPON', 'ARMOR'];
-   for(var i = 0; i < s.length; i++)
-   {
-      $('#info #equipment').append('<span id="' + s[i] + '">' + s[i] + ' <span id="' + s[i] + '_label"></span></span>');
-   }
-
-   updateAllUI();
-}
-
-function buildInventoryFrame()
-{
-   $('#info').empty();
-   
-   $('#info').append('<div id="inventory"><div id="items"></div><div id="details"></div></div>');
-}
-
-function updateHP()
-{
-    drawBar($('#HP_bar'), g_player.HP, g_player.maxHP);
-    $('#HP_label').text(g_player.HP + '/' + g_player.maxHP);
-}
-
-function updateXP()
-{
-    drawBar($('#XP_bar'), g_player.XP, g_levelingInfo[g_player.LVL]['next']);
-    $('#XP_label').text(g_player.XP + '/' + g_levelingInfo[g_player.LVL]['next']);
-}
-
-function updateLVL()
-{
-    $('#LVL_label').text(g_player.LVL);
-}
-
-function updateSTR()
-{
-    $('#STR_label').text(g_player.STR);
-}
-
-function updateDEF()
-{
-    $('#DEF_label').text(g_player.DEF);
-}
-
-function updateWEAPON()
-{
-   var name = g_player.weapon ? g_player.weapon.getName() : 'none';
-   var damage = g_player.weapon ? g_player.weapon.getDamage() : 0;
-
-   $('#WEAPON_label').text(name + ' (+' + damage + ')');
-}
-
-function updateARMOR()
-{
-   var name = g_player.armor ? g_player.armor.getName() : 'none';
-   var protection = g_player.armor ? g_player.armor.getProtection() : 0;
-
-    $('#ARMOR_label').text(name + ' (+' + protection + ')');
-}
-
-function updateAllUI()
-{
-    updateHP();
-    updateXP();
-    updateLVL();
-    updateSTR();
-    updateDEF();
-    updateWEAPON();
-    updateARMOR();
-}
-
 function clearMessages()
 {
-    $('#message').empty();
+   $('#message').empty();
+}
+
+function logMessage(message)
+{
+   g_log.push(message);
 }
 
 function writeMessage(message, type)
 {
-    if(type == undefined)
-    {
-        type = 'DEFAULT';
-    }
+   if(type == undefined)
+   {
+       type = 'DEFAULT';
+   }
 
-    $('#message').append('<span style="color:' + g_messageInfo[type]['color'] + '">' + message + '</span>');    
+   $('#message').append('<span style="color:' + g_messageInfo[type]['color'] + '">' + message + '</span>');
+
+   logMessage(message);    
 }
 
 // LIGHTING

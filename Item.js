@@ -46,12 +46,12 @@ Item.prototype =
       if(this.owner.weapon == this)
       {
          this.owner.weapon = null;
-         updateWEAPON();
+         g_menu.updateStatusFrame();
       }
       else if(this.owner.armor == this)
       {
          this.owner.armor = null;
-         updateARMOR();
+         g_menu.updateStatusFrame();
       }
 
       writeMessage(g_player.getName() + ' drop a ' + this.getName(), 'INFO');

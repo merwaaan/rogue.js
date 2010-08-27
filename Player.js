@@ -56,7 +56,7 @@ Player.prototype =
             this.levelUp();
         }
         
-        updateAllUI();
+         g_menu.updateStatusFrame();
     },
 
     levelUp : function()
@@ -89,6 +89,10 @@ Player.prototype =
         // numpad only works in Chrome for the moment
         switch(event.keyCode)
         {
+        // h : help
+        case 72:
+           g_menu.openHelpFrame();
+           return;
         // i : inventory
         case 73:
             this.inventory.open();

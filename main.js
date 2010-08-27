@@ -11,6 +11,10 @@ const CANVAS_HEIGHT = SIZE * FONT_HEIGHT;
 
 var g_gameObjectManager = null;
 
+// message log
+var g_log = new Array();
+
+var g_menu = null;
 var g_level = null;
 var g_player = null;
 
@@ -24,5 +28,6 @@ window.onload = function()
    g_gameObjectManager = new GameObjectManager();
    g_gameObjectManager.step();
 
-   buildStatusFrame();
+   g_menu = new Menu();
+   g_menu.openStatusFrame();
 }
