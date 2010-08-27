@@ -42,7 +42,7 @@ Item.prototype =
       this.x = x;
       this.y = y;
 
-      // unwield the item if currenctly used
+      // unwield the item before removing it from the owner inventory
       if(this.owner.weapon == this)
       {
          this.owner.weapon = null;
@@ -53,6 +53,8 @@ Item.prototype =
          this.owner.armor = null;
          g_menu.updateStatusFrame();
       }
+
+      this.owner.inventory.remove(this);
 
       writeMessage(g_player.getName() + ' drop a ' + this.getName(), 'INFO');
 

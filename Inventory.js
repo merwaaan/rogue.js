@@ -42,17 +42,17 @@ Inventory.prototype =
       }
    },
 
-   remove : function(category, item)
+   remove : function(item)
    {
-      if(category == 'WEAPON')
+      if(item.getCategory() == 'WEAPON')
       {
          this.weapons.removeObject(item);
       }
-      else if(category == 'ARMOR')
+      else if(item.getCategory() == 'ARMOR')
       {
          this.armors.removeObject(item);
       }
-      else if(category == 'FOOD')
+      else if(item.getCategory() == 'FOOD')
       {
          this.food.removeObject(item);
       }
@@ -78,11 +78,5 @@ Inventory.prototype =
    open : function()
    {
       g_menu.openInventoryFrame();
-   },
-
-   close : function()
-   {
-      g_menu.openStatusFrame();
-      setKeyHandler(g_gameObjectManager.keyHandler_game);
    }
 }

@@ -99,10 +99,19 @@ Player.prototype =
             return;
         // p : pick up
         case 80:
-            // check if an item is on the tile
-            if(g_level.getTile(this.x, this.y).items && g_level.getTile(this.x, this.y).items[0])
+            var items = g_level.getTile(this.x, this.y).items;
+            if(items)
             {
-               g_level.getTile(this.x, this.y).items[0].pickUp(this);
+               // only one item on the tile, we pick it up
+               if(items.length == 1)
+               {
+                  g_level.getTile(this.x, this.y).items[0].pickUp(this);
+               }
+               // several items, open a choice menu
+               else if(items.length > 1)
+               {
+                  g_menu.openPickUpChoiceFrame(g_level.getTile(this.x, this.y).items);
+               }
             }
             return;
         // left arrow

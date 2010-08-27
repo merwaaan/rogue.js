@@ -177,8 +177,7 @@ function isTileWalkable(x, y)
 
 function gameOver()
 {
-    $('#wall').append('----- GAME OVER -----<br/><br/>');
-    $('#wall').append('Your quest lasted for ' + g_gameObjectManager.turn + ' turns');
+   g_menu.openGameOverFrame();
 }
 
 function setKeyHandler(keyHandler)
@@ -196,7 +195,7 @@ function setKeyHandler(keyHandler)
 
 // ARRAY
 
-// Array Remove - By John Resig (MIT Licensed)
+// By John Resig (MIT Licensed)
 Array.prototype.remove = function(from, to)
 {
     var rest = this.slice((to || from) + 1 || this.length);

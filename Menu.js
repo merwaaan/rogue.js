@@ -28,6 +28,12 @@ Menu.prototype =
       this.bottom = $('#message');
    },
 
+   backToGame : function()
+   {
+      this.openStatusFrame();
+      setKeyHandler(g_gameObjectManager.keyHandler_game);
+   },
+
    openIntroFrame : function()
    {
       this.right.empty();
@@ -87,13 +93,57 @@ Menu.prototype =
       $('#ARMOR_label').text(name + ' (+' + protection + ')');
    },
 
-   openPickUpChoiceFrame : function()
+   openPickUpChoiceFrame : function(items)
    {
-      //TODO
+      // build the structure
+      this.right.empty();
+      this.right.append('<div id="pickUpChoice"><ul></ul></div>');
+
+      // ASCII code of the key used to select an item (we start with 'a')
+      var keyCodeAscii = 97;
+
+      // hold shortcut/item associations
+      var shortcuts = [];
+
+      for(var i = 0; i < items.length; i++)
+      {
+         var shortcut = String.fromCharCode(keyCodeAscii);
+         var name = items[i].getName();
+
+         $('#pickUpChoice ul').append('<li>' + name + ' (' + shortcut + ')</li>');
+               
+         // memorize the shortcut and the associated item
+         // (32 is the offset between a character's ASCII code and its Javascript code)
+         var keyCodeJS = keyCodeAscii - 32 + '';
+         shortcuts[keyCodeJS] = items[i];
+         keyCodeAscii++;
+      }
+
+      // keyboard handling
+      var menu = this;
+      setKeyHandler(function(event)
+      {
+         // ESCAPE
+         if(event.keyCode == 27)
+         {
+            menu.backToGame();
+         }
+         // if the used shorcut is associated with an item, pick it up
+         else if(shortcuts[event.keyCode])
+         {
+            shortcuts[event.keyCode].pickUp(g_player);
+            menu.backToGame();
+         }
+
+         event.preventDefault();
+      });
+
    },
 
    openTargetChoiceFrame : function()
    {
+      this.right.empty();
+
       //TODO
    },
 
@@ -154,7 +204,7 @@ Menu.prototype =
          // ESCAPE
          if(event.keyCode == 27)
          {
-            inv.close();
+            menu.backToGame();
          }
          // if the used shorcut is associated with an item, open the detail tab
          else if(shortcuts[event.keyCode])
@@ -189,7 +239,7 @@ Menu.prototype =
          // ESCAPE
          if(event.keyCode == 27)
          {
-            inv.close();
+            menu.backToGame();
          }
          // d : drop item
          else if(event.keyCode == 68)
@@ -197,8 +247,8 @@ Menu.prototype =
             if(item.drop)
             {
                item.drop(g_player.x, g_player.y);
-               g_player.inventory.remove(item.getCategory(), item);
-               inv.close();
+               
+               menu.backToGame();
             }
          }
          // u : unwield item
@@ -207,7 +257,8 @@ Menu.prototype =
             if(item.unwield && item.isWielded && item.isWielded())
             {
                item.unwield();
-               inv.close();
+
+               menu.backToGame();
             }
          }
          // w : wield item
@@ -216,7 +267,8 @@ Menu.prototype =
             if(item.wield && item.isWielded && !item.isWielded())
             {
                item.wield();
-               inv.close();
+
+               menu.backToGame();
             }
          }
                  
@@ -240,12 +292,17 @@ Menu.prototype =
          // ESCAPE
          if(event.keyCode == 27)
          {
-            menu.openStatusFrame();
-            setKeyHandler(g_gameObjectManager.keyHandler_game);
+            menu.backToGame();
 
             event.preventDefault();
          }
       });
+   },
+
+   openGameOverFrame : function()
+   {
+      this.right.empty();
+      this.right.append('-------- GAME OVER ---------<br/><br/>blabla');
    }
 }
 

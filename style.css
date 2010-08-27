@@ -52,14 +52,14 @@ body
    color : chartreuse;
 }
 
-#inventory #items ul
+#inventory #items ul, #pickUpChoice ul
 {
    margin : 0;
    padding : 0;
    margin-bottom : 5px;
 }
 
-#inventory #items li
+#inventory #items li, #pickUpChoice li
 {
    list-style-type : none;
    margin-left : 10px;
