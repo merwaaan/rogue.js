@@ -45,6 +45,7 @@ Menu.prototype =
    {
       // build the structure
       this.right.empty();
+      this.right.append('<div class="frameTitle">Status</div>');
       this.right.append('<div id="status"></div>');
       this.right.append('<div id="characteristics"></div>');
       this.right.append('<div id="equipment"></div>');
@@ -97,7 +98,7 @@ Menu.prototype =
    {
       // build the structure
       this.right.empty();
-      this.right.append('<div id="pickUpChoice"><ul></ul></div>');
+      this.right.append('<div class="frameTitle">Which item do you want to pick up?</div><div id="pickUpChoice"><ul></ul></div>');
 
       // hold an array of shortcut/item associations
       var shortcuts = getItemShortcuts(items);
@@ -143,7 +144,7 @@ Menu.prototype =
    {
       // build the structure
       this.right.empty();
-      this.right.append('<div id="inventory"><div id="items"></div><div id="details"></div></div>');
+      this.right.append('<div class="frameTitle">Your inventory</div><div id="inventory"><div id="items"></div><div id="details"></div></div>');
 
       var inv = g_player.inventory;
 
@@ -266,10 +267,10 @@ Menu.prototype =
    {
       // build the structure
       this.right.empty();
-      this.right.append('<div id="help"></div>');
+      this.right.append('<div class="frameTitle">Help</div><div id="help"></div>');
 
       // fill with information
-      $('#help').append('HELP<br/><br/>blablabla');
+      $('#help').append('blablabla');
 
       // keyboard handling
       var menu = this;

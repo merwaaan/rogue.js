@@ -16,6 +16,12 @@ body
     padding-left : 20px;
 }
 
+.frameTitle
+{
+   margin-bottom : 10px;
+   color : tan;
+}
+
 #status, #characteristics, #equipment, #wall
 {
     margin-bottom : 10px;
@@ -68,5 +74,5 @@ body
 #inventory #details
 {
    float : left;
-   margin-left : 40px;
+   margin-left : 80px;
 }
