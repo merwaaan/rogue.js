@@ -99,24 +99,15 @@ Menu.prototype =
       this.right.empty();
       this.right.append('<div id="pickUpChoice"><ul></ul></div>');
 
-      // ASCII code of the key used to select an item (we start with 'a')
-      var keyCodeAscii = 97;
-
-      // hold shortcut/item associations
-      var shortcuts = [];
+      // hold an array of shortcut/item associations
+      var shortcuts = getItemShortcuts(items);
 
       for(var i = 0; i < items.length; i++)
       {
-         var shortcut = String.fromCharCode(keyCodeAscii);
+         var shortcut = String.fromCharCode(97 + i);
          var name = items[i].getName();
 
          $('#pickUpChoice ul').append('<li>' + name + ' (' + shortcut + ')</li>');
-               
-         // memorize the shortcut and the associated item
-         // (32 is the offset between a character's ASCII code and its Javascript code)
-         var keyCodeJS = keyCodeAscii - 32 + '';
-         shortcuts[keyCodeJS] = items[i];
-         keyCodeAscii++;
       }
 
       // keyboard handling
@@ -128,10 +119,11 @@ Menu.prototype =
          {
             menu.backToGame();
          }
-         // if the used shorcut is associated with an item, pick it up
+         // if the pressed key is associated with an item, pick it up
          else if(shortcuts[event.keyCode])
          {
             shortcuts[event.keyCode].pickUp(g_player);
+
             menu.backToGame();
          }
 
@@ -159,11 +151,11 @@ Menu.prototype =
       // [[category display name, inventory local array], ...]
       var categories = [['Weapons', inv.weapons], ['Armors', inv.armors], ['Food', inv.food]];
 
-      // ASCII code of the key used to select an item (we start with 'a')
-      var keyCodeAscii = 97;
-
-      // hold shortcut/item associations
-      var shortcuts = [];
+      // hold shortcut/item associations (we have to concat all the array from the inventory
+      // if we want to have continuous shortcuts and we also need to keep track of the current
+      // shortcut through all the item categories)
+      var shortcuts = getItemShortcuts(inv.weapons.concat(inv.armors, inv.food));
+      var shortcutIndex = 0;
 
       for(var i = 0; i < categories.length; i++)
       {
@@ -177,7 +169,7 @@ Menu.prototype =
          {
             for(var j = 0; j < currentCat[1].length; j++)
             {
-               var shortcut = String.fromCharCode(keyCodeAscii);
+               var shortcut = String.fromCharCode(97 + shortcutIndex++);
                var name = currentCat[1][j].getName();
 
                // change the color of the item name if it is a wielded weapon or armor
@@ -187,12 +179,6 @@ Menu.prototype =
                }
 
                $('#inventory #items ul:last-child').append('<li>' + name + ' (' + shortcut + ')</li>');
-               
-               // memorize the shortcut and the associated item
-               // (32 is the offset between a character's ASCII code and its Javascript code)
-               var keyCodeJS = keyCodeAscii - 32 + '';
-               shortcuts[keyCodeJS] = currentCat[1][j];
-               keyCodeAscii++;
             }
          }
       }

@@ -62,6 +62,32 @@ function drawBar(element, value, max)
     element.text(bar);
 }
 
+/**
+ * return an associative array in which the shortcuts are the keys and 
+ * the items are the values. The shortcuts can later be used to let the
+ * user choose an item from a list.
+ *
+ * [97:item1, 98:item2, ...]
+ */
+function getItemShortcuts(items)
+{
+   var shortcuts = [];
+
+   // ASCII code of the key used to select an item (we start with 'a')
+   var keyCodeAscii = 97;
+
+   for(var i = 0; i < items.length; i++)
+   {
+      // memorize the shortcut and the associated item
+      // (32 is the offset between a character's ASCII code and its Javascript code)
+      var keyCodeJS = keyCodeAscii - 32 + '';
+      shortcuts[keyCodeJS] = items[i];
+      keyCodeAscii++;
+   }
+
+   return shortcuts;
+}
+
 function clearMessages()
 {
    $('#message').empty();
