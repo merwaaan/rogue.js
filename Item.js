@@ -17,12 +17,12 @@ Item.prototype =
 
    pickUp : function(creature)
    {
-      if(creature.inventory.hasFreeSlot(this))
+      if(creature.inventory.enoughSpace(this))
       {
          this.owner = creature;
 
          // only works for @ at the moment
-         creature.inventory.add(this.getCategory(), this);
+         creature.inventory.add(this);
 
          if(creature.type == 'PLAYER')
          {
@@ -43,14 +43,14 @@ Item.prototype =
       this.y = y;
 
       // unwield the item before removing it from the owner inventory
-      if(this.owner.weapon == this)
+      if(this.owner.left == this)
       {
-         this.owner.weapon = null;
+         this.owner.left = null;
          g_menu.updateStatusFrame();
       }
-      else if(this.owner.armor == this)
+      else if(this.owner.right == this)
       {
-         this.owner.armor = null;
+         this.owner.right = null;
          g_menu.updateStatusFrame();
       }
 
@@ -63,19 +63,48 @@ Item.prototype =
    },
 
    /**
-    * returns a string representing the name of the category that
-    * the current item belongs to. This information comes from g_itemsCategories.
-    *
+    * equip the owner with this item, it will be placed in the left hand if the string
+    * 'left' is specified in parameter, if the string 'right' is specified it will be 
+    * placed in the right hand
     */
-   getCategory : function()
+   wield : function(hand)
    {
-      for(var i = 0; i < g_itemsCategories.length; i++)
-      {
-         if(g_itemsCategories[i][0][this.type])
-         {
-            return g_itemsCategories[i][1];
-         }
-      }
+      if(hand == 'left')
+         this.owner.left = this;
+      else if(hand == 'right')
+         this.owner.right = this;
+   },
+
+   /**
+    * free the owner's hand holding the item
+    *
+    * @requires the item to be held
+    */
+   unwield : function()
+   {
+      if(this.owner.left == this)
+         this.owner.left = null;
+      else if(this.owner.right == this)
+         this.owner.right = null;
+   },
+
+   /**
+    * return true if the item is held in one of the player's hands, else false
+    */
+   isWielded : function(hand)
+   {
+      // without a parameter specified, return true if the item is in whatever hand
+      if(!hand && (this.owner.left == this || this.owner.right == this))
+         return true;
+
+      // with a parameter specified, check the corresponding hand
+      if(hand == 'left' && this.owner.left == this)
+         return true;
+      
+      if(hand == 'right' && this.owner.right == this)
+         return true;
+
+      return false;
    }
 };
 

@@ -22,12 +22,12 @@ body
    color : tan;
 }
 
-#status, #characteristics, #equipment, #wall
+#status, #characteristics, #hands, #wall
 {
     margin-bottom : 10px;
 }
 
-#HP, #XP, #LVL, #STR, #DEF, #WEAPON, #ARMOR 
+#HP, #XP, #LVL, #STR, #DEF, #leftHand, #rightHand 
 {
     display : block;
 }

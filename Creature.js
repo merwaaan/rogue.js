@@ -20,9 +20,9 @@ Creature.prototype =
    STR : null,
    DEF : null,
 
-   // equipment
-   weapon : null,
-   armor : null,
+   // the creature's hands, each one can hold an object
+   left : null,
+   right : null,
 
    destroyCreature : function()
    {

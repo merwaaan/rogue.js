@@ -12,13 +12,12 @@ function Player()
    this.STR = g_levelingInfo[this.LVL]['STR'];
    this.DEF = g_levelingInfo[this.LVL]['DEF'];
 
-   this.weapon = new Weapon(null, null, 'SWORD', this);
-   this.armor = new Armor(null, null, 'SKIN', this);
+   // equip the player with a sword
+   this.left = new Weapon(null, null, 'SWORD', this);
 
    // create and fill the inventory
    this.inventory = new Inventory();
-   this.inventory.add(this.weapon);
-   this.inventory.add(this.armor);
+   this.inventory.add(this.left);
    this.inventory.add(new Weapon(null, null, 'SPEAR', this));
    this.inventory.add(new FoodItem(null, null, 'BREAD', this));
 
@@ -35,16 +34,16 @@ Player.prototype =
     LVL : null,
     nextLevel : null,
 
-    // inventory
-    inventory : null,
+   // inventory
+   inventory : null,
 
-    // tile memory
-    seenTiles : null,
+   // tile memory
+   seenTiles : null,
 
-    destroyPlayer : function()
-    {
-        this.destroyCreature();
-    },
+   destroyPlayer : function()
+   {
+      this.destroyCreature();
+   },
 
     winXP : function(XP)
     {
@@ -72,11 +71,11 @@ Player.prototype =
         writeMessage(this.getName() + ' level up!', 'GOOD');
     },
 
-    // TODO let the user choose the name of his adventurer
-    getName : function()
-    {
-        return 'You';
-    },
+   // TODO let the user choose the name of his adventurer
+   getName : function()
+   {
+      return 'You';
+   },
 
     keyDown : function(event)
     {

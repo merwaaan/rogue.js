@@ -48,7 +48,7 @@ Menu.prototype =
       this.right.append('<div class="frameTitle">Status</div>');
       this.right.append('<div id="status"></div>');
       this.right.append('<div id="characteristics"></div>');
-      this.right.append('<div id="equipment"></div>');
+      this.right.append('<div id="hands"></div>');
 
       // status
       var s = ['HP', 'XP']; 
@@ -59,11 +59,10 @@ Menu.prototype =
       s = ['LVL', 'STR', 'DEF'];
       for(var i = 0; i < s.length; i++)
          $('#characteristics').append('<span id="' + s[i] + '">' + s[i] + ' <span id="' + s[i] + '_label"></span></span>'); 
-   
-      // equipment
-      s = ['WEAPON', 'ARMOR'];
-      for(var i = 0; i < s.length; i++)
-         $('#info #equipment').append('<span id="' + s[i] + '">' + s[i] + ' <span id="' + s[i] + '_label"></span></span>');
+
+      // held objects
+      $('#hands').append('<span id="leftHand"></span>');
+      $('#hands').append('<span id="rightHand"></span>');
 
       this.updateStatusFrame();
    },
@@ -83,22 +82,17 @@ Menu.prototype =
       $('#STR_label').text(g_player.STR);
       $('#DEF_label').text(g_player.DEF);
 
-      // weapon
-      var name = g_player.weapon ? g_player.weapon.getName() : 'none';
-      var damage = g_player.weapon ? g_player.weapon.getDamage() : 0;
-      $('#WEAPON_label').text(name + ' (+' + damage + ')');
-
-      // armor
-      var name = g_player.armor ? g_player.armor.getName() : 'none';
-      var protection = g_player.armor ? g_player.armor.getProtection() : 0;
-      $('#ARMOR_label').text(name + ' (+' + protection + ')');
+      // held items
+      $('#hands #leftHand').text('Left hand : ' + (g_player.left ? g_player.left.getName() : 'empty'));
+      $('#hands #rightHand').text('Right hand : ' + (g_player.right ? g_player.right.getName() : 'empty'));
    },
 
    openPickUpChoiceFrame : function(items)
    {
       // build the structure
       this.right.empty();
-      this.right.append('<div class="frameTitle">Which item do you want to pick up?</div><div id="pickUpChoice"><ul></ul></div>');
+      this.right.append('<div class="frameTitle">Which item do you want to pick up?</div>');
+      this.right.append('<div id="pickUpChoice"></div>');
 
       // hold an array of shortcut/item associations
       var shortcuts = getItemShortcuts(items);
@@ -108,7 +102,7 @@ Menu.prototype =
          var shortcut = String.fromCharCode(97 + i);
          var name = items[i].getName();
 
-         $('#pickUpChoice ul').append('<li>' + name + ' (' + shortcut + ')</li>');
+         $('#pickUpChoice').append(name + ' (' + shortcut + ')<br/>');
       }
 
       // keyboard handling
@@ -156,6 +150,12 @@ Menu.prototype =
       {
          var shortcut = String.fromCharCode(97 + i);
          var name = inv.items[i].getName();
+         
+         // add a note if the item is held
+         if(inv.items[i].isWielded('left'))
+            name += ' [left hand]';
+         else if(inv.items[i].isWielded('right'))
+            name += ' [right hand]';
 
          $('#inventory #items').append(name + ' (' + shortcut + ')<br/>');
       }
@@ -169,7 +169,7 @@ Menu.prototype =
          {
             menu.backToGame();
          }
-         // if the used shorcut is associated with an item, open the detail tab
+         // if the used shorcut is associated with an item, open the details tab
          else if(shortcuts[event.keyCode])
          {
             menu.displayInventoryDetails(shortcuts[event.keyCode]);
@@ -184,14 +184,23 @@ Menu.prototype =
       // display basic information about the selected item
       $('#inventory #details').append(item.getName() + ' : ' + item.getDescription() + '<br/>');
 
-      // display the list of possible actions
-      if(item.drop)
+      // flags for possible actions
+      var drop = item.drop;
+      var wieldLeft = item.wield && item.isWielded && !item.isWielded() && !g_player.left;
+      var wieldRight = item.wield && item.isWielded && !item.isWielded() && !g_player.right;
+      var unwield = item.unwield && item.isWielded && item.isWielded();
+
+      // display the list of possible actions and record them
+      if(drop)
          $('#inventory #details').append('<br/>drop (d)');
 
-      if(item.wield && item.isWielded && !item.isWielded())
-         $('#inventory #details').append('<br/>wield (w)');
+      if(wieldLeft)
+         $('#inventory #details').append('<br/>hold in left hand (l)');
 
-      if(item.unwield && item.isWielded && item.isWielded())
+      if(wieldRight)
+         $('#inventory #details').append('<br/>hold in right hand (r)');
+
+      if(unwield)
          $('#inventory #details').append('<br/>unwield (u)');
 
       // key handling
@@ -207,34 +216,44 @@ Menu.prototype =
          // d : drop item
          else if(event.keyCode == 68)
          {
-            if(item.drop)
+            if(drop)
             {
                item.drop(g_player.x, g_player.y);
                
                menu.backToGame();
             }
          }
-         // u : unwield item
+         // l : wield the item with the left hand
+         else if(event.keyCode == 76)
+         {
+            if(wieldLeft)
+            {
+               item.wield('left');
+
+               menu.backToGame();
+            }
+         }
+         // r : wield the item with the right hand
+         else if(event.keyCode == 82)
+         {
+            if(wieldRight)
+            {
+               item.wield('right');
+
+               menu.backToGame();
+            }
+         }       
+         // u : unwield
          else if(event.keyCode == 85)
          {
-            if(item.unwield && item.isWielded && item.isWielded())
+            if(unwield)
             {
                item.unwield();
 
                menu.backToGame();
             }
          }
-         // w : wield item
-         else if(event.keyCode == 87)
-         {
-            if(item.wield && item.isWielded && !item.isWielded())
-            {
-               item.wield();
 
-               menu.backToGame();
-            }
-         }
-                 
          event.preventDefault();
       });
    },
