@@ -62,30 +62,6 @@ var g_weaponInfo =
 };
 
 /**
- * PWR : power of the armor, it is added to the DEF of the creature wielding it
- */
-
-var g_armorInfo =
-{
-    'SKIN' :
-    {
-        'name' : 'wolf skin',
-        'desc' : 'A glorious wolf skin',
-        'char' : 's',
-        'color' : 'blue',
-        'PWR' : 0
-    },
-    'MAIL' :
-    {
-        'name' : 'silver mail',
-        'desc' : 'A shiny mail',
-        'char' : 'm',
-        'color' : 'blue',
-        'PWR' : 3
-    }
-};
-
-/**
  * - stat : name of the state which will be altered once the item is used (HP, STR, DEF, maybe more later...)
  * - value : quantity of the targetted stat which will be altered
  * - alteration : type of alteration applied to the stat
@@ -125,7 +101,6 @@ var g_foodInfo =
 /**
  * - STR : strength of this type monster
  * - DEF : defense of this type of monster
- * - XP : quantity of XP that @ will win if he kills this type of monster
  */
 
 var g_monsterInfo =
@@ -135,20 +110,14 @@ var g_monsterInfo =
         'name' : 'snake',
         'desc' : 'A small yet venomous snake',
         'char' : 's',
-        'color' : 'yellow',
-        'STR' : 1,
-        'DEF' : 1,
-        'XP' : 70
+        'color' : 'yellow'
     },
     'SPIDER' :
     {
         'name' : 'spider',
         'desc' : 'An eight-legged horror',
         'char' : 'x',
-        'color' : 'red',
-        'STR' : 1,
-        'DEF' : 0,
-        'XP' : 60
+        'color' : 'red'
     }
 };
 
@@ -161,30 +130,7 @@ var g_playerInfo =
     }
 };
 
-var g_levelingInfo =
-{
-    1 :
-    {
-        'HP' : '15',
-        'STR' : 1,
-        'DEF' : 1,
-        'next' : 100
-    },
-    2 :
-    {
-        'HP' : '5',
-        'STR' : 1,
-        'DEF' : 1,
-        'next' : 130
-    },
-    3 :
-    {
-        'HP' : '5',
-        'STR' : 1,
-        'DEF' : 0,
-        'next' : 200
-    }
-};
+var g_sanityLevels = ['Utterly insane', 'Verging on dementia', 'Mildly delirious', 'Lightly disturbed', 'Sane'];
 
 var g_messageInfo =
 {

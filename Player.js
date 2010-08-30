@@ -4,13 +4,8 @@ function Player()
 
    this.info = g_playerInfo['PLAYER'];
 
-   this.LVL = 1;
-
-   this.HP = this.maxHP = g_levelingInfo[this.LVL]['HP'];
-   this.XP = 0;
-
-   this.STR = g_levelingInfo[this.LVL]['STR'];
-   this.DEF = g_levelingInfo[this.LVL]['DEF'];
+   // sanity level (index of the level in the global array)
+   this.sanity = g_sanityLevels.length - 1;
 
    // equip the player with a sword
    this.left = new Weapon(null, null, 'SWORD', this);
@@ -30,9 +25,8 @@ function Player()
 
 Player.prototype =
 {
-    // characteristics
-    LVL : null,
-    nextLevel : null,
+   // sanity level
+   sanity : null,
 
    // inventory
    inventory : null,
@@ -45,60 +39,33 @@ Player.prototype =
       this.destroyCreature();
    },
 
-    winXP : function(XP)
-    {
-        this.XP += XP;
-        
-        writeMessage(this.getName() + ' win ' + XP + ' XP points', 'GOOD');
-
-        if(this.XP >= g_levelingInfo[this.LVL]['next'])
-        {
-            this.levelUp();
-        }
-        
-         g_menu.updateStatusFrame();
-    },
-
-    levelUp : function()
-    {
-        this.XP = this.XP % g_levelingInfo[this.LVL]['next'];
-
-        this.LVL++;
-        this.maxHP += g_levelingInfo[this.LVL]['HP'];
-        this.STR += g_levelingInfo[this.LVL]['STR'];
-        this.DEF += g_levelingInfo[this.LVL]['DEF'];
-
-        writeMessage(this.getName() + ' level up!', 'GOOD');
-    },
-
-   // TODO let the user choose the name of his adventurer
    getName : function()
    {
       return 'You';
    },
 
-    keyDown : function(event)
-    {
-        var xOld = this.x;
-        var yOld = this.y;
+   keyDown : function(event)
+   {
+      var xOld = this.x;
+      var yOld = this.y;
 
-        var xMove = 0;
-        var yMove = 0;
+      var xMove = 0;
+      var yMove = 0;
 
-        // TODO: keyCode are not the same for FF
-        // numpad only works in Chrome for the moment
-        switch(event.keyCode)
-        {
-        // h : help
-        case 72:
-           g_menu.openHelpFrame();
-           return;
-        // i : inventory
-        case 73:
+      // TODO: keyCode are not the same for FF
+      // numpad only works in Chrome for the moment
+      switch(event.keyCode)
+      {
+         // h : help
+         case 72:
+            g_menu.openHelpFrame();
+            return;
+         // i : inventory
+         case 73:
             this.inventory.open();
             return;
-        // p : pick up
-        case 80:
+         // p : pick up
+         case 80:
             var items = g_level.getTile(this.x, this.y).items;
             if(items)
             {
@@ -114,89 +81,112 @@ Player.prototype =
                }
             }
             return;
-        // left arrow
-        case 37:
-        // numpad 4
-        case 100:
+         // left arrow
+         case 37:
+         // numpad 4
+         case 100:
             xMove = -1;
             break;
-        // up arrow
-        case 38:
-        // numpad 8
-        case 104:
+         // up arrow
+         case 38:
+         // numpad 8
+         case 104:
             yMove = -1;
             break;
-        // right arrow
-        case 39:
-        // numpad 6
-        case 102:
+         // right arrow
+         case 39:
+         // numpad 6
+         case 102:
             xMove = 1;
             break;
-        // down arrow
-        case 40:
-        // numpad 2
-        case 98:
+         // down arrow
+         case 40:
+         // numpad 2
+         case 98:
             yMove = 1;
             break;
 
-        // diagonals
-        // numpad 1
-        case 97:
+         // diagonals
+         // numpad 1
+         case 97:
             xMove = -1;
             yMove =  1;
             break;
-        // numpad 3
-        case 99:
+         // numpad 3
+         case 99:
             xMove =  1;
             yMove =  1;
             break;
-        // numpad 7
-        case 103:
+         // numpad 7
+         case 103:
             xMove = -1;
             yMove = -1;
             break;
         // numpad 9
-        case 105:
+         case 105:
             xMove =  1;
             yMove = -1;
             break;
-        }
+      }
 
-        var xNew = this.x + xMove;
-        var yNew = this.y + yMove;
+      var xNew = this.x + xMove;
+      var yNew = this.y + yMove;
 
-        // check if a movement has to be made
-        // don't walk into undefined tiles
-        if((xNew != this.x || yNew != this.y) && g_level.getTile(xNew, yNew))
-        {
+      // check if a movement has to be made
+      // don't walk into undefined tiles
+      if((xNew != this.x || yNew != this.y) && g_level.getTile(xNew, yNew))
+      {
             // if the target tile is walkable
-            if(isTileWalkable(xNew, yNew))
-            {
-                this.move(xNew, yNew);
+         if(isTileWalkable(xNew, yNew))
+         {
+            this.move(xNew, yNew);
 
-                // if there is items on the current tile, enumerate them
-                var items;
-                if(items = g_level.getTile(xNew, yNew).items)
-                {
-                  for(var i = 0; i < items.length; i++)
-                  {
-                     writeMessage('There is a ' + items[i].getName() + ' on the floor');
-                  }
-                }
-            }
-            // else if there is a monster on the tile
-            else if(g_level.getTile(xNew, yNew).creature != null)
+            // if there is items on the current tile, enumerate them
+            var items;
+            if(items = g_level.getTile(xNew, yNew).items)
             {
-                this.attack(g_level.getTile(xNew, yNew).creature);
+               for(var i = 0; i < items.length; i++)
+               {
+                  writeMessage('There is a ' + items[i].getName() + ' on the floor');
+               }
             }
+         }
+         // else if there is a monster on the tile
+         else if(g_level.getTile(xNew, yNew).creature != null)
+         {
+            this.attack(g_level.getTile(xNew, yNew).creature);
+         }
             
-            g_gameObjectManager.xOffset += this.x - xOld;
-            g_gameObjectManager.yOffset += this.y - yOld;
+         g_gameObjectManager.xOffset += this.x - xOld;
+         g_gameObjectManager.yOffset += this.y - yOld;
 
-            g_gameObjectManager.turn++;
-        }
-    },
+         g_gameObjectManager.turn++;
+      }
+   },
 
+   /**
+    * decrease the player's sanity
+    */
+   takeDamage : function(attacker)
+   {
+      this.sanity--;
+
+      if(this.sanity < 0)
+         this.die();
+
+      g_menu.updateStatusFrame();
+   },
+
+   /**
+    *
+    */
+   die : function()
+   {
+      writeMessage(this.getName() + ' die', 'BAD');
+	   
+      gameOver();
+   },
+      
     /**
      * Commit the given tile to the player memory. A subsequent call
      * to this.hasSeenTile(tile) will return true.

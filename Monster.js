@@ -4,17 +4,17 @@ function Monster(type)
 
     this.info = g_monsterInfo[type];
 
-    this.HP = 5;
-    this.XP = g_monsterInfo[this.type]['XP'];
-
-    this.STR = this.info['STR'];
-    this.DEF = this.info['DEF'];
+    this.HP = 3;
 
     this.brain = new FiniteStateMachine(this, g_followerBehavior);
 }
 
 Monster.prototype =
 {
+   // status
+   HP : null,
+   maxHP : null,
+
    brain : null,
 
    // tracked enemy

@@ -47,18 +47,10 @@ Menu.prototype =
       this.right.empty();
       this.right.append('<div class="frameTitle">Status</div>');
       this.right.append('<div id="status"></div>');
-      this.right.append('<div id="characteristics"></div>');
       this.right.append('<div id="hands"></div>');
-
-      // status
-      var s = ['HP', 'XP']; 
-      for(var i = 0; i < s.length; i++)
-	      $('#status').append('<span id="' + s[i] + '">' + s[i] + ' <span id="' + s[i] + '_bar"></span> <span id="' + s[i] + '_label"></span>');
    
-      // characteristics
-      s = ['LVL', 'STR', 'DEF'];
-      for(var i = 0; i < s.length; i++)
-         $('#characteristics').append('<span id="' + s[i] + '">' + s[i] + ' <span id="' + s[i] + '_label"></span></span>'); 
+      // mental status
+      $('#status').append('<span id="sanity"></span>');
 
       // held objects
       $('#hands').append('<span id="leftHand"></span>');
@@ -69,18 +61,8 @@ Menu.prototype =
 
    updateStatusFrame : function()
    {
-      // HP
-      drawBar($('#HP_bar'), g_player.HP, g_player.maxHP);
-      $('#HP_label').text(g_player.HP + '/' + g_player.maxHP);
-
-      // XP
-      drawBar($('#XP_bar'), g_player.XP, g_levelingInfo[g_player.LVL]['next']);
-      $('#XP_label').text(g_player.XP + '/' + g_levelingInfo[g_player.LVL]['next']);
-
-      // stats
-      $('#LVL_label').text(g_player.LVL);
-      $('#STR_label').text(g_player.STR);
-      $('#DEF_label').text(g_player.DEF);
+      // mental status
+      $('#sanity').text(g_sanityLevels[g_player.sanity]);
 
       // held items
       $('#hands #leftHand').text('Left hand : ' + (g_player.left ? g_player.left.getName() : 'empty'));
@@ -293,6 +275,9 @@ Menu.prototype =
    {
       this.right.empty();
       this.right.append('-------- GAME OVER ---------<br/><br/>blabla');
+
+      // block inputs from the player
+      setKeyHandler(null);
    }
 }
 

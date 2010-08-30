@@ -4,22 +4,10 @@ function Creature(type)
    var tile = g_level.getRandomTile('FLOOR');
 
    VisualGameObject.apply(this, [tile.x, tile.y, type]);
-
-   this.HP = 15;
-   this.maxHP = 15;
 }
 
 Creature.prototype =
 {
-   // status
-   HP : null,
-   maxHP : null,
-   XP : null,
-
-   // characteristics
-   STR : null,
-   DEF : null,
-
    // the creature's hands, each one can hold an object
    left : null,
    right : null,
@@ -37,7 +25,7 @@ Creature.prototype =
     
    attack : function(victim)
    {
-      var damage = this.STR + (this.weapon != null ? this.weapon.getDamage() : 0);
+      var damage = 1;
 
       victim.takeDamage(damage, this);
    },
@@ -46,53 +34,18 @@ Creature.prototype =
    {
       this.HP -= damage;
 
-      if(this.type == 'PLAYER')
-      {
-         writeMessage(this.getName() + ' lose ' + damage + 'HP', 'BAD');
-         g_menu.updateStatusFrame();
-      }
-      else
-      { 
-         writeMessage(this.getName() + ' loses ' + damage + 'HP');
-      }
+      writeMessage(this.getName() + ' loses ' + damage + 'HP');
 
       if(this.HP <= 0)
-      {
-         this.HP = 0;
-
          this.die(); 
-
-         if(attacker.type == 'PLAYER')
-         {
-            attacker.winXP(this.XP);
-         }
-      }
    },
-
-    // TODO
-    getHealth : function(quantity)
-    {
-        this.HP += quantity;
-
-        if(this.HP > this.maxHP)
-        {
-            this.HP = this.maxHP;
-        }
-    },
 
    die : function()
    {
-      if(this.type == 'PLAYER')
-	   {
-         writeMessage(this.getName() + ' die', 'BAD');
-	      gameOver();
-	   }
-	   else
-	   {
-	      writeMessage(this.getName() + ' dies');
-	   }
+       writeMessage(this.getName() + ' dies');
 	
       // drop stuff
+      // TODO
 
       this.destroyCreature();
     },
