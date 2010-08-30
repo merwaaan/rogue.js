@@ -86,12 +86,20 @@ Tile.prototype =
    // drop an item on the tile
    dropItem : function(item)
    {
-      this.items.push(item);
+      // don't forget to update the coordinates
+      item.x = this.x;
+      item.y = this.y;
+   
+      this.items.push(item);   
    },
 
    // remove an item from the tile
    pickUpItem : function(item)
    {
+      // don't forget to erase the coordinates
+      item.x = null;
+      item.y = null;
+
       this.items.removeObject(item);
    }
 }

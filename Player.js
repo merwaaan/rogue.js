@@ -167,9 +167,11 @@ Player.prototype =
    /**
     * decrease the player's sanity
     */
-   takeDamage : function(attacker)
+   takeDamage : function(damage, attacker)
    {
-      this.sanity--;
+      this.sanity -= damage;
+
+      writeMessage('The ' + attacker.getName() + ' attacks you', 'BAD');
 
       if(this.sanity < 0)
          this.die();

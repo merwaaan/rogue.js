@@ -274,7 +274,7 @@ Menu.prototype =
    openGameOverFrame : function()
    {
       this.right.empty();
-      this.right.append('-------- GAME OVER ---------<br/><br/>blabla');
+      this.right.append('-------- GAME OVER ---------<br/><br/>Work it harder,<br/>Make it better,<br/>Do it faster,<br/>Makes us stronger<br/>');
 
       // block inputs from the player
       setKeyHandler(null);

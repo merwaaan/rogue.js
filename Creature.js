@@ -34,7 +34,7 @@ Creature.prototype =
    {
       this.HP -= damage;
 
-      writeMessage(this.getName() + ' loses ' + damage + 'HP');
+      writeMessage('The ' + this.getName() + ' loses ' + damage + 'HP');
 
       if(this.HP <= 0)
          this.die(); 
@@ -42,10 +42,11 @@ Creature.prototype =
 
    die : function()
    {
-       writeMessage(this.getName() + ' dies');
+       writeMessage('The ' + this.getName() + ' dies');
 	
       // drop stuff
-      // TODO
+      if(this.inventory)
+         this.inventory.drop();
 
       this.destroyCreature();
     },

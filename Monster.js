@@ -7,6 +7,8 @@ function Monster(type)
     this.HP = 3;
 
     this.brain = new FiniteStateMachine(this, g_followerBehavior);
+    this.inventory = new Inventory();
+    this.inventory.add(new Weapon(null, null, 'SWORD', this));
 }
 
 Monster.prototype =
@@ -31,11 +33,6 @@ Monster.prototype =
       {
          this.brain.think();
       }
-   },
-
-   getName : function()
-   {
-       return 'the ' + this.info['name'];
    },
 
    /**
