@@ -15,11 +15,12 @@ function Player()
    this.weapon = new Weapon(null, null, 'SWORD', this);
    this.armor = new Armor(null, null, 'SKIN', this);
 
+   // create and fill the inventory
    this.inventory = new Inventory();
-   this.inventory.add('WEAPON', this.weapon);
-   this.inventory.add('ARMOR', this.armor);
-   this.inventory.add('WEAPON', new Weapon(null, null, 'SPEAR', this));
-   this.inventory.add('FOOD', new FoodItem(null, null, 'BREAD', this));
+   this.inventory.add(this.weapon);
+   this.inventory.add(this.armor);
+   this.inventory.add(new Weapon(null, null, 'SPEAR', this));
+   this.inventory.add(new FoodItem(null, null, 'BREAD', this));
 
    this.seenTiles = new Array();
     

@@ -144,44 +144,20 @@ Menu.prototype =
    {
       // build the structure
       this.right.empty();
-      this.right.append('<div class="frameTitle">Your inventory</div><div id="inventory"><div id="items"></div><div id="details"></div></div>');
+      this.right.append('<div class="frameTitle">Your inventory</div>');
+      this.right.append('<div id="inventory"><div id="items"></div><div id="details"></div></div>');
 
       var inv = g_player.inventory;
 
-      // list of all the categories of items possibly in the inventory
-      // [[category display name, inventory local array], ...]
-      var categories = [['Weapons', inv.weapons], ['Armors', inv.armors], ['Food', inv.food]];
+      // hold shortcut/item associations
+      var shortcuts = getItemShortcuts(inv.items);
 
-      // hold shortcut/item associations (we have to concat all the array from the inventory
-      // if we want to have continuous shortcuts and we also need to keep track of the current
-      // shortcut through all the item categories)
-      var shortcuts = getItemShortcuts(inv.weapons.concat(inv.armors, inv.food));
-      var shortcutIndex = 0;
-
-      for(var i = 0; i < categories.length; i++)
+      for(var i = 0; i < inv.items.length; i++)
       {
-         var currentCat = categories[i];
+         var shortcut = String.fromCharCode(97 + i);
+         var name = inv.items[i].getName();
 
-         // display the name of the current category
-         $('#inventory #items').append('<ul><span class="category">' + currentCat[0] + '</span></ul>');
-
-         // display the content of the current category
-         if(currentCat[1].length > 0)
-         {
-            for(var j = 0; j < currentCat[1].length; j++)
-            {
-               var shortcut = String.fromCharCode(97 + shortcutIndex++);
-               var name = currentCat[1][j].getName();
-
-               // change the color of the item name if it is a wielded weapon or armor
-               if(currentCat[1][j].isWielded && currentCat[1][j].isWielded())
-               {
-                  name = '<span class="wielded">' + name + '</span>';
-               }
-
-               $('#inventory #items ul:last-child').append('<li>' + name + ' (' + shortcut + ')</li>');
-            }
-         }
+         $('#inventory #items').append(name + ' (' + shortcut + ')<br/>');
       }
 
       // keyboard handling

@@ -152,11 +152,6 @@ var g_monsterInfo =
     }
 };
 
-// keep all the item dictionnaries and their respective categories (mainly used in the player's inventory)
-// [[dictionnary, category name], ...]
-
-var g_itemsCategories = [[g_weaponInfo, 'WEAPON'], [g_armorInfo, 'ARMOR'], [g_foodInfo, 'FOOD']];
-
 var g_playerInfo =
 {
     'PLAYER' :
