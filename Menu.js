@@ -138,7 +138,7 @@ Menu.prototype =
    {
       // build the structure
       this.right.empty();
-      this.right.append('<div class="frameTitle">Your inventory</div>');
+      this.right.append('<div class="frameTitle">Inventory</div>');
       this.right.append('<div id="inventory"><div id="items"></div><div id="details"></div></div>');
 
       var inv = g_player.inventory;
@@ -157,7 +157,7 @@ Menu.prototype =
          else if(inv.items[i].isWielded('right'))
             name += ' [right hand]';
 
-         $('#inventory #items').append(name + ' (' + shortcut + ')<br/>');
+         $('#inventory #items').append(shortcut + ' - ' + name + '<br/>');
       }
 
       // keyboard handling
@@ -192,16 +192,16 @@ Menu.prototype =
 
       // display the list of possible actions and record them
       if(drop)
-         $('#inventory #details').append('<br/>drop (d)');
+         $('#inventory #details').append('<br/>d - drop');
 
       if(wieldLeft)
-         $('#inventory #details').append('<br/>hold in left hand' + (item.owner.left ? ' (will unwield the ' + item.owner.left.getName() + ')' : '')  + ' (l)');
+         $('#inventory #details').append('<br/>l - hold in left hand' + (item.owner.left ? ' (will unwield the ' + item.owner.left.getName() + ')' : ''));
 
       if(wieldRight)
-         $('#inventory #details').append('<br/>hold in right hand '+ (item.owner.right ? ' (will unwield the ' + item.owner.right.getName() + ')' : '')  + '(r)');
+         $('#inventory #details').append('<br/>r - hold in right hand '+ (item.owner.right ? ' (will unwield the ' + item.owner.right.getName() + ')' : ''));
 
       if(unwield)
-         $('#inventory #details').append('<br/>unwield (u)');
+         $('#inventory #details').append('<br/>u - unwield');
 
       // key handling
       var menu = this;
