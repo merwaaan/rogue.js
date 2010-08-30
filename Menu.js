@@ -186,8 +186,8 @@ Menu.prototype =
 
       // flags for possible actions
       var drop = item.drop;
-      var wieldLeft = item.wield && item.isWielded && !item.isWielded() && !g_player.left;
-      var wieldRight = item.wield && item.isWielded && !item.isWielded() && !g_player.right;
+      var wieldLeft = item.wield && !item.isWielded('left');
+      var wieldRight = item.wield && !item.isWielded('right');
       var unwield = item.unwield && item.isWielded && item.isWielded();
 
       // display the list of possible actions and record them
@@ -195,10 +195,10 @@ Menu.prototype =
          $('#inventory #details').append('<br/>drop (d)');
 
       if(wieldLeft)
-         $('#inventory #details').append('<br/>hold in left hand (l)');
+         $('#inventory #details').append('<br/>hold in left hand' + (item.owner.left ? ' (will unwield the ' + item.owner.left.getName() + ')' : '')  + ' (l)');
 
       if(wieldRight)
-         $('#inventory #details').append('<br/>hold in right hand (r)');
+         $('#inventory #details').append('<br/>hold in right hand '+ (item.owner.right ? ' (will unwield the ' + item.owner.right.getName() + ')' : '')  + '(r)');
 
       if(unwield)
          $('#inventory #details').append('<br/>unwield (u)');
@@ -228,6 +228,10 @@ Menu.prototype =
          {
             if(wieldLeft)
             {
+               // unwield the item if it is already held by the other hand
+               if(item == item.owner.right)
+                  item.owner.right.unwield();
+
                item.wield('left');
 
                menu.backToGame();
@@ -238,6 +242,10 @@ Menu.prototype =
          {
             if(wieldRight)
             {
+               // unwield the item if it is already held by the other hand
+               if(item == item.owner.left)
+                  item.owner.left.unwield();
+
                item.wield('right');
 
                menu.backToGame();
