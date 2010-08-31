@@ -51,6 +51,19 @@ Level.prototype =
                     // let the tile resolve what should be drawn
                     var sprite = tile.sprite();
 
+                    // if the targeting interface is on and the tile is reachable by a throw,
+                    // then highlight the tile
+                    if(g_targetingInterface.on && g_player.reachableTiles.containsObject(tile))
+                    {
+                       // the target tile has a different color than the rest of the reachable area
+                       if(x == g_targetingInterface.column - g_gameObjectManager.xOffset && y == g_targetingInterface.row - g_gameObjectManager.yOffset)
+                          ctx.fillStyle = 'crimson'
+                       else
+                          ctx.fillStyle = 'rosybrown';
+
+                       ctx.fillRect(cx, cy - FONT_HEIGHT - 1, FONT_WIDTH, FONT_HEIGHT);
+                    }
+
                     // if the player can see the tile, draw it
                     // otherwise, if the player previously saw the
                     // tile, draw the tile as it was last seen, and

@@ -18,6 +18,8 @@ function Player()
 
    this.seenTiles = new Array();
     
+   this.reachableTiles = new Array();
+
    // center the screen on the player
    g_gameObjectManager.xOffset = this.x - HALF_SIZE;
    g_gameObjectManager.yOffset = this.y - HALF_SIZE;
@@ -33,6 +35,9 @@ Player.prototype =
 
    // tile memory
    seenTiles : null,
+
+   // tiles reachable by throw
+   reachableTiles : null,
 
    destroyPlayer : function()
    {
@@ -196,50 +201,79 @@ Player.prototype =
       gameOver();
    },
       
-    /**
-     * Commit the given tile to the player memory. A subsequent call
-     * to this.hasSeenTile(tile) will return true.
-     *
-     * @requires tile is defined and not null
-     * @modifies this.seenTiles
-     * @effect add tile to this.seenTiles
-     */
-    addSeenTile : function(tile)
-    {
-        if (this.seenTiles[tile.x] === undefined)
-            this.seenTiles[tile.x] = new Array();
-        // record the sprite drawn for the tile to avoid omniscience
-        this.seenTiles[tile.x][tile.y] = tile.sprite()[0];
-    },
+   /**
+    * Commit the given tile to the player memory. A subsequent call
+    * to this.hasSeenTile(tile) will return true.
+    *
+    * @requires tile is defined and not null
+    * @modifies this.seenTiles
+    * @effect add tile to this.seenTiles
+    */
+   addSeenTile : function(tile)
+   {
+      if (this.seenTiles[tile.x] === undefined)
+         this.seenTiles[tile.x] = new Array();
+   
+      // record the sprite drawn for the tile to avoid omniscience
+      this.seenTiles[tile.x][tile.y] = tile.sprite()[0];
+   },
 
-    /**
-     * Return the sprite character of the tile as it was when the
-     * player last saw it.  If the player has not previously seen the
-     * given tile, undefined is returned.
-     *
-     * @requires tile is defined and not null,
-     *           this.hasSeenTile(tile) is true
-     * @return the tile's sprite character as it was when the player last
-     *         commited it to memory, or undefined it the player never
-     *         saw the tile
-     */
-    getSeenTile : function(tile)
-    {
-        return this.seenTiles[tile.x][tile.y];
-    },
+   /**
+    * Return the sprite character of the tile as it was when the
+    * player last saw it.  If the player has not previously seen the
+    * given tile, undefined is returned.
+    *
+    * @requires tile is defined and not null,
+    *           this.hasSeenTile(tile) is true
+    * @return the tile's sprite character as it was when the player last
+    *         commited it to memory, or undefined it the player never
+    *         saw the tile
+    */
+   getSeenTile : function(tile)
+   {
+      return this.seenTiles[tile.x][tile.y];
+   },
 
-    /**
-     * Whether this player has seen the given tile or not. To add a
-     * tile to this player memory, use this.addSeenTile.
-     *
-     * @requires tile is defined and not null
-     * @return true iff this player saw the tile :
-     *         this.seenTiles.contains(tile)
-     */
-    hasSeenTile : function(tile)
-    {
-        return this.seenTiles[tile.x] && this.seenTiles[tile.x][tile.y];
-    }
+   /**
+    * Whether this player has seen the given tile or not. To add a
+    * tile to this player memory, use this.addSeenTile.
+    *
+    * @requires tile is defined and not null
+    * @return true iff this player saw the tile :
+    *         this.seenTiles.contains(tile)
+    */
+   hasSeenTile : function(tile)
+   {
+      return this.seenTiles[tile.x] && this.seenTiles[tile.x][tile.y];
+   },
+
+   /**
+    * Update the list of tiles reachable by a throw.
+    */
+   updateReachableTiles : function()
+   {
+      // reset the previous list
+      this.reachableTiles = new Array();
+
+      // check for each displayed tile if it is reachable
+      for(var y = 0; y < SIZE; y++)
+      {
+         for(var x = 0; x < SIZE; x++)
+         {
+            // convert from screen coordinates to level coordinates
+            var tile = g_level.getTile(x + g_gameObjectManager.xOffset, y + g_gameObjectManager.yOffset);
+
+            if(tile)
+            {
+               var distance = Math.sqrt(Math.pow(this.x - tile.x, 2) + Math.pow(this.y - tile.y, 2));
+
+               // if the tile is not a wall, not too far and visible, an item can be thrown on it
+               if(tile.type != 'WALL'  && distance <= THROW_RADIUS && this.canSeeTile(tile))
+                  this.reachableTiles.push(tile);
+            }
+         }
+      }
+   }
 };
 
 extend(Player, Creature);

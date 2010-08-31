@@ -226,7 +226,6 @@ Menu.prototype =
 
          event.preventDefault();
       });
-
    },
 
    /**
@@ -261,24 +260,11 @@ Menu.prototype =
          // if the pressed key is associated with an item, open the targeting interface
          else if(shortcuts[event.keyCode])
          {
-            menu.openTargetingMenu(shortcuts[event.keyCode]);
+            g_targetingInterface.open(shortcuts[event.keyCode]);
          }
 
          event.preventDefault();
       });
-   },
-
-   /**
-    * Open a menu letting the user select a position where to throw
-    * the item given as parameter.
-    *
-    * @requires item to be a valid item
-    */
-   openTargetingMenu : function(item)
-   {
-      this.right.empty();
-
-      //TODO
    },
 
    /**
@@ -332,6 +318,7 @@ Menu.prototype =
    {
       // flags for possible actions
       var drop = item.drop;
+      var throwable = true;
       var wieldLeft = item.wield && !item.isWielded('left');
       var wieldRight = item.wield && !item.isWielded('right');
       var unwield = item.unwield && item.isWielded && item.isWielded();
@@ -339,6 +326,9 @@ Menu.prototype =
       // display the list of possible actions and record them
       if(drop)
          $('#inventory #details').append('d - Drop<br/>');
+
+      if(throwable)
+         $('#inventory #details').append('t - Throw<br/>');
 
       if(wieldLeft)
          $('#inventory #details').append('l - Hold in left hand' + (item.owner.left ? ' (will unwield the ' + item.owner.left.getName() + ')' : '') + '<br/>');
@@ -370,6 +360,14 @@ Menu.prototype =
                item.drop(g_player.x, g_player.y);
                
                menu.backToGame();
+            }
+         }
+         // t : throw item
+         else if(event.keyCode == 84)
+         {
+            if(throwable)
+            {
+               g_targetingInterface.open(item);
             }
          }
          // l : wield the item with the left hand

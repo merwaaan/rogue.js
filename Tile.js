@@ -12,46 +12,47 @@ function Tile(x, y, type)
 
 Tile.prototype =
 {
-    x : null,
-    y : null,
+   // position (level coordinates)
+   x : null,
+   y : null,
 
-    type : null,
+   type : null,
 
-    // data from the dictionnary
-    info : null,
+   // data from the dictionnary
+   info : null,
 
-    // held creature (player or monster)
-    creature : null,
+   // held creature
+   creature : null,
 
-    // held items
-    items : null,
+   // array of held items
+   items : null,
 
-    // pathfinding variables
-    parent : null,
-    c : 0, // cost from the start
-    m : 0, // manhattan distance
+   // pathfinding variables
+   parent : null,
+   c : 0, // cost from the start
+   m : 0, // manhattan distance
 
-    isWalkable : function()
-    {
-        return g_tileInfo[this.type]['walkable'] && !this.creature;
-    },
+   isWalkable : function()
+   {
+      return g_tileInfo[this.type]['walkable'] && !this.creature;
+   },
 
-    setType : function(type)
-    {
-        this.type = type;
+   setType : function(type)
+   {
+      this.type = type;
 
-        // update the data from the dictionnary
-        this.info = g_tileInfo[type];
-    },
+      // update the data from the dictionnary
+      this.info = g_tileInfo[type];
+   },
 
-    equals : function(tile)
-    {
-        if(this.x == tile.x && this.y == tile.y)
-        {
-            return true;
-        }
+   equals : function(tile)
+   {
+      if(this.x == tile.x && this.y == tile.y)
+      {
+         return true;
+      }
         
-        return false;
+      return false;
     },
 
     /** @return the sprite to represent this tile, as an array [char,color] */
