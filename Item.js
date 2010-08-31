@@ -38,28 +38,30 @@ Item.prototype =
    },
 
    /**
-    * Drop the item on the tile the owner is standing on. All the owner/item
+    * Drop the item on the tile the owner is standing on. Any owner/item
     * relation will be erased and the item will be given independant level coordinates.
-    *
-    * @requires the item to be in a creature's inventory
     */
    drop : function(x, y)
    {
-      // unwield the item before removing it from the owner's inventory
-      if(this.owner.left == this)
-         this.owner.left = null;
-      else if(this.owner.right == this)
-         this.owner.right = null;
+      // handle the item/owner relation
+      if(this.owner)
+      {
+         // unwield the item before removing it from the owner's inventory
+         if(this.owner.left == this)
+            this.owner.left = null;
+         else if(this.owner.right == this)
+            this.owner.right = null;
 
-      writeMessage((this.owner == g_player ? '' : 'The ') + this.owner.getName() + ' drop a ' + this.getName(), 'INFO');
+         writeMessage((this.owner == g_player ? '' : 'The ') + this.owner.getName() + ' drop a ' + this.getName(), 'INFO');
      
-      // put the item on the tile
-      g_level.getTile(this.owner.x, this.owner.y).dropItem(this);
-      
-      // remove from the owner's inventory and erase the owner
-      this.owner.inventory.remove(this);
-      this.owner = null; 
+         // remove from the owner's inventory and erase the owner
+         this.owner.inventory.remove(this);
+         this.owner = null; 
+      }
 
+      // put the item on the tile
+      g_level.getTile(x, y).dropItem(this);
+      
       // update the status menu, in case the dropped item was wielded
       g_menu.updateStatusMenu();
    },

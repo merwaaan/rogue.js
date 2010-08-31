@@ -85,6 +85,9 @@ Player.prototype =
          case 68:
             g_menu.openDropChoiceMenu();
             return;
+         case 84:
+            g_menu.openThrowChoiceMenu();
+            return;
          // left arrow
          case 37:
          // numpad 4

@@ -45,7 +45,12 @@ Inventory.prototype =
     */
    drop : function()
    {
-      for(var i = 0; i < this.items.length; i++)
-         this.items[i].drop();
+      if(this.items.length > 0)
+      {
+         var owner = this.items[0].owner;
+
+         for(var i = 0; i < this.items.length; i++)
+            this.items[i].drop(owner.x, owner.y);
+      }
    }
 }

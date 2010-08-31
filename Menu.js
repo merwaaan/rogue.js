@@ -219,7 +219,7 @@ Menu.prototype =
          // if the pressed key is associated with an item, drop it
          else if(shortcuts[event.keyCode])
          {
-            shortcuts[event.keyCode].drop();
+            shortcuts[event.keyCode].drop(g_player.x, g_player.y);
 
             menu.backToGame();
          }
@@ -228,10 +228,53 @@ Menu.prototype =
       });
 
    },
+
    /**
-    * 
+    * Open a menu letting the user manually choose an item to trhow. 
+    * Each available item is associated with a shortcut which, when 
+    * pressed, will open a targeting interface.
     */
-   openTargetChoiceMenu : function()
+   openThrowChoiceMenu : function()
+   {
+      // build the structure
+      this.right.empty();
+      this.right.append('<div class="menuTitle">Which item do you want to throw?</div>');
+      this.right.append('<div id="throwChoice"></div>');
+
+      var items = g_player.inventory.items;
+
+      // hold an array of shortcut/item associations
+      var shortcuts = this.getItemShortcuts(items);
+
+      // display the items
+      $('#throwChoice').append(this.getItemList(items));
+
+      // keyboard handling
+      var menu = this;
+      setKeyHandler(function(event)
+      {
+         // ESC
+         if(event.keyCode == 27)
+         {
+            menu.backToGame();
+         }
+         // if the pressed key is associated with an item, open the targeting interface
+         else if(shortcuts[event.keyCode])
+         {
+            menu.openTargetingMenu(shortcuts[event.keyCode]);
+         }
+
+         event.preventDefault();
+      });
+   },
+
+   /**
+    * Open a menu letting the user select a position where to throw
+    * the item given as parameter.
+    *
+    * @requires item to be a valid item
+    */
+   openTargetingMenu : function(item)
    {
       this.right.empty();
 
