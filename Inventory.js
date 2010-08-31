@@ -33,25 +33,19 @@ Inventory.prototype =
    },
 
    /**
-    * open a menu letting the player choose and use his items
+    * open a menu letting the player directly use his items
     */
    open : function()
    {
-      g_menu.openInventoryFrame();
+      g_menu.openInventoryMenu();
    },
 
    /**
-    * drop the content of the inventory on the tile the owner is standing on
+    * Drop all the content of the inventory on the tile the owner is standing on.
     */
    drop : function()
    {
-      // check if there really are items to drop
-      if(this.items.length > 0)
-      {
-         var owner = this.items[0].owner;
-
-         for(var i = 0; i < this.items.length; i++)
-            owner.getTile().dropItem(this.items[i]);
-      }
+      for(var i = 0; i < this.items.length; i++)
+         this.items[i].drop();
    }
 }

@@ -29,5 +29,5 @@ window.onload = function()
    g_gameObjectManager.step();
 
    g_menu = new Menu();
-   g_menu.openStatusFrame();
+   g_menu.openStatusMenu();
 }

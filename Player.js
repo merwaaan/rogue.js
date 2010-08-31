@@ -58,7 +58,7 @@ Player.prototype =
       {
          // h : help
          case 72:
-            g_menu.openHelpFrame();
+            g_menu.openHelpMenu();
             return;
          // i : inventory
          case 73:
@@ -77,9 +77,13 @@ Player.prototype =
                // several items, open a choice menu
                else if(items.length > 1)
                {
-                  g_menu.openPickUpChoiceFrame(g_level.getTile(this.x, this.y).items);
+                  g_menu.openPickUpChoiceMenu(g_level.getTile(this.x, this.y).items);
                }
             }
+            return;
+         // d : drop
+         case 68:
+            g_menu.openDropChoiceMenu();
             return;
          // left arrow
          case 37:
@@ -176,7 +180,7 @@ Player.prototype =
       if(this.sanity < 0)
          this.die();
 
-      g_menu.updateStatusFrame();
+      g_menu.updateStatusMenu();
    },
 
    /**

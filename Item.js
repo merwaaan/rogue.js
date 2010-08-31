@@ -37,33 +37,35 @@ Item.prototype =
       }
    },
 
+   /**
+    * Drop the item on the tile the owner is standing on. All the owner/item
+    * relation will be erased and the item will be given independant level coordinates.
+    *
+    * @requires the item to be in a creature's inventory
+    */
    drop : function(x, y)
    {
-      this.x = x;
-      this.y = y;
-
-      // unwield the item before removing it from the owner inventory
+      // unwield the item before removing it from the owner's inventory
       if(this.owner.left == this)
-      {
          this.owner.left = null;
-         g_menu.updateStatusFrame();
-      }
       else if(this.owner.right == this)
-      {
          this.owner.right = null;
-         g_menu.updateStatusFrame();
-      }
 
+      writeMessage((this.owner == g_player ? '' : 'The ') + this.owner.getName() + ' drop a ' + this.getName(), 'INFO');
+     
+      // put the item on the tile
+      g_level.getTile(this.owner.x, this.owner.y).dropItem(this);
+      
+      // remove from the owner's inventory and erase the owner
       this.owner.inventory.remove(this);
+      this.owner = null; 
 
-      writeMessage(g_player.getName() + ' drop a ' + this.getName(), 'INFO');
-
-      this.owner = null;
-      g_level.getTile(x, y).dropItem(this);
+      // update the status menu, in case the dropped item was wielded
+      g_menu.updateStatusMenu();
    },
 
    /**
-    * equip the owner with this item, it will be placed in the left hand if the string
+    * Equip the owner with this item, it will be placed in the left hand if the string
     * 'left' is specified in parameter, if the string 'right' is specified it will be 
     * placed in the right hand
     */
@@ -93,6 +95,10 @@ Item.prototype =
     */
    isWielded : function(hand)
    {
+      // check if there is an owner or if the item is just laying somewhere
+      if(!this.owner)
+         return false;
+
       // without a parameter specified, return true if the item is in whatever hand
       if(!hand && (this.owner.left == this || this.owner.right == this))
          return true;
