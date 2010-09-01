@@ -30,9 +30,7 @@ Monster.prototype =
    update : function()
    {
       if(this.brain)
-      {
          this.brain.think();
-      }
    },
 
    /**

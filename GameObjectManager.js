@@ -22,17 +22,16 @@ GameObjectManager.prototype =
     
     step : function()
     {
-        // update
+        // update the game objects
         for(i in this.gameObjects)
-        {
             if(this.gameObjects[i].update)
-            {
                 this.gameObjects[i].update(this.table, this.xOffset, this.yOffset);
-            }
-        }
 
         // draw
         g_level.draw(this.xOffset, this.yOffset);
+
+        // update the turns count
+        this.turns++;
     },
 
     addGameObject : function(object)
@@ -61,7 +60,6 @@ GameObjectManager.prototype =
        clearMessages();
 
        g_gameObjectManager.keyDown(event);
-       g_gameObjectManager.step();
 
        event.preventDefault();
    }
