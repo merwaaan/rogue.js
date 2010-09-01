@@ -11,6 +11,8 @@
 // color to draw the tiles in the fog of war in
 const FOW_COLOR = 'rgb(80,80,80)';
 
+const THROW_RADIUS = 10;
+
 /**
  * walkable : true if creature can go through this type of tile
  */
@@ -131,6 +133,16 @@ var g_playerInfo =
 };
 
 var g_sanityLevels = ['Utterly insane', 'Verging on dementia', 'Mildly delirious', 'Lightly disturbed', 'Sane'];
+
+// ANIMATIONS
+
+const THROW_ANIM_FREQ = 30;
+const THROW_ANIM_CHAR = '*';
+
+// UI
+
+const REACHABLE_AREA_COLOR = 'rosybrown';
+const TARGET_COLOR = 'crimson';
 
 var g_messageInfo =
 {

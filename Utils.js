@@ -281,7 +281,7 @@ function highlightPoints(points)
 }
 
 /**
- * @requires tiles is an array of level tiles
+ * @requires tiles is an array tiles
  * @effect highlight an array of tiles by drawing a rectangle
  * around each one 
  */

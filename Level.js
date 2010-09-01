@@ -30,6 +30,13 @@ Level.prototype =
     
     draw : function(xOffset, yOffset)
     {
+       // if no parameter are specified, use the default offsets from g_gameObjectManager
+      if(!xOffset || !yOffset)
+      {
+         xOffset = g_gameObjectManager.xOffset;
+         yOffset = g_gameObjectManager.yOffset;
+      }
+
         // get the canvas 2d context
         var ctx = document.getElementById('canvas').getContext('2d');
         // clear the canvas
@@ -56,10 +63,10 @@ Level.prototype =
                     if(g_targetingInterface.on && g_player.reachableTiles.containsObject(tile))
                     {
                        // the target tile has a different color than the rest of the reachable area
-                       if(x == g_targetingInterface.column - g_gameObjectManager.xOffset && y == g_targetingInterface.row - g_gameObjectManager.yOffset)
-                          ctx.fillStyle = 'crimson'
+                       if(x == g_targetingInterface.x - g_gameObjectManager.xOffset && y == g_targetingInterface.y - g_gameObjectManager.yOffset)
+                          ctx.fillStyle = TARGET_COLOR;
                        else
-                          ctx.fillStyle = 'rosybrown';
+                          ctx.fillStyle = REACHABLE_AREA_COLOR;
 
                        ctx.fillRect(cx, cy - FONT_HEIGHT - 1, FONT_WIDTH, FONT_HEIGHT);
                     }

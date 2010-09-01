@@ -5,14 +5,17 @@ function TargetingInterface()
 TargetingInterface.prototype =
 {  
    // target position
-   row : null,
-   column : null,
+   y : null,
+   x : null,
 
    // item to be thrown
    item : null,
 
-   // flag set to true when the interface is is use
+   // flag set to true when the interface is in use
    on : false,
+
+   // array containing the list of points used for the animation
+   trajectory : null,
 
    /**
     * Reset the targeting interface by centering the target on the player's 
@@ -20,15 +23,15 @@ TargetingInterface.prototype =
     */
    reset : function(creature)
    {
-      this.row = g_player.y;
-      this.column  = g_player.x;
+      this.y = g_player.y;
+      this.x  = g_player.x;
 
       g_player.updateReachableTiles();
    },
 
    /**
     * Open The targeting interface. The game is paused while the user
-    * moves a target on the level and choose where to throw the item
+    * moves a target within a limited area and choose where to throw the item
     * given in parameter.
     *
     * @requires item to be a valid item
@@ -41,14 +44,14 @@ TargetingInterface.prototype =
       this.on = true;
 
       // draw the reachable area and the target
-      g_level.draw(g_gameObjectManager.xOffset, g_gameObjectManager.yOffset);
+      g_level.draw();
     
       // key handling
       targetingInterface = this;
       setKeyHandler(function(event)
       {
-         var newRow = targetingInterface.row;
-         var newColumn = targetingInterface.column;
+         var yNew = targetingInterface.y;
+         var xNew = targetingInterface.x;
         
          switch(event.keyCode)
          {
@@ -59,36 +62,35 @@ TargetingInterface.prototype =
             // ENTER
             case 13:
                // throw the item to the targeted position
-               targetingInterface.throwItem();
-               targetingInterface.close();
+               targetingInterface.startThrowAnimation();
                return;
-            // left arrow
+            // left ary
             case 37:
-               newColumn = targetingInterface.column - 1;
+               xNew = targetingInterface.x - 1;
                break;
-            // up arrow
+            // up ary
             case 38:
-               newRow = targetingInterface.row - 1;
+               yNew = targetingInterface.y - 1;
                break;
-            // right arrow
+            // right ary
             case 39:
-               newColumn = targetingInterface.column + 1;
+               xNew = targetingInterface.x + 1;
                break;
-            // down arrow
+            // down ary
             case 40:
-               newRow = targetingInterface.row + 1;
+               yNew = targetingInterface.y + 1;
                break;
          }
 
          // if the tile is reachable, we can move the target here
-         var tile = g_level.getTile(newColumn, newRow);
-         if((newRow != targetingInterface.row || newColumn != targetingInterface.column) && tile && g_player.reachableTiles.containsObject(tile))
+         var tile = g_level.getTile(xNew, yNew);
+         if((yNew != targetingInterface.y || xNew != targetingInterface.x) && tile && g_player.reachableTiles.containsObject(tile))
          {
-            targetingInterface.row = newRow;
-            targetingInterface.column = newColumn;
+            targetingInterface.y = yNew;
+            targetingInterface.x = xNew;
 
             // redraw the reachable area and the target
-            g_level.draw(g_gameObjectManager.xOffset, g_gameObjectManager.yOffset);
+            g_level.draw();
          }
       });
    },
@@ -98,19 +100,64 @@ TargetingInterface.prototype =
     */
    close : function()
    {
-      targetingInterface.on = false;
+      this.on = false;
       g_menu.backToGame();
 
-      // redraw the level to get rid of the reachable area
-      g_level.draw(g_gameObjectManager.xOffset, g_gameObjectManager.yOffset);
+      // redraw the level to get rid of the reachable area highlighting
+      g_level.draw();
    },
 
    /**
-    *
+    * Start an animation representing the throw of an item from
+    * the player position to the target position. It is not a
+    * real-time animation as the flow of the game is paused during
+    * its execution.
     */
-   throwItem : function()
+   startThrowAnimation : function()
    {
-      this.item.drop(this.column, this.row);
+      // get an array containing a list of points from the player to the target
+      this.trajectory = bresenhamLinePoints(g_player.x, g_player.y, this.x, this.y);
+
+      // convert from level coordinates to canvas coordinates
+      for(var i = 0; i < this.trajectory.length; i++)
+         this.trajectory[i] = levelToCanvasCoord(this.trajectory[i][0], this.trajectory[i][1] + 1);
+
+      // draw the screen in order to get rid of the reachable zone highlight
+      this.on = false;
+      g_level.draw();
+
+      // start the animation
+      setTimeout(this.playThrowAnimation, THROW_ANIM_FREQ);
+   },
+
+   /**
+    * Draw a new point along the trajectory each THROW_ANIM_FREQ seconds.
+    * When the animation is over the item is dropped, the targeting interface 
+    * is closed and the game is resumed.
+    *
+    * As the method is asynchronously called, it is necessary to refer to the
+    * targeting interface by the global reference g_targetingInterface and not
+    * the 'this' keyword.
+    */
+   playThrowAnimation : function()
+   {
+      // draw the first point of the trajectory array
+      var ctx = getCanvasContext();
+      ctx.strokeStyle = 'green';
+      ctx.fillText(THROW_ANIM_CHAR, g_targetingInterface.trajectory[0][0], g_targetingInterface.trajectory[0][1]);
+         
+      // remove the drawn point
+      g_targetingInterface.trajectory.shift();
+
+      // stop the animation, drop the item and go back to the game if there is
+      // no more point to draw
+      if(g_targetingInterface.trajectory.length == 0)
+      {      
+         g_targetingInterface.item.drop(g_targetingInterface.x, g_targetingInterface.y);
+         g_targetingInterface.close();
+      }
+      else
+         setTimeout(g_targetingInterface.playThrowAnimation, THROW_ANIM_FREQ);
    }
 };
 

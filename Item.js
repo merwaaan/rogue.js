@@ -51,8 +51,6 @@ Item.prototype =
             this.owner.left = null;
          else if(this.owner.right == this)
             this.owner.right = null;
-
-         writeMessage((this.owner == g_player ? '' : 'The ') + this.owner.getName() + ' drop a ' + this.getName(), 'INFO');
      
          // remove from the owner's inventory and erase the owner
          this.owner.inventory.remove(this);

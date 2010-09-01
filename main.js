@@ -9,8 +9,6 @@ const FONT_HEIGHT = 13;
 const CANVAS_WIDTH = SIZE * FONT_WIDTH;
 const CANVAS_HEIGHT = SIZE * FONT_HEIGHT;
 
-const THROW_RADIUS = 8;
-
 var g_gameObjectManager = null;
 
 // message log
