@@ -18,10 +18,11 @@ Monster.prototype =
    HP : null,
    maxHP : null,
 
+   // state machine controlling the creature
    brain : null,
 
    // tracked enemy
-   targetedEnemy : null,
+   target : null,
 
    destroyMonster : function()
    {
@@ -39,56 +40,68 @@ Monster.prototype =
     **********************/
 
    /**
-    * Check if the creature can detect a potential enemy within its FOV.
-    * If it is the case, return an array containing the seen creature, else
-    * return null.
+    * Check if the creature's health if critically low.
     */
-   seeEnemy : function()
+   hasCriticalHealth : function()
    {
-      // TEMPORARY !!!
-      if(Math.sqrt(Math.pow(this.x - g_player.x, 2) + Math.pow(this.y - g_player.y, 2)) < 5)
-         return [g_player];
+      if(this.HP <= 2)
+         return true;
 
-      return null;
+      return false;
    },
 
    /**
-    * Check if the creature is currently targeting another creature and if
-    * it is positionned next to it. If it is the case, return an array
-    * containing the targeted creature, else null.
+    * Check if the creature can detect a potential enemy within its FOV.
+    * If it is the case, return true and record the enemy.
+    */
+   seeEnemy : function()
+   {
+      // TEMPORARY!!!
+      if(Math.sqrt(Math.pow(this.x - g_player.x, 2) + Math.pow(this.y - g_player.y, 2)) < 5)
+      {
+         this.target = g_player;
+
+         return true;
+      }
+
+      return false;
+   },
+
+   /**
+    * Check if the creature is positionned next to its target.
     */
    nextToTarget : function()
    {
       var target = this.getTarget();
 
       if(target && this.nextTo(target))
-         return [target];
+         return true;
 
-      return null;
+      return false;
    },
 
    /**
-    * Check if the creature is positionned far from its target, ie not next to it.
+    * Check if the creature is positionned far from its target.
     */
    farFromTarget : function()
    {
-      if(!this.nextToTarget())
-         return [this.brain.state.target];
+      if(Math.sqrt(Math.pow(this.x - g_player.x, 2) + Math.pow(this.y - g_player.y, 2)) > 10)
+         return true;
 
-      return null;
+      return false;
    },
 
    /**
-    * Check if the creature is currently targeting another object. If
-    * it is the case return the targeted object, else return null.
+    * Return the current target of the creature, null if it is not currently
+    * targeting anything.
     */
    getTarget : function()
    {
-      if(this.brain && this.brain.state && this.brain.state.target)
-         return this.brain.state.target;
+      if(this.target)
+         return this.target;
 
       return null;
    }
-}
+};
 
 extend(Monster, Creature);

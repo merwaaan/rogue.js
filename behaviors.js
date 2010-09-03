@@ -6,20 +6,21 @@
  *
  * current state :
  * {
- *    0 : {'check' : stimulus function, 'next' : next state },
+ *    0 : {'check' : stimulus function, 'next' : next state [, 'weight' : weight]},
  *    ...
  * }
  *
- * - 'current state' requires to be a State.
+ * - 'current state' requires to be a State class.
  * 
- * - 'stimulus function' requires to be a string representing the name of a member
- *   function of the creature, without parenthesis or argument.
- *   As the function will be called by eval()uation as a generic stimulus function, it
- *   must return a simple array containing the data that will be transmitted to the next 
- *   state constructor. If the stimulus is not verified, it must return null.
+ * - 'stimulus function' requires to be a string representing the name of a boolean 
+ *    member function of the creature, without parenthesis or argument.
+ *   It is possible to negate this function by adding '!' at the start of the string.
  * 
- * - 'next state' requires to be a State.
+ * - 'next state' requires to be a State class.
  *
+ * - weight is not mandatory and is used when several candidate states are competing.
+ *   The bigger the weight, the greater the chance for a state to be next.
+ *   
  * The principle of this system can be summed up as follows :
  * If in the current state, the stimulus is verified, switch to the next state.
  */
@@ -36,6 +37,11 @@ var g_roamerBehavior =
    },
    AttackState :
    {
-      0 : {'check' : 'farFromTarget', 'next' : FollowState}
+      0 : {'check' : '!nextToTarget', 'next' : FollowState, 'weight' : 3},
+      1 : {'check' : 'hasCriticalHealth', 'next' : FleeState, 'weight' : 1}
+   },
+   FleeState :
+   {
+      0 : {'check' : 'farFromTarget', 'next' : RoamState}
    }
 };
