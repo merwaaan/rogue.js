@@ -15,7 +15,7 @@ GameObjectManager.prototype =
 
     applicationManager : null,
 
-    turn : 0,
+    turns : 0,
 
     xOffset : 0,
     yOffset : 0,

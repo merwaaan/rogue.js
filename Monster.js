@@ -6,7 +6,8 @@ function Monster(type)
 
     this.HP = 3;
 
-    this.brain = new FiniteStateMachine(this, g_followerBehavior);
+    this.brain = new StateMachine(this, g_roamerBehavior);
+
     this.inventory = new Inventory();
     this.inventory.add(new Weapon(null, null, 'SWORD', this));
 }
@@ -33,43 +34,58 @@ Monster.prototype =
          this.brain.think();
    },
 
-   /**
+   /**********************
     * Stimulus functions
-    */
+    **********************/
 
-   // TODO
    /**
-    * @returns an enemy creature to follow
+    * Check if the creature can detect a potential enemy within its FOV.
+    * If it is the case, return an array containing the seen creature, else
+    * return null.
     */
    seeEnemy : function()
    {
-      return [g_player];
-   },
-
-   /**
-    * @returns the targeted enemy if the current monster is positionned next to it,
-    * null if it is still far away or if it doesn't exist
-    */
-   nextToTargetedEnemy : function()
-   {
-      if(this.targetedEnemy && this.nextTo(this.targetedEnemy))
-      {
-         return [this.targetedEnemy];
-      }
+      // TEMPORARY !!!
+      if(Math.sqrt(Math.pow(this.x - g_player.x, 2) + Math.pow(this.y - g_player.y, 2)) < 5)
+         return [g_player];
 
       return null;
    },
 
    /**
-    * @returns the targeted enemy if the current monster is far away from it,
-    * null if it is next to it or if it doesn't exist
+    * Check if the creature is currently targeting another creature and if
+    * it is positionned next to it. If it is the case, return an array
+    * containing the targeted creature, else null.
     */
-   farFromTargetedEnemy : function()
+   nextToTarget : function()
    {
-      if(this.targetedEnemy && !this.nextToTargetedEnemy())
-      {
-         return [this.targetedEnemy];
-      }
+      var target = this.getTarget();
+
+      if(target && this.nextTo(target))
+         return [target];
+
+      return null;
+   },
+
+   /**
+    * Check if the creature is positionned far from its target, ie not next to it.
+    */
+   farFromTarget : function()
+   {
+      if(!this.nextToTarget())
+         return [this.brain.state.target];
+
+      return null;
+   },
+
+   /**
+    * Check if the creature is currently targeting another object. If
+    * it is the case return the targeted object, else return null.
+    */
+   getTarget : function()
+   {
+      if(this.brain && this.brain.state && this.brain.state.target)
+         return this.brain.state.target;
 
       return null;
    }

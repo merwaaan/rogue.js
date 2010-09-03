@@ -4,12 +4,6 @@ function ApplicationManager()
     g_player = new Player();
 
     new Monster('SNAKE');
-    /*new Monster('SNAKE');
-    new Monster('SNAKE');
-    new Monster('SNAKE');
-    new Monster('SPIDER');
-    new Monster('SPIDER');
-    new Monster('SPIDER');*/
 }
 
 ApplicationManager.prototype =

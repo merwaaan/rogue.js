@@ -23,7 +23,6 @@ IdleState.prototype =
 {
    update : function()
    {
-      // well... 
    },
 
    toString : function()
@@ -40,57 +39,48 @@ function RoamState(host, args)
 {
    State.call(this, host);
 
+   // get a random destination
    this.getNewDestination();
 }
 
 RoamState.prototype =
 {
+   // targeted tile
    destination : null,
+
+   // path to the targeted tile
+   path : null,
 
    update : function()
    {
-      // if the creature knows where to go
-      if(this.destination)
-      {
-         // if the destination is reached
-         if(this.host.nextTo(this.destination))
-         {
-            this.getNewDestination();
-         }
-         // else walk to the destination
-         else
-         {
-            var path = new AStar().getInBetweenPath(this.host.getTile(), this.destination);
-             // if a path is found, move there
-             if (path)
-                 this.host.move(path[0].x, path[0].y);
-         }
-      }
-      else if(!this.destination)
-      {
+      // if the destination is reached, find a new destination
+      if(this.path.length == 0)
          this.getNewDestination();
+      // else walk to the destination
+      else
+      {
+         this.host.move(this.path[0].x, this.path[0].y);
+         this.path.shift();
       }
    },
 
+   /**
+    * Randomly find a new destination tile for the creature and compute
+    * a path to it.
+    */
    getNewDestination : function()
    {
-      this.destination = null;
-
-      while(!this.destination)
-      {
-         this.destination = g_level.getRandomTile('FLOOR');
-      }
+      this.destination = g_level.getRandomTile('FLOOR');
+      this.path = new AStar().getInBetweenPath(this.host.getTile(), this.destination);
    },
 
    toString : function()
    {
       return 'RoamState';
    }
-
 };
 
 extend(RoamState, State);
-
 
 // FOLLOW
 
@@ -98,17 +88,29 @@ function FollowState(host, args)
 {
    State.call(this, host);
 
-   this.host.targetedEnemy = args[0];
+   this.target = args[0];
+   this.targetLastTile = this.target.getTile();
 }
 
 FollowState.prototype =
 {
+   target : null,
+
+   targetLastTile : null,
+
+   path : null,
+
    update : function()
    {
-      var path = new AStar().getInBetweenPath(this.host.getTile(), this.host.targetedEnemy.getTile());
-      if(path)
+      // if it has not been made yet or if the target moved since the last update, compute the path
+      if(!this.path || this.target.getTile() != this.targetLastTile)
+         this.path = new AStar().getInBetweenPath(this.host.getTile(), this.target.getTile());
+
+      // move to the first step of the path
+      if(this.path)
       {
-         this.host.move(path[0].x, path[0].y);
+         this.host.move(this.path[0].x, this.path[0].y);
+         this.targetLastTile = this.target.getTile();
       }
    },
 
@@ -126,14 +128,16 @@ function AttackState(host, args)
 {
    State.call(this, host);
 
-   this.host.targetedEnemy = args[0];
+   this.target = args[0];
 }
 
 AttackState.prototype =
 {
+   target : null,
+
    update : function()
    {
-      this.host.attack(this.host.targetedEnemy);
+      this.host.attack(this.target);
    },
 
    toString : function()
