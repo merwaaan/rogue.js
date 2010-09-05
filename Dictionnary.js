@@ -19,75 +19,75 @@ const THROW_RADIUS = 10;
 
 var g_tileInfo =
 {
-    'VOID' :
+    VOID :
     {
-        'char' : '',
-        'color' : 'white',
-        'walkable' : true,
+        char : '',
+        color : 'white',
+        walkable : true,
     },
-    'FLOOR' :
+    FLOOR :
     {
-        'char' : '.',
-        'color' : 'white',
-        'walkable' : true
+        char : '.',
+        color : 'white',
+        walkable : true
     }, 
-    'WALL' :
+    WALL :
     {
-        'char' : '#',
-        'color' : 'white',
-        'walkable' : false
+        char : '#',
+        color : 'white',
+        walkable : false
     }
 };
 
 var g_weaponInfo =
 {
-    'RUSTY_SWORD' :
+    RUSTY_SWORD :
     {
-        'name' : 'rusty sword',
-        'desc' : 'An old rusty sword',
-        'char' : 't',
-        'color' : 'orange',
-        'damage' : 1
+        name : 'rusty sword',
+        desc : 'An old rusty sword',
+        char : 't',
+        color : 'orange',
+        damage : 1
     },
-    'WOODEN_BOW' :
+    WOODEN_BOW :
     {
-        'name' : 'bow',
-        'desc' : 'A wooden bow',
-        'char' : 'D',
-        'color' : 'brown',
-        'damage' : 1,
-        'maxDistance' : 12,
-        'minDistance': 4
+        name : 'bow',
+        desc : 'A wooden bow',
+        char : 'D',
+        color : 'brown',
+        damage : 1,
+        maxDistance : 12,
+        minDistance: 4
     }
 };
 
 var g_projectileInfo =
 {
-   'ARROW' :
+   ARROW :
    {
-      'name' : 'arrow',
-      'desc' : 'A fragile wooden arrow',
-      'char' : '-',
-      'color' : 'white'
+      name : 'arrow',
+      desc : 'A fragile wooden arrow',
+      char : '-',
+      color : 'white'
    }
 }
 var g_monsterInfo =
 {
-    'SNAKE' :
-    {
-        'name' : 'snake',
-        'desc' : 'A small yet venomous snake',
-        'char' : 's',
-        'color' : 'yellow'
-    }
+   SNAKE :
+   {
+      name : 'snake',
+      desc : 'A small yet venomous snake',
+      char : 's',
+      color : 'yellow'
+   }
 };
 
 var g_playerInfo =
 {
-    'PLAYER' :
+    PLAYER :
     {
-        'char' : '@',
-        'color' : 'white'
+        char : '@',
+        color : 'white'
     }
 };
 
@@ -105,24 +105,24 @@ const TARGET_COLOR = 'crimson';
 
 var g_messageInfo =
 {
-    'DEFAULT' :
+    DEFAULT :
     {
-        'color' : 'white'
+        color : 'white'
     },
-    'AMBIANCE' :
+    AMBIANCE :
     {
-        'color' : 'gold'
+        color : 'gold'
     },
-    'INFO' :
+    INFO :
     {
-        'color' : 'lightseagreen'
+        color : 'lightseagreen'
     },
-    'GOOD' :
+    GOOD :
     {
-        'color' : 'chartreuse'
+        color : 'chartreuse'
     },
-    'BAD' :
+    BAD :
     {
-        'color' : 'crimson'
+        color : 'crimson'
     }
 };
