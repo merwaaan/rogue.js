@@ -16,6 +16,8 @@ var g_log = new Array();
 
 var g_menu = null;
 var g_targetingInterface = null;
+var g_currentAnimation = null;
+
 var g_level = null;
 var g_player = null;
 

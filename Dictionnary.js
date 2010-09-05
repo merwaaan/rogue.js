@@ -39,72 +39,38 @@ var g_tileInfo =
     }
 };
 
-/**
- * PWR : power of the weapon, it is added to the STR of the creature wielding it
- */
-
 var g_weaponInfo =
 {
-    'SWORD' :
+    'RUSTY_SWORD' :
     {
-        'name' : 'sword',
-        'desc' : 'A big sword',
+        'name' : 'rusty sword',
+        'desc' : 'An old rusty sword',
         'char' : 't',
-        'color' : 'blue',
-        'PWR' : 0
+        'color' : 'orange',
+        'damage' : 1
     },
-    'SPEAR' :
+    'WOODEN_BOW' :
     {
-        'name' : 'spear',
-        'desc' : 'A long shining spear',
-        'char' : 'l',
-        'color' : 'blue',
-        'PWR' : 1
+        'name' : 'bow',
+        'desc' : 'A wooden bow',
+        'char' : 'D',
+        'color' : 'brown',
+        'damage' : 1,
+        'maxDistance' : 12,
+        'minDistance': 4
     }
 };
 
-/**
- * - stat : name of the state which will be altered once the item is used (HP, STR, DEF, maybe more later...)
- * - value : quantity of the targetted stat which will be altered
- * - alteration : type of alteration applied to the stat
- *   - 'relative' : stat = current stat + value
- *   - 'absolute' : stat = value
- *   - 'progressive' : stat = current stat + value at a regular frequency
- * - frequency : frequency in turn of a progressive alteration
- * - duration : maximum duration in turn of a progressive alteration
- */
-
-var g_foodInfo =
+var g_projectileInfo =
 {
-    'BREAD' :
-    {
-        'name' : 'bread',
-        'desc' : 'A piece of stale bread',
-        'char' : 'o',
-        'color' : 'white',
-        'stat' : 'HP',
-        'value' : 5,
-        'alteration' : 'relative'
-    },
-    'POISONNED_BREAD' :
-    {
-        'name' : 'poisonned bread',
-        'desc' : 'A piece of reaaally stale bread',
-        'char' : 'o',
-        'color' : 'pink',
-        'stat' : 'HP',
-        'value' : -1,
-        'alteration' : 'progressive',
-        'frequency' : 1,
-        'duration' : 10
-    }
-};
-
-/**
- * - STR : strength of this type monster
- * - DEF : defense of this type of monster
- */
-
+   'ARROW' :
+   {
+      'name' : 'arrow',
+      'desc' : 'A fragile wooden arrow',
+      'char' : '-',
+      'color' : 'white'
+   }
+}
 var g_monsterInfo =
 {
     'SNAKE' :
@@ -113,13 +79,6 @@ var g_monsterInfo =
         'desc' : 'A small yet venomous snake',
         'char' : 's',
         'color' : 'yellow'
-    },
-    'SPIDER' :
-    {
-        'name' : 'spider',
-        'desc' : 'An eight-legged horror',
-        'char' : 'x',
-        'color' : 'red'
     }
 };
 

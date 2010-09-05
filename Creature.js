@@ -126,7 +126,41 @@ Creature.prototype =
         // other fun mechanisms could interact with this, like magic,
         // status effects, special monsters ...
         return tile.type != 'WALL';
-    }
+    },
+
+   /**
+    * Return an array containing the tiles surrounding the creature.
+    */
+   getSurroundingTiles : function()
+   {
+      var tiles = new Array();
+
+      for(var y = this.y - 1; y < this.y + 2; y++)
+         for(var x = this.x - 1; x < this.x + 2; x++)
+            if((x != this.x || y != this.y) && g_level.getTile(x, y))
+               tiles.push(g_level.getTile(x, y));
+
+      return tiles;
+    },
+
+   /**
+    * Scan the tiles surrounding the creature and return an array
+    * containing potential enemies.
+    */
+   getMeleeTargets : function()
+   {
+      var targets = new Array();
+
+      // scan the surrounding tiles
+      var tiles = this.getSurroundingTiles();
+
+      // check for creatures
+      for(var i = 0; i < tiles.length; i++)
+         if(tiles[i].creature)
+            targets.push(tiles[i].creature);
+
+      return targets;
+   }
 };
 
 extend(Creature, VisualGameObject);

@@ -260,7 +260,7 @@ Menu.prototype =
          // if the pressed key is associated with an item, open the targeting interface
          else if(shortcuts[event.keyCode])
          {
-            g_targetingInterface.open(shortcuts[event.keyCode]);
+            g_targetingInterface.open(shortcuts[event.keyCode], THROW_RADIUS);
          }
 
          event.preventDefault();
@@ -424,7 +424,7 @@ Menu.prototype =
       this.right.append('<div class="menuTitle">Help</div><div id="help"></div>');
 
       // fill with information
-      $('#help').append('i - Inventory<br/><br/>p - Pick up an item<br/>d - Drop an item<br/>t - Throw an item<br/><br/>ESC - Cancel');
+      $('#help').append('i - Inventory<br/><br/>l - use the item in left hand<br/>r - use the item in right hand<br/><br/>p - Pick up an item<br/>d - Drop an item<br/>t - Throw an item<br/><br/>ESC - Cancel');
 
       // keyboard handling
       var menu = this;

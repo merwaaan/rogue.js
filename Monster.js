@@ -9,7 +9,7 @@ function Monster(type)
     this.brain = new StateMachine(this, g_roamerBehavior);
 
     this.inventory = new Inventory();
-    this.inventory.add(new Weapon(null, null, 'SWORD', this));
+    this.inventory.add(new Weapon(null, null, 'RUSTY_SWORD', this));
 }
 
 Monster.prototype =
@@ -44,7 +44,7 @@ Monster.prototype =
     */
    hasCriticalHealth : function()
    {
-      if(this.HP <= 2)
+      if(this.HP == 1)
          return true;
 
       return false;

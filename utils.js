@@ -207,13 +207,11 @@ Array.prototype.remove = function(from, to)
 Array.prototype.removeObject = function(object)
 {
     for(var i = 0; i < this.length; ++i)
-    {
         if(this[i] === object)
         {
             this.remove(i);
-            break;
+            return;
         }
-    }
 };
 
 Array.prototype.containsObject = function(object)

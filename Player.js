@@ -8,13 +8,13 @@ function Player()
    this.sanity = g_sanityLevels.length - 1;
 
    // equip the player with a sword
-   this.left = new Weapon(null, null, 'SWORD', this);
+   this.left = new MeleeWeapon(null, null, 'RUSTY_SWORD', this);
+   this.right = new DistanceWeapon(null, null, 'WOODEN_BOW', this);
 
    // create and fill the inventory
    this.inventory = new Inventory();
    this.inventory.add(this.left);
-   this.inventory.add(new Weapon(null, null, 'SPEAR', this));
-   this.inventory.add(new FoodItem(null, null, 'BREAD', this));
+   this.inventory.add(this.right);
 
    this.seenTiles = new Array();
     
@@ -69,6 +69,14 @@ Player.prototype =
          case 73:
             this.inventory.open();
             return;
+         // l : use item in left hand
+         case 76:
+            this.left.use();
+            return;
+         // r : use item in right hand
+         case 82:
+            this.right.use();
+            return;
          // p : pick up
          case 80:
             var items = g_level.getTile(this.x, this.y).items;
@@ -90,6 +98,7 @@ Player.prototype =
          case 68:
             g_menu.openDropChoiceMenu();
             return;
+         // t : throw
          case 84:
             g_menu.openThrowChoiceMenu();
             return;
@@ -248,29 +257,29 @@ Player.prototype =
    /**
     * Update the list of tiles reachable by a throw.
     */
-   updateReachableTiles : function()
+   updateReachableTiles : function(maxDistance, minDistance)
    {
+      if(!minDistance)
+         minDistance = 0;
+
       // reset the previous list
       this.reachableTiles = new Array();
 
       // check for each displayed tile if it is reachable
       for(var y = 0; y < SIZE; y++)
-      {
          for(var x = 0; x < SIZE; x++)
          {
-            // convert from screen coordinates to level coordinates
             var tile = g_level.getTile(x + g_gameObjectManager.xOffset, y + g_gameObjectManager.yOffset);
 
             if(tile)
             {
                var distance = Math.sqrt(Math.pow(this.x - tile.x, 2) + Math.pow(this.y - tile.y, 2));
-
+               
                // if the tile is not a wall, not too far and visible, an item can be thrown on it
-               if(tile.type != 'WALL'  && distance <= THROW_RADIUS && this.canSeeTile(tile))
+               if(tile.type != 'WALL' && distance <= maxDistance && distance >= minDistance && this.canSeeTile(tile))
                   this.reachableTiles.push(tile);
             }
          }
-      }
    }
 };
 

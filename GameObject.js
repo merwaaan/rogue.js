@@ -3,9 +3,7 @@ function GameObject(x, y, type)
    this.type = type;
 
    if(x != null && y != null)
-   {
      this.move(x, y);
-   }
    
    g_gameObjectManager.addGameObject(this);
 }

@@ -62,5 +62,10 @@ GameObjectManager.prototype =
        g_gameObjectManager.keyDown(event);
 
        event.preventDefault();
-   }
+   },
+
+   keyHandler_inactive : function(event)
+   {
+       event.preventDefault();
+   },
 }
