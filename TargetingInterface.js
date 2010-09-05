@@ -11,7 +11,7 @@ TargetingInterface.prototype =
    // item to be thrown
    item : null,
 
-   // flag set to true when the interface is in use
+   // flag sets to true when the interface is in use
    on : false,
 
    // array containing the list of points used for the animation
@@ -39,9 +39,9 @@ TargetingInterface.prototype =
    open : function(item)
    {
       this.item = item;
+      this.on = true;
 
       this.reset();
-      this.on = true;
 
       // draw the reachable area and the target
       g_level.draw();
@@ -64,19 +64,19 @@ TargetingInterface.prototype =
                // throw the item to the targeted position
                targetingInterface.startThrowAnimation();
                return;
-            // left ary
+            // left arrow
             case 37:
                xNew = targetingInterface.x - 1;
                break;
-            // up ary
+            // up arrow
             case 38:
                yNew = targetingInterface.y - 1;
                break;
-            // right ary
+            // right arrow
             case 39:
                xNew = targetingInterface.x + 1;
                break;
-            // down ary
+            // down arrow
             case 40:
                yNew = targetingInterface.y + 1;
                break;
@@ -101,6 +101,7 @@ TargetingInterface.prototype =
    close : function()
    {
       this.on = false;
+
       g_menu.backToGame();
 
       // redraw the level to get rid of the reachable area highlighting
@@ -132,7 +133,7 @@ TargetingInterface.prototype =
 
    /**
     * Draw a new point along the trajectory each THROW_ANIM_FREQ seconds.
-    * When the animation is over the item is dropped, the targeting interface 
+    * When the animation is over, the item is dropped, the targeting interface 
     * is closed and the game is resumed.
     *
     * As the method is asynchronously called, it is necessary to refer to the
@@ -146,14 +147,18 @@ TargetingInterface.prototype =
       ctx.strokeStyle = 'green';
       ctx.fillText(THROW_ANIM_CHAR, g_targetingInterface.trajectory[0][0], g_targetingInterface.trajectory[0][1]);
          
-      // remove the drawn point
+      // remove the drawn pointa from the trajectory array
       g_targetingInterface.trajectory.shift();
 
-      // stop the animation, drop the item and go back to the game if there is
-      // no more point to draw
+      // if there is no more points to draw, stop the animation, drop the item and go back to the game
       if(g_targetingInterface.trajectory.length == 0)
       {      
          g_targetingInterface.item.drop(g_targetingInterface.x, g_targetingInterface.y);
+
+         // execute an item-specific action, if necessary
+         if(g_targetingInterface.item.afterThrow)
+            g_targetingInterface.item.afterThrow();
+
          g_targetingInterface.close();
       }
       else
