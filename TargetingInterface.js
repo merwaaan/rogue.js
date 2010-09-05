@@ -83,19 +83,49 @@ TargetingInterface.prototype =
                return;
             // left arrow
             case 37:
+            // numpad 4
+            case 100:
                xNew = g_targetingInterface.x - 1;
                break;
             // up arrow
             case 38:
+            // numpad 8
+            case 104:
                yNew = g_targetingInterface.y - 1;
                break;
             // right arrow
             case 39:
+            // numpad 6
+            case 102:
                xNew = g_targetingInterface.x + 1;
                break;
             // down arrow
             case 40:
+            // numpad 2
+            case 98:
                yNew = g_targetingInterface.y + 1;
+               break;
+
+            // diagonals
+            // numpad 1
+            case 97:
+               xNew = g_targetingInterface.x - 1; 
+               yNew = g_targetingInterface.y + 1; 
+               break;
+            // numpad 3
+            case 99:
+               xNew = g_targetingInterface.x + 1; 
+               yNew = g_targetingInterface.y + 1; 
+               break;
+            // numpad 7
+            case 103:
+               xNew = g_targetingInterface.x - 1; 
+               yNew = g_targetingInterface.y - 1; 
+               break;
+            // numpad 9
+            case 105:
+               xNew = g_targetingInterface.x + 1; 
+               yNew = g_targetingInterface.y - 1; 
                break;
          }
 
