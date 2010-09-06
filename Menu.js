@@ -199,7 +199,7 @@ Menu.prototype =
       this.right.append('<div class="menuTitle">Which item do you want to drop?</div>');
       this.right.append('<div id="dropChoice"></div>');
 
-      var items = g_player.inventory.items;
+      var items = g_player.inventory;
 
       // hold an array of shortcut/item associations
       var shortcuts = this.getItemShortcuts(items);
@@ -240,7 +240,7 @@ Menu.prototype =
       this.right.append('<div class="menuTitle">Which item do you want to throw?</div>');
       this.right.append('<div id="throwChoice"></div>');
 
-      var items = g_player.inventory.items;
+      var items = g_player.inventory;
 
       // hold an array of shortcut/item associations
       var shortcuts = this.getItemShortcuts(items);
@@ -283,10 +283,10 @@ Menu.prototype =
       var inv = g_player.inventory;
 
       // hold shortcut/item associations
-      var shortcuts = this.getItemShortcuts(inv.items);
+      var shortcuts = this.getItemShortcuts(inv);
 
       // display the items
-      $('#inventory #items').append(this.getItemList(inv.items));
+      $('#inventory #items').append(this.getItemList(inv));
 
       // keyboard handling
       var menu = this;
@@ -294,15 +294,11 @@ Menu.prototype =
       {
          // ESCAPE
          if(event.keyCode == 27)
-         {
             menu.backToGame();
-         }
          // if the used shorcut is associated with an item, open the details tab
          else if(shortcuts[event.keyCode])
-         {
             menu.displayInventoryDetails(shortcuts[event.keyCode]);
-         }
-
+         
          event.preventDefault();
       });
    },

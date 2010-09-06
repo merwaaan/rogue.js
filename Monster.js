@@ -8,8 +8,7 @@ function Monster(type)
 
     this.brain = new StateMachine(this, g_roamerBehavior);
 
-    this.inventory = new Inventory();
-    this.inventory.add(new Weapon(null, null, 'RUSTY_SWORD', this));
+    this.inventory.push(new Weapon(null, null, 'RUSTY_SWORD', this));
 }
 
 Monster.prototype =

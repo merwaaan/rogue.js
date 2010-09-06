@@ -17,24 +17,16 @@ Item.prototype =
 
    pickUp : function(creature)
    {
-      if(creature.inventory.enoughSpace(this))
-      {
-         this.owner = creature;
+      this.owner = creature;
 
-         // only works for @ at the moment
-         creature.inventory.add(this);
+      // only works for @ at the moment
+      creature.inventory.push(this);
 
-         if(creature.type == 'PLAYER')
-         {
-            writeMessage(g_player.getName() + ' pick up a ' + this.getName(), 'INFO');
-         }
+      if(creature.type == 'PLAYER')
+         writeMessage(g_player.getName() + ' pick up a ' + this.getName(), 'INFO');
 
-         g_level.getTile(this.x, this.y).pickUpItem(this);
-      }
-      else
-      {
-         writeMessage('There is not enough space in your inventory');
-      }
+      g_level.getTile(this.x, this.y).pickUpItem(this);
+
    },
 
    /**
@@ -53,7 +45,7 @@ Item.prototype =
             this.owner.right = null;
      
          // remove from the owner's inventory and erase the owner
-         this.owner.inventory.remove(this);
+         this.owner.inventory.removeObject(this);
          this.owner = null; 
       }
 

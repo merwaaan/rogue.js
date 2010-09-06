@@ -12,9 +12,8 @@ function Player()
    this.right = new DistanceWeapon(null, null, 'WOODEN_BOW', this);
 
    // create and fill the inventory
-   this.inventory = new Inventory();
-   this.inventory.add(this.left);
-   this.inventory.add(this.right);
+   this.inventory.push(this.left);
+   this.inventory.push(this.right);
 
    this.seenTiles = new Array();
     
@@ -29,9 +28,6 @@ Player.prototype =
 {
    // sanity level
    sanity : null,
-
-   // inventory
-   inventory : null,
 
    // tile memory
    seenTiles : null,
@@ -67,15 +63,17 @@ Player.prototype =
             return;
          // i : inventory
          case 73:
-            this.inventory.open();
+            g_menu.openInventoryMenu();
             return;
          // l : use item in left hand
          case 76:
-            this.left.use();
+            if(this.left)
+               this.left.use();
             return;
          // r : use item in right hand
          case 82:
-            this.right.use();
+            if(this.right)
+               this.right.use();
             return;
          // p : pick up
          case 80:

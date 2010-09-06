@@ -4,6 +4,8 @@ function Creature(type)
    var tile = g_level.getRandomTile('FLOOR');
 
    VisualGameObject.apply(this, [tile.x, tile.y, type]);
+
+   this.inventory = new Array();
 }
 
 Creature.prototype =
@@ -11,6 +13,9 @@ Creature.prototype =
    // the creature's hands, each one can hold an object
    left : null,
    right : null,
+
+   // inventory
+   inventory : null,
 
    destroyCreature : function()
    {
@@ -46,10 +51,19 @@ Creature.prototype =
 	
       // drop stuff
       if(this.inventory)
-         this.inventory.drop();
+         this.dropInventory();
 
       this.destroyCreature();
     },
+
+   /**
+    * Drop all the content of the inventory on the tile the owner is standing on.
+    */
+   dropInventory : function()
+   {
+      for(var i = 0; i < this.items.length; i++)
+         this.items[i].drop(this.x, this.y);
+   },
 
     /**
      * Whether or not this creature can see the given tile. A creature
