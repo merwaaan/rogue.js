@@ -102,6 +102,7 @@ const THROW_ANIM_CHAR = '*';
 
 const REACHABLE_AREA_COLOR = 'rosybrown';
 const TARGET_COLOR = 'crimson';
+const TARGET_NO_COLOR = 'purple';
 
 var g_messageInfo =
 {

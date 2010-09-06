@@ -49,10 +49,10 @@ AStar.prototype =
                   var neighbor = g_level.getTile(current.x + x, current.y + y);
 
                   // if the neighbor exists, is walkable and is not in the closed list
-                  if(neighbor != undefined && neighbor.isWalkable() && !this.closed.containsObject(neighbor))
+                  if(neighbor != undefined && neighbor.isWalkable() && !this.closed.contains(neighbor))
                   {
                      // if the neighbor is not already present in the open list, add it
-                     if(!this.open.containsObject(neighbor))
+                     if(!this.open.contains(neighbor))
                      {
                         // calculate the neighbor score
                         neighbor.parent = current;

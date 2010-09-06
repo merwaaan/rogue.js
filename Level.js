@@ -58,17 +58,22 @@ Level.prototype =
                     // let the tile resolve what should be drawn
                     var sprite = tile.sprite();
 
-                    // if the targeting interface is on and the tile is reachable by a throw,
-                    // then highlight the tile
-                    if(g_targetingInterface.on && g_player.reachableTiles.containsObject(tile))
+                    // if the targeting interface is in draw mode, highlight
+                    // the reachable tiles and the current target
+                    if(g_targetingInterface.draw)
                     {
-                       // the target tile has a different color than the rest of the reachable area
-                       if(x == g_targetingInterface.x - g_gameObjectManager.xOffset && y == g_targetingInterface.y - g_gameObjectManager.yOffset)
-                          ctx.fillStyle = TARGET_COLOR;
-                       else
-                          ctx.fillStyle = REACHABLE_AREA_COLOR;
-
-                       ctx.fillRect(cx, cy - FONT_HEIGHT - 1, FONT_WIDTH, FONT_HEIGHT);
+                       // current target
+                       if(g_targetingInterface.isTileTarget(tile))
+                       {
+                           ctx.fillStyle = g_targetingInterface.isTileReachable(tile) ? TARGET_COLOR : TARGET_NO_COLOR;
+                           ctx.fillRect(cx, cy - FONT_HEIGHT - 1, FONT_WIDTH, FONT_HEIGHT);
+                       }
+                       // reachable area
+                       else if(g_targetingInterface.isTileReachable(tile))
+                       {
+                           ctx.fillStyle = REACHABLE_AREA_COLOR;
+                           ctx.fillRect(cx, cy - FONT_HEIGHT - 1, FONT_WIDTH, FONT_HEIGHT);
+                       }
                     }
 
                     // if the player can see the tile, draw it

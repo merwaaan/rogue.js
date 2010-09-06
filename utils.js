@@ -214,7 +214,7 @@ Array.prototype.removeObject = function(object)
         }
 };
 
-Array.prototype.containsObject = function(object)
+Array.prototype.contains = function(object)
 {
    for(var i = 0; i < this.length; i++)
    {

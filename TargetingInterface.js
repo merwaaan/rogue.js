@@ -12,7 +12,7 @@ TargetingInterface.prototype =
    item : null,
 
    // flag sets to true when the interface is in use
-   on : false,
+   draw : false,
 
    /**
     * Open The targeting interface. The game is paused while the user
@@ -23,7 +23,7 @@ TargetingInterface.prototype =
     */
    open : function(item, maxDistance, minDistance)
    {
-      this.on = true;
+      this.draw = true;
 
       this.item = item;
 
@@ -32,7 +32,7 @@ TargetingInterface.prototype =
       // if no minimum range is specified, center the target on the player's position 
       if(!minDistance)
       {
-         this.x  = g_player.x;
+         this.x = g_player.x;
          this.y = g_player.y;
       }
       // else choose a random starting tile
@@ -61,26 +61,31 @@ TargetingInterface.prototype =
                return;
             // ENTER
             case 13:
-               setKeyHandler(g_gameObjectManager.keyHandler_inactive);
- 
-               g_targetingInterface.on = false;
-               g_level.draw();
-               
-               var callback = function()
+               if(g_targetingInterface.isTileReachable(g_level.getTile(g_targetingInterface.x, g_targetingInterface.y)))
                {
-                  // drop the thrown item
-                  g_targetingInterface.item.drop(g_targetingInterface.x, g_targetingInterface.y);
-                  
-                  // if necessary, execute an item-specific action
-                  if(g_targetingInterface.item.afterThrow)
-                     g_targetingInterface.item.afterThrow();
-
+                  setKeyHandler(g_gameObjectManager.keyHandler_inactive);
+ 
+                  g_targetingInterface.draw = false;
                   g_level.draw();
-                  g_menu.backToGame();
-               };
+               
+                  var callback = function()
+                  {
+                     // drop the thrown item
+                     g_targetingInterface.item.drop(g_targetingInterface.x, g_targetingInterface.y);
+                  
+                     // if necessary, execute an item-specific action
+                     if(g_targetingInterface.item.afterThrow)
+                        g_targetingInterface.item.afterThrow();
 
-               new ThrowAnimation(callback, g_player.x, g_player.y, g_targetingInterface.x, g_targetingInterface.y).start();
-               return;
+                     g_level.draw();
+                     g_menu.backToGame();
+                  };
+
+                  new ThrowAnimation(callback, g_player.x, g_player.y, g_targetingInterface.x, g_targetingInterface.y).start();
+                  
+                  return;
+               }
+               break;
             // left arrow
             case 37:
             // numpad 4
@@ -129,9 +134,8 @@ TargetingInterface.prototype =
                break;
          }
 
-         // if the tile is reachable, we can move the target here
          var tile = g_level.getTile(xNew, yNew);
-         if((yNew != g_targetingInterface.y || xNew != g_targetingInterface.x) && tile && g_player.reachableTiles.containsObject(tile))
+         if(tile)
          {
             g_targetingInterface.y = yNew;
             g_targetingInterface.x = xNew;
@@ -147,11 +151,21 @@ TargetingInterface.prototype =
     */
    close : function()
    {
-      this.on = false;
+      this.draw = false;
 
       // redraw the level to get rid of the reachable area highlighting
       g_level.draw();
 
       g_menu.backToGame();
+   },
+
+   isTileReachable : function(tile)
+   {
+      return g_player.reachableTiles.contains(tile);
+   },
+
+   isTileTarget : function(tile)
+   {
+      return tile == g_level.getTile(this.x, this.y);
    }
 };
