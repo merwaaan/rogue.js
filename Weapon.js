@@ -60,7 +60,33 @@ DistanceWeapon.prototype =
 
    use : function()
    {
-      g_targetingInterface.open(new Projectile('ARROW', this), this.maxDistance, this.minDistance);
+      var weapon = this;
+
+      // function which will be called once a target has been selected
+      var callback_afterTargeting = function()
+      {
+         // function which will be called once the throw animation is over
+         var callback_afterAnimation = function()
+         {
+            var p = new Projectile('ARROW', weapon);
+            p.drop(g_targetingInterface.x, g_targetingInterface.y);
+            p.afterThrow();
+
+            g_level.draw();
+
+            // reactivate user inputs
+            setKeyHandler(g_gameObjectManager.keyHandler_game);
+         };
+
+         // block user inputs
+         setKeyHandler(g_gameObjectManager.keyHandler_inactive);
+
+         // start a throw animation from the player to the target
+         new ThrowAnimation(g_player.x, g_player.y, g_targetingInterface.x, g_targetingInterface.y, callback_afterAnimation).start();
+      };
+
+      // open the targeting interface
+      g_targetingInterface.open(this.maxDistance, this.minDistance, callback_afterTargeting);
    }
 };
 

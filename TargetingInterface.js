@@ -8,45 +8,33 @@ TargetingInterface.prototype =
    y : null,
    x : null,
 
-   // item to be thrown
-   item : null,
-
    // flag sets to true when the interface is in use
    draw : false,
 
    /**
-    * Open The targeting interface. The game is paused while the user
-    * moves a target within a limited area and choose where to throw the item
-    * given in parameter.
+    * Open The targeting interface which let the user manually choose a target.
+    * The target can only be selected if it is within a radius of more than minDistance
+    * and less than maxDistance. Once the user presses the ENTER key, the callback function
+    * given in paramter is executed.
     *
-    * @requires item to be a valid item
+    * @requires maxDistance to be a positive integer
+    * @requires minDistance to be a positive integer or null
+    * @requires callback to be a valid function
     */
-   open : function(item, maxDistance, minDistance)
+   open : function(maxDistance, minDistance, callback)
    {
-      this.draw = true;
-
-      this.item = item;
-
+      // update the list of tiles reachable by a throw
       g_player.updateReachableTiles(maxDistance, minDistance);
 
-      // if no minimum range is specified, center the target on the player's position 
-      if(!minDistance)
-      {
-         this.x = g_player.x;
-         this.y = g_player.y;
-      }
-      // else choose a random starting tile
-      else
-      {
-         var tile = g_player.reachableTiles[Math.floor(Math.random() * g_player.reachableTiles.length)];
+      // center the target on the player's position
+      this.x = g_player.x;
+      this.y = g_player.y;
 
-         this.x = tile.x;
-         this.y = tile.y;
-      }
-
-      // draw the reachable area and the target
+      // draw mode : on
+      this.draw = true;
       g_level.draw();
-    
+
+
       // key handling
       setKeyHandler(function(event)
       {
@@ -63,26 +51,13 @@ TargetingInterface.prototype =
             case 13:
                if(g_targetingInterface.isTileReachable(g_level.getTile(g_targetingInterface.x, g_targetingInterface.y)))
                {
-                  setKeyHandler(g_gameObjectManager.keyHandler_inactive);
- 
+                  // redraw the level so that the highlited tiles disappear
                   g_targetingInterface.draw = false;
                   g_level.draw();
                
-                  var callback = function()
-                  {
-                     // drop the thrown item
-                     g_targetingInterface.item.drop(g_targetingInterface.x, g_targetingInterface.y);
-                  
-                     // if necessary, execute an item-specific action
-                     if(g_targetingInterface.item.afterThrow)
-                        g_targetingInterface.item.afterThrow();
+                  // execute the callback function
+                  callback();
 
-                     g_level.draw();
-                     g_menu.backToGame();
-                  };
-
-                  new ThrowAnimation(callback, g_player.x, g_player.y, g_targetingInterface.x, g_targetingInterface.y).start();
-                  
                   return;
                }
                break;
@@ -110,8 +85,6 @@ TargetingInterface.prototype =
             case 98:
                yNew = g_targetingInterface.y + 1;
                break;
-
-            // diagonals
             // numpad 1
             case 97:
                xNew = g_targetingInterface.x - 1; 
@@ -152,18 +125,24 @@ TargetingInterface.prototype =
    close : function()
    {
       this.draw = false;
-
-      // redraw the level to get rid of the reachable area highlighting
       g_level.draw();
 
       g_menu.backToGame();
    },
 
+   /**
+    * @returns true if tile is contained in the list of tiles reachable
+    * by the player, false either.
+    */
    isTileReachable : function(tile)
    {
       return g_player.reachableTiles.contains(tile);
    },
 
+   /**
+    * @returns true if tile is the tile currently targeted by the
+    * targeting interface, false either.
+    */
    isTileTarget : function(tile)
    {
       return tile == g_level.getTile(this.x, this.y);

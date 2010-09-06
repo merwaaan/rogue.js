@@ -22,7 +22,7 @@ Animation.prototype =
 
 // THROW ANIMATION
 
-function ThrowAnimation(callback, x1, y1, x2, y2)
+function ThrowAnimation(x1, y1, x2, y2, callback)
 {
    Animation.call(this, callback);
 

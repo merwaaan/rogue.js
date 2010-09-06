@@ -67,12 +67,12 @@ Player.prototype =
             return;
          // l : use item in left hand
          case 76:
-            if(this.left)
+            if(this.left && this.left.use)
                this.left.use();
             return;
          // r : use item in right hand
          case 82:
-            if(this.right)
+            if(this.right && this.right.use)
                this.right.use();
             return;
          // p : pick up

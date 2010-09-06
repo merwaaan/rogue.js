@@ -61,8 +61,8 @@ Creature.prototype =
     */
    dropInventory : function()
    {
-      for(var i = 0; i < this.items.length; i++)
-         this.items[i].drop(this.x, this.y);
+      for(var i = 0; i < this.inventory.length; i++)
+         this.inventory[i].drop(this.x, this.y);
    },
 
     /**
