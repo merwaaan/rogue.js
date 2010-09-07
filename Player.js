@@ -166,9 +166,6 @@ Player.prototype =
                }
             }
          }
-         // else if there is a monster on the tile
-         else if(g_level.getTile(xNew, yNew).creature != null)
-            this.attack(g_level.getTile(xNew, yNew).creature);
             
          g_gameObjectManager.xOffset += this.x - xOld;
          g_gameObjectManager.yOffset += this.y - yOld;
