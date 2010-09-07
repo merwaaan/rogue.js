@@ -82,14 +82,10 @@ Player.prototype =
             {
                // only one item on the tile, we pick it up
                if(items.length == 1)
-               {
                   g_level.getTile(this.x, this.y).items[0].pickUp(this);
-               }
                // several items, open a choice menu
                else if(items.length > 1)
-               {
                   g_menu.openPickUpChoiceMenu(g_level.getTile(this.x, this.y).items);
-               }
             }
             return;
          // d : drop

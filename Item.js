@@ -126,12 +126,11 @@ Item.prototype =
             if(item.afterThrow)
                item.afterThrow();
 
-            // redraw the level and the status menu
-            g_level.draw();
-            g_menu.backToGame();
-
             // reactivate user inputs
             setKeyHandler(g_gameObjectManager.keyHandler_game);
+
+            // redraw
+            g_level.draw();
          };
 
          // block user inputs
@@ -141,12 +140,12 @@ Item.prototype =
          new ThrowAnimation(g_player.x, g_player.y, g_targetingInterface.x, g_targetingInterface.y, callback_afterAnimation).start();
       };
 
-      // if the item is throw by a weapon, we use the launcher min and max range
+      // if the item is thrown by a weapon, we use the launcher min and max range
       var minRange = item.weapon && item.weapon.minRange ? item.weapon.minRange : 0;
       var maxRange = item.weapon && item.weapon.maxRange ? item.weapon.maxRange : THROW_RADIUS;
 
       // open the targeting interface
-      g_targetingInterface.open(maxRange, minRange, callback_afterTargeting);
+      g_targetingInterface.openFreeTargetingInterface(maxRange, minRange, callback_afterTargeting);
    }
 };
 

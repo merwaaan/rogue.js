@@ -36,7 +36,19 @@ MeleeWeapon.prototype =
          this.owner.attack(targets[0]);
       // several enemies : let the user choose the target
       else
-         g_targetingInterface.selectTarget(targets);
+      {
+         var weapon = this;
+         var callback_afterTargeting = function()
+         {
+            var enemy = g_level.getTile(g_targetingInterface.x, g_targetingInterface.y).creature;
+            weapon.owner.attack(enemy);
+
+            // redraw
+            g_level.draw();
+         };
+
+         g_targetingInterface.openLimitedTargetingInterface(targets, callback_afterTargeting);
+      }
    }
 };
 

@@ -60,16 +60,16 @@ Level.prototype =
 
                     // if the targeting interface is in draw mode, highlight
                     // the reachable tiles and the current target
-                    if(g_targetingInterface.draw)
+                    if(g_targetingInterface.drawCursor || g_targetingInterface.drawArea)
                     {
-                       // current target
-                       if(g_targetingInterface.isTileTarget(tile))
+                       // current target (cursor)
+                       if(g_targetingInterface.drawCursor && g_targetingInterface.isTileTarget(tile))
                        {
                            ctx.fillStyle = g_targetingInterface.isTileReachable(tile) ? TARGET_COLOR : TARGET_NO_COLOR;
                            ctx.fillRect(cx, cy - FONT_HEIGHT - 1, FONT_WIDTH, FONT_HEIGHT);
                        }
                        // reachable area
-                       else if(g_targetingInterface.isTileReachable(tile))
+                       else if(g_targetingInterface.drawArea && g_targetingInterface.isTileReachable(tile))
                        {
                            ctx.fillStyle = REACHABLE_AREA_COLOR;
                            ctx.fillRect(cx, cy - FONT_HEIGHT - 1, FONT_WIDTH, FONT_HEIGHT);
