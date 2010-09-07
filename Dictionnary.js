@@ -56,8 +56,8 @@ var g_weaponInfo =
         char : 'D',
         color : 'brown',
         damage : 1,
-        maxDistance : 12,
-        minDistance: 4
+        minRange : 4,
+        maxRange : 12
     }
 };
 

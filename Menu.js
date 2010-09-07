@@ -254,14 +254,10 @@ Menu.prototype =
       {
          // ESC
          if(event.keyCode == 27)
-         {
             menu.backToGame();
-         }
          // if the pressed key is associated with an item, open the targeting interface
          else if(shortcuts[event.keyCode])
-         {
-            g_targetingInterface.open(shortcuts[event.keyCode], THROW_RADIUS);
-         }
+            shortcuts[event.keyCode].aimAndThrow();
 
          event.preventDefault();
       });
@@ -340,14 +336,11 @@ Menu.prototype =
 
       // key handling
       var menu = this;
-      var inv = g_player.inventory;
       setKeyHandler(function(event)
       {
          // ESCAPE
          if(event.keyCode == 27)
-         {
             menu.backToGame();
-         }
          // d : drop item
          else if(event.keyCode == 68)
          {
@@ -363,7 +356,7 @@ Menu.prototype =
          {
             if(throwable)
             {
-               g_targetingInterface.open(item);
+               item.aimAndThrow();
             }
          }
          // l : wield the item with the left hand
